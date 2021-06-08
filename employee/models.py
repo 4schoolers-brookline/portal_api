@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_fulltime = models.BooleanField(null=True, blank=True)
+    is_active = models.BooleanField(null=True, blank=True)
     
     birth_date = models.DateField(null=True, blank=True)
     is_male = models.BooleanField(null=True, blank=True)
@@ -24,3 +26,9 @@ class Employee(models.Model):
 
     def __str__(self):
         return self.user.get_full_name()
+
+class Documents(models.Model):
+    name = models.CharField(max_length=35,null=True, blank=True)
+    description = models.TextField(blank=True, null=True)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    file = models.FileField(upload_to ='uploads/')
