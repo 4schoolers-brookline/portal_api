@@ -58,9 +58,11 @@ class Lesson(models.Model):
     name = models.CharField(max_length=50,null=True, blank=True)
     description = models.TextField(blank=True, null=True)
     subject = models.CharField(max_length = 30, choices = SUBJECT_CHOICES, default = '1')
-    classwork = models.OneToOneField('Submission', on_delete=models.CASCADE, related_name='lesson_classwork')
-    homework_sent = models.OneToOneField('Submission', on_delete=models.CASCADE, related_name='lesson_homework_sent')
-    homework_submissions = models.ManyToManyField('Submission')
+    classwork = models.OneToOneField('Submission', on_delete=models.CASCADE, related_name='lesson_classwork', null = True, blank = True)
+    homework_sent = models.OneToOneField('Submission', on_delete=models.CASCADE, related_name='lesson_homework_sent', null = True, blank = True)
+    homework_submissions = models.ManyToManyField('Submission', null = True, blank = True)
+    start = models.DateTimeField(null=True, blank = True)
+    end = models.DateTimeField(null=True, blank = True)
     
     def __str__(self):
         return self.name
@@ -71,4 +73,4 @@ class Submission(models.Model):
     description = models.TextField(blank=True, null=True)
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     type = models.CharField(max_length = 20, choices = SUBMISSION_TYPES)
-    file = models.FileField(upload_to ='uploads/')
+    file = models.FileField(upload_to ='uploads/', blank=True, null=True)

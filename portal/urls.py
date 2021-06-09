@@ -24,4 +24,8 @@ urlpatterns = [
     path('manager/', include('manager.urls')),
     path('parent/', include('parent.urls')),
     path('employee/', include('employee.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('activity/', include('activity.urls')),
+] 
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

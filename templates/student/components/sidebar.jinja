@@ -17,9 +17,8 @@
                     <span class="nav-text">Lessons</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="./app-profile.html">Upcoming Lessons</a></li>
-                    <li><a href="./post-details.html">Past Lessons</a></li>
-                    <li><a href="./post-details.html">Add Lesson</a></li>          
+                    <li><a href="{% url 'student_lessons' %}">Calendar</a></li>
+                    <li><a href="{% url 'student_lesson_add' %}">Add Lesson</a></li>          
                 </ul>
             </li>
             <li><a  href="{% url 'student_directory' %}" aria-expanded="false">
