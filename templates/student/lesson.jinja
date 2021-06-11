@@ -34,9 +34,12 @@
 									<h5 class="text-primary d-inline">Students Attending</h5>
 									<div class="row mt-4 sp4" id="lightgallery">
 										{% for s in students_registered %}
-											<a href="{{s.image.url}}" data-exthumbimage="{{s.image.url}}" data-src="{{s.image.url}}" class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
-												<img src="{{s.image.url}}" alt="{{s.user.get_full_name}}" class="img-fluid">
-											</a>
+											{% if s.image.url %}
+												<a href="{{s.image.url}}" data-exthumbimage="{{s.image.url}}" data-src="{{s.image.url}}" class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
+													<img src="{{s.image.url}}" alt="{{s.user.get_full_name}}" class="img-fluid">
+												</a>	
+											{% endif %}
+
 											
 										{% endfor %}
 										
@@ -52,8 +55,59 @@
 								<div class="profile-interest">
 									<h5 class="text-primary d-inline">Shared Files</h5>
 									<div class="row mt-4 sp4" id="lightgallery">
-										<a href="javascript:void()" class="btn btn-primary light btn-xs mb-1">Classwork</a>
-										<a href="javascript:void()" class="btn btn-primary light btn-xs mb-1">Homework</a>
+										
+										<a href="javascript:void()" class="btn btn-primary light btn-xs mb-1" data-toggle="modal" data-target="#classworkModal">Classwork</a>
+										<!-- Modal classwork -->
+										<div class="modal fade" id="classworkModal">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title">Classwork</h5>
+														<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<h5>{{lesson.classwork.name}}</h5>
+														<p>{{lesson.classwork.description}}</p>
+														<hr>
+														{% if classwork_file %}
+															<p><a href="{{lesson.classwork.file.url}}" target="_blank" class="tooltip-test text-primary" data-toggle="tooltip">Download File</a>  </p>
+														{% endif %}
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+										<a href="javascript:void()" class="btn btn-primary light btn-xs mb-1" data-toggle="modal" data-target="#homeworkModal">Homework</a>
+										<!-- Modal homework -->
+										<div class="modal fade" id="homeworkModal">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title">Homework</h5>
+														<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<h5>{{lesson.homework.name}}</h5>
+														<p>{{lesson.homework.description}}</p>
+														<hr>
+														{% if homework_file %}
+															<p><a href="{{lesson.homework.file.url}}" target="_blank" class="tooltip-test text-primary" data-toggle="tooltip">Download File</a>  </p>
+														{% endif %}
+														
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										
 									</div>
 								</div>
 							</div>
@@ -63,6 +117,8 @@
 
 				</div>
 			</div>
+
+			
 			<div class="col-xl-8">
 				<div class="card">
 					<div class="card-body">
@@ -79,17 +135,42 @@
 							{% if submission %}
 								<div class="comment-respond" id="respond">
 									<h4 class="comment-reply-title text-primary mb-3" id="reply-title">Homework submitted.</h4>
+									<a href="javascript:void()" class="btn btn-primary light btn-xs mb-1" data-toggle="modal" data-target="#homeworkSubmittedModal">Open Submission</a>
+										<!-- Modal homework submission -->
+										<div class="modal fade" id="homeworkSubmittedModal">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title">View Submission</h5>
+														<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<h5>{{submission.name}}</h5>
+														<p>{{submission.description}}</p>
+														<hr>
+														{% if submission_file %}
+															<p><a href="{{submission.file.url}}" target="_blank" class="tooltip-test text-primary" data-toggle="tooltip">Download File</a>  </p>
+														{% endif %}
+														
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+													</div>
+												</div>
+											</div>
+										</div>
 									
 								</div>
 							{% else %}
 								<div class="comment-respond" id="respond">
 									<h4 class="comment-reply-title text-primary mb-3" id="reply-title">Submit Homework </h4>
-									<form class="comment-form" id="commentform" method="post">
+									<form class="comment-form" id="commentform" method="post" enctype="multipart/form-data"> {% csrf_token %}
 										<div class="row"> 
 											<div class="col-lg-12">
 												<div class="form-group">
 													<label for="comment" class="text-black font-w600">Description</label>
-													<textarea rows="8" class="form-control" name="comment" placeholder="Description of the homework..." id="comment"></textarea>
+													<textarea rows="8" class="form-control" name="descr" placeholder="Description of the homework..." id="comment"></textarea>
 												</div>
 											</div>
 	
@@ -97,10 +178,10 @@
 											<div class="col-lg-12">
 												<div class = "input-group mb-3">
 													<div class="input-group-prepend">
-														<button class="btn btn-primary btn-sm" type="button">Submit</button>
+														<button class="btn btn-primary btn-sm" type="submit">Submit</button>
 													</div>
 													<div class="custom-file">
-														<input type="file" class="custom-file-input">
+														<input type="file" class="custom-file-input" name = "subm">
 														<label class="custom-file-label">Choose file</label>
 													</div>
 												</div>
@@ -121,6 +202,8 @@
 		</div>
 	</div>
 </div>
+
+
 
 {% endblock content %}
 

@@ -16,8 +16,8 @@ class Student(models.Model):
     bio = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to=user_image_path, null=True, blank = True)
 
-    languages = models.CharField(max_length=115,null=True, blank=True)
-    interests = models.CharField(max_length=115,null=True, blank=True)
+    languages = models.CharField(max_length=215,null=True, blank=True)
+    interests = models.CharField(max_length=215,null=True, blank=True)
 
     school = models.CharField(max_length=63,null=True, blank=True)
     graduation_year = models.IntegerField(null=True, blank=True)

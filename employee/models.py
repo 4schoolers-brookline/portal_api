@@ -1,12 +1,29 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+def user_image_path(instance, filename):
+    ext = filename.split('.')[-1]
+    return ('employees/id{}/avatar.{}'.format(instance.user.id, ext))
+
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_fulltime = models.BooleanField(null=True, blank=True)
     is_active = models.BooleanField(null=True, blank=True)
+    title = models.CharField(max_length=100,null=True, blank=True)
+
+    title = models.CharField(max_length=100,null=True, blank=True)
+    education = models.CharField(max_length=180,null=True, blank=True)
+    priority = models.IntegerField(default = 10, null=True, blank=True)
+    image = models.ImageField(upload_to=user_image_path, null=True, blank = True, default = 'man.png')
+
+    title = models.CharField(max_length=100,null=True, blank=True)
     
+    languages = models.CharField(max_length=215,null=True, blank=True)
+    interests = models.CharField(max_length=215,null=True, blank=True)
+    subjects = models.CharField(max_length=255,null=True, blank=True)
+
+
     birth_date = models.DateField(null=True, blank=True)
     is_male = models.BooleanField(null=True, blank=True)
     phone = models.CharField(max_length=15,null=True, blank=True)

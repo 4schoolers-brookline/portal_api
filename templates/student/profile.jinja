@@ -29,10 +29,14 @@
 					<div class="profile-head">
 						<div class="photo-content">
 							<div class="cover-photo" style = "background:url({% static 'img/cover.png' %})"></div>
+							
 						</div>
 						<div class="profile-info">
 							<div class="profile-photo">
-								<img src="{{student.image.url}}" class="img-fluid rounded-circle" alt="">
+								<a href="javascript:void()" data-toggle="modal" data-target="#changeImageModal">
+									<img src="{{student.image.url}}" class="img-fluid rounded-circle" alt="" data-toggle="modal" data-target="#changeImageModalModal">
+								</a>
+
 							</div>
 							<div class="profile-details">
 								<div class="profile-name px-3 pt-2">
@@ -237,6 +241,39 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal changeImage -->
+<div class="modal fade" id="changeImageModal">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Change profile Image</h5>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<img src = "{{student.image.url}}">
+				<hr>
+				<form action="" method = "POST" name = "change_image_form" enctype="multipart/form-data"> {% csrf_token %}
+					
+
+					<div class="form-group">
+						<label>Attach an image</label>
+						<input type="file" accept="image/*" class="form-control" name = "avatar">
+					</div>
+	
+		
+					<button class="btn btn-primary" type="submit" name = "change_image">Save</button>
+				</form>
+					
+					
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
