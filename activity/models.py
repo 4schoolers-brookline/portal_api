@@ -75,3 +75,5 @@ class Submission(models.Model):
     account_type = models.CharField(max_length = 20, choices = ACC_TYPES, blank = True, null = True)
     type = models.CharField(max_length = 20, choices = SUBMISSION_TYPES)
     file = models.FileField(upload_to=user_submission, blank=True, null=True)
+
+

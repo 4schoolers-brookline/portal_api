@@ -20,6 +20,15 @@ def index(request):
 def highlights(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
+    context['lessons'] = lessons = [lesson for lesson in Lesson.objects.all() if (context['student'] in lesson.students.all())]
+    context['classes'] = len(lessons)
+    context['balance'] = context['student'].wallet
+    context['hours'] = 0
+    for lesson in lessons:
+        diff = lesson.end-lesson.start
+        context['hours'] += diff.total_seconds()/3600
+
+
     return render(request, 'student/highlights.jinja', context)
 
 @login_required
@@ -28,7 +37,7 @@ def req(request):
     context['student'] = Student.objects.get(user = request.user)
     if (request.method == 'POST'):
         req = request.POST['req']
-        
+
     return render(request, 'student/request.jinja', context)
 
 @login_required

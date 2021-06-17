@@ -26,7 +26,6 @@
         </div>
         <!-- row -->
         <div class="row">     
-
             <div class="col-xl-4 col-xxl-4 col-lg-6 col-sm-6">
                 <div class="widget-stat card bg-danger ">
                     <div class="card-body p-4">
@@ -36,7 +35,7 @@
                             </span>
                             <div class="media-body text-white">
                                 <p class="mb-1">Balance left</p>
-                                <h3 class="text-white">123{{balance}} hrs</h3>
+                                <h3 class="text-white">{{balance}} hrs</h3>
                                 <small></small>
                             </div>
                         </div>
@@ -51,8 +50,8 @@
                                 <i class="la la-user"></i>
                             </span>
                             <div class="media-body text-white">
-                                <p class="mb-1">Total classes</p>
-                                <h3 class="text-white">245{{classes}}</h3>
+                                <p class="mb-1">Total hours</p>
+                                <h3 class="text-white">{{hours}}</h3>
                                 <small></small>
                             </div>
                         </div>
@@ -68,7 +67,7 @@
                             </span>
                             <div class="media-body text-white">
                                 <p class="mb-1">Total Clases</p>
-                                <h3 class="text-white">2{{classes}}</h3>
+                                <h3 class="text-white">{{classes}}</h3>
                                 <small></small>
                             </div>
                         </div>
@@ -82,7 +81,7 @@
                         <h4 class="card-title">Time spent this week</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="barChart_1"></canvas>
+                        <canvas id="weekLessonsChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -93,7 +92,7 @@
                         <h4 class="card-title">Time spent this year</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="barChart_2"></canvas>
+                        <canvas id="yearLessonsChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -104,7 +103,7 @@
                         <h4 class="card-title">Time spent this month</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="barChart_3"></canvas>
+                        <canvas id="monthLessonsChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -126,7 +125,7 @@
                         <h4 class="card-title">Subjects</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="pie_chart"></canvas>
+                        <canvas id="subjectsLessonChart"></canvas>
                     </div>
                 </div>
             </div>
