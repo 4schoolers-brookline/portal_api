@@ -1,0 +1,156 @@
+{% extends 'student/base.jinja' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/chartist.min.css'%}">
+{% endblock style %}
+
+{% block content %}
+
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Add Project -->
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Hi, welcome back!</h4>
+                    <span>4Schoolers Welcomes you!</span>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Highlights</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="row">     
+
+            <div class="col-xl-4 col-xxl-4 col-lg-6 col-sm-6">
+                <div class="widget-stat card bg-danger ">
+                    <div class="card-body p-4">
+                        <div class="media">
+                            <span class="mr-3">
+                                <i class="la la-dollar"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">Balance left</p>
+                                <h3 class="text-white">123{{balance}} hrs</h3>
+                                <small></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-xxl-4 col-lg-6 col-sm-6">
+                <div class="widget-stat card bg-warning">
+                    <div class="card-body p-4">
+                        <div class="media">
+                            <span class="mr-3">
+                                <i class="la la-user"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">Total classes</p>
+                                <h3 class="text-white">245{{classes}}</h3>
+                                <small></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-xxl-4 col-lg-6 col-sm-6">
+                <div class="widget-stat card bg-secondary">
+                    <div class="card-body p-4">
+                        <div class="media">
+                            <span class="mr-3">
+                                <i class="la la-graduation-cap"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">Total Clases</p>
+                                <h3 class="text-white">2{{classes}}</h3>
+                                <small></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Time spent this week</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="barChart_1"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Time spent this year</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="barChart_2"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-12 col-lg-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Time spent this month</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="barChart_3"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Exam results</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="radar_chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Subjects</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pie_chart"></canvas>
+                    </div>
+                </div>
+            </div>
+                                
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+
+    
+{% block scripts %}
+
+    <script src="{% static 'js/Chart.bundle.min.js' %}"></script>
+
+    <script src="{% static 'js/apexchart.js' %}"></script>
+
+    <script src="{% static 'js/chartist.min.js' %}"></script>
+
+
+
+
+    <script src="{% static 'js/chartjs-init.js' %}"></script>
+{% endblock scripts %}

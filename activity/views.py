@@ -28,18 +28,4 @@ def student_lessons(request):
         for lesson in lessons
     ]
 
-    # result = [
-    #     {
-    #         'title': 'first urok',
-    #         'start': '2021-02-01',
-    #     },
-    #     {
-    #         'title': 'Meeting',
-    #         'start': '2021-02-12T10:30:00',
-    #         'end': '2021-02-12T12:30:00',
-    #         'url': '/activity/lesson/1',
-    #         'className': 'bg-info'
-    #     }
-    # ]
-
     return JsonResponse(result, safe = False)

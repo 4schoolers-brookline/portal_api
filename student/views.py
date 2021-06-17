@@ -7,37 +7,125 @@ from student.models import Student
 from django.contrib.auth.models import User
 from activity.models import Lesson, Submission
 import re
+import datetime
 
 def index(request):
     if (request.user.is_authenticated):
+        context['student'] = Student.objects.get(user = request.user)
         return redirect('student_profile')
     else:
-        context['student'] = Student.objects.get(user = request.user)
         return redirect('student_login')
     
+@login_required
+def highlights(request):
+    context = {}
+    context['student'] = Student.objects.get(user = request.user)
+    return render(request, 'student/highlights.jinja', context)
+
+@login_required
+def req(request):
+    context = {}
+    context['student'] = Student.objects.get(user = request.user)
+    if (request.method == 'POST'):
+        req = request.POST['req']
+        
+    return render(request, 'student/request.jinja', context)
 
 @login_required
 def lesson_add(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
-    context['employees'] = Employee.objects.all()
+    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: -x.priority) 
 
     if (request.method == 'POST'):
         name = request.POST['name']
         subject = request.POST['subject']
         teacher = request.POST['teacher']
         description = request.POST['descr']
-        start = request.POST['']
-        end = request.POST['']
+        start = request.POST['start']
+        end = request.POST['end']
 
-        lesson = Lesson(name = name, subject = subject, description = description, teacher = teacher, start = start, end=end)
+        try:
+            t = Employee.objects.get(pk = teacher)
+        except:
+            context['error'] = 'Teacher does not exist'
+            return render(request, 'student/lesson_add.jinja', context)
+                
+        try:
+            start_parsed = to_datetime(start)
+            end_parsed = to_datetime(end)
+        except:
+            context['error'] = 'There was a problem with the selected time'
+            return render(request, 'student/lesson_add.jinja', context)
 
+        lesson = Lesson(name = name, subject = subject, description = description, teacher = t, start = start_parsed, end = end_parsed)
+        lesson.save()
         lesson.students.add(context['student'])
-
-
-
- 
+        lesson.save()
+        return redirect('student_lessons')
+        
     return render(request, 'student/lesson_add.jinja', context)
+
+
+@login_required
+def lesson_edit(request, id):
+    context = {}
+    context['student'] = Student.objects.get(user = request.user)
+    lesson = context['lesson'] = Lesson.objects.get(pk = id)
+    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: x.priority)
+
+    if (request.method == 'POST'):
+        name = request.POST['name']
+        subject = request.POST['subject']
+        teacher = request.POST['teacher']
+        description = request.POST['descr']
+        start = request.POST['start']
+        end = request.POST['end']
+
+        try:
+            t = Employee.objects.get(pk = teacher)
+        except:
+            context['error'] = 'Teacher does not exist'
+            return render(request, 'student/lesson_add.jinja', context)
+                
+        try:
+            start_parsed = to_datetime(start)
+            end_parsed = to_datetime(end)
+        except:
+            context['error'] = 'There was a problem with the selected time'
+            return render(request, 'student/lesson_add.jinja', context)
+
+        lesson.name = name
+        lesson.description = description
+        lesson.teacher = t
+        lesson.start = start_parsed
+        lesson.end = end_parsed
+        lesson.save()
+        return redirect('student_lessons')
+
+    return render(request, 'student/lesson_edit.jinja', context)
+
+@login_required
+def lesson_delete(request, id):
+    context = {}
+    context['student'] = Student.objects.get(user = request.user)
+    lesson = context['lesson'] = Lesson.objects.get(pk = id)
+
+    if (request.method == 'POST'):
+        # TODO: Check if there is less than N hours before class
+        lesson.delete()
+        return redirect('student_lessons')
+
+    return render(request, 'student/lesson_delete.jinja', context)
+
+
+def to_datetime(s):
+    date = s.split(' ')[0].split('/')
+    time = s.split(' ')[1].split(':')
+    x = datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]))
+
+    return x
+
 
 @login_required
 def lesson(request, id):
@@ -88,9 +176,14 @@ def lesson(request, id):
 def lessons(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
-    context['test'] = 'loool'
     return render(request, 'student/lessons.jinja', context)
 
+@login_required
+def lessons_list(request):
+    context = {}
+    context['student'] = Student.objects.get(user = request.user)
+    context['lessons'] = [lesson for lesson in Lesson.objects.all() if (context['student'] in lesson.students.all())]
+    return render(request, 'student/lessons_list.jinja', context)
 
 @login_required
 def directory(request):
@@ -143,9 +236,9 @@ def employee(request, id):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
     context['employee'] = Employee.objects.get(id = id)
-    context['interests'] = context['employee'].interests.split(',')
-    context['languages'] = context['employee'].languages.split(',')   
-    context['subjects'] = context['employee'].subjects.split(',')   
+    context['interests'] = (context['employee'].interests or 'Education').split(',')
+    context['languages'] = (context['employee'].languages or 'English').split(',')   
+    context['subjects'] = (context['employee'].subjects or 'Advising').split(',')   
 
     return render(request, 'student/employee.jinja', context)
 
