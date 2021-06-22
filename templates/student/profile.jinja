@@ -106,6 +106,22 @@
 						</div>
 					</div>
 
+
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="profile-interest">
+									<h5 class="text-primary d-inline">Exam results</h5>
+									<div class="card-body">
+										<canvas id="radar_chart"></canvas>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+
 				</div>
 			</div>
 			<div class="col-xl-8">
@@ -197,6 +213,7 @@
 														<label>Address</label>
 														<input type="text" name = "address" value ="{{student.address}}" class="form-control">
 													</div>
+													
 													<div class="form-row">
 														<div class="form-group col-md-6">
 															<label>City</label>
@@ -214,26 +231,6 @@
 													<button class="btn btn-primary" type="submit">Save</button>
 												</form>
 											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- Modal -->
-							<div class="modal fade" id="replyModal">
-								<div class="modal-dialog modal-dialog-centered" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title">Post Reply</h5>
-											<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-										</div>
-										<div class="modal-body">
-											<form>
-												<textarea class="form-control" rows="4">Message</textarea>
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary">Reply</button>
 										</div>
 									</div>
 								</div>
@@ -282,4 +279,14 @@
 
 {% block scripts %}
     <script src="{% static 'js/lightgallery-all.min.js'%}" ></script>
+	<script src="{% static 'js/Chart.bundle.min.js' %}"></script>
+
+    <script src="{% static 'js/apexchart.js' %}"></script>
+
+    <script src="{% static 'js/chartist.min.js' %}"></script>
+
+
+
+
+    <script src="{% static 'js/chartjs-init.js' %}"></script>
 {% endblock scripts %}

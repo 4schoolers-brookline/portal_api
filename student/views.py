@@ -1,21 +1,56 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from employee.models import Employee
-from student.models import Student
+from student.models import Student, Exam
 from django.contrib.auth.models import User
 from activity.models import Lesson, Submission
 import re
 import datetime
 
 def index(request):
+    context = {}
     if (request.user.is_authenticated):
         context['student'] = Student.objects.get(user = request.user)
         return redirect('student_profile')
     else:
         return redirect('student_login')
-    
+
+
+@login_required
+def student_exam_results_api(request):
+    student = Student.objects.get(user = request.user)
+    exams = Exam.objects.filter(taker = student)
+    names = [exam.name for exam in exams]
+    percents = [exam.percentage for exam in exams]
+
+
+
+
+    if ('Regular SAT Math' not in names):
+        names.append('Regular SAT Math')
+        percents.append(0)
+    if ('Regular SAT English' not in names):
+        names.append('Regular SAT English')
+        percents.append(0)
+    if ('ACT Math' not in names):
+        names.append('ACT Math')
+        percents.append(0)
+    if ('ACT English' not in names):
+        names.append('ACT English')
+        percents.append(0)
+    if ('ACT Science' not in names):
+        names.append('ACT Science')
+        percents.append(0)
+
+    result = {
+        'exams': names,
+        'percentages': percents,
+    }
+    return JsonResponse(result, safe = False)
+
+
 @login_required
 def highlights(request):
     context = {}
@@ -23,11 +58,11 @@ def highlights(request):
     context['lessons'] = lessons = [lesson for lesson in Lesson.objects.all() if (context['student'] in lesson.students.all())]
     context['classes'] = len(lessons)
     context['balance'] = context['student'].wallet
-    context['hours'] = 0
+    hrs = 0
     for lesson in lessons:
         diff = lesson.end-lesson.start
-        context['hours'] += diff.total_seconds()/3600
-
+        hrs += diff.total_seconds()/3600
+    context['hours'] = round(hrs, 2)
 
     return render(request, 'student/highlights.jinja', context)
 

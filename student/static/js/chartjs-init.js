@@ -166,6 +166,14 @@
 	var radarChart = function(){	
 		if(jQuery('#radar_chart').length > 0 ){
 			//radar chart
+			var exams = $.parseJSON(
+				$.ajax({
+					url: '/student/api/exams',
+					dataType: 'json',
+					async:false
+				}).responseText
+			);
+
 			const radar_chart = document.getElementById("radar_chart").getContext('2d');
 
 			const radar_chartgradientStroke1 = radar_chart.createLinearGradient(500, 0, 100, 0);
@@ -181,11 +189,11 @@
 				type: 'radar',
 				data: {
 					defaultFontFamily: 'Poppins',
-					labels: ["TOEFL", "SAT", "SSAT", "PSAT", "GRE"],
+					labels: exams.exams,
 					datasets: [
 						{
 							label: "Exam percentile",
-							data: [65, 59, 66, 45, 56],
+							data: exams.percentages,
 							borderColor: '#f21780',
 							borderWidth: "1",
 							backgroundColor: radar_chartgradientStroke2

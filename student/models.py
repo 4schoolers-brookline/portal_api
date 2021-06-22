@@ -10,14 +10,18 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_active = models.BooleanField(null=True, blank=True)
 
+    bio = models.CharField(max_length=215, null=True, blank=True)
+
+
     birth_date = models.DateField(null=True, blank=True)
     is_male = models.BooleanField(null=True, blank=True)
     phone = models.CharField(max_length=15,null=True, blank=True)
-    bio = models.TextField(blank=True, null=True)
+
     image = models.ImageField(upload_to=user_image_path, null=True, blank = True)
 
     languages = models.CharField(max_length=215,null=True, blank=True)
     interests = models.CharField(max_length=215,null=True, blank=True)
+    
 
     school = models.CharField(max_length=63,null=True, blank=True)
     graduation_year = models.IntegerField(null=True, blank=True)
@@ -33,4 +37,9 @@ class Student(models.Model):
     def __str__(self):
         return self.user.get_full_name()
 
+class Exam(models.Model):
+    taker = models.ForeignKey('Student', on_delete = models.CASCADE)
+    name = models.CharField(max_length = 215,null = True, blank = True)
+    score = models.FloatField(null = True, blank = True)
+    percentage = models.IntegerField(null = True, blank = True)
 

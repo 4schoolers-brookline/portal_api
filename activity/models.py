@@ -51,7 +51,7 @@ class Activity(models.Model):
 
 class Lesson(models.Model):
     students = models.ManyToManyField(Student)
-    teacher = models.OneToOneField(Employee, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Employee, on_delete = models.CASCADE)
     name = models.CharField(max_length=50,null=True, blank=True)
     description = models.TextField(blank=True, null=True)
     subject = models.CharField(max_length = 30, choices = SUBJECT_CHOICES, default = '1')
@@ -71,7 +71,7 @@ def user_submission(instance, filename):
 class Submission(models.Model):
     name = models.CharField(max_length=35,null=True, blank=True)
     description = models.TextField(blank=True, null=True)
-    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     account_type = models.CharField(max_length = 20, choices = ACC_TYPES, blank = True, null = True)
     type = models.CharField(max_length = 20, choices = SUBMISSION_TYPES)
     file = models.FileField(upload_to=user_submission, blank=True, null=True)

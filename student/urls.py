@@ -25,6 +25,8 @@ urlpatterns = [
     
     
     path('employee/<int:id>', views.employee, name = 'student_employee'),
+
+    path('api/exams', views.student_exam_results_api),
 ]
 
 

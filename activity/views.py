@@ -39,8 +39,6 @@ def student_lessons_year(request):
     for lesson in lessons:
         if lesson.start.year == datetime.datetime.now().year:
             result[lesson.start.month-1] += 1
-
-
     return JsonResponse(result, safe = False)
 
 @login_required
