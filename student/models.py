@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 def user_image_path(instance, filename):
     ext = filename.split('.')[-1]
     return ('students/id{}/avatar.{}'.format(instance.user.id, ext))
@@ -31,9 +32,7 @@ class Student(models.Model):
     zip_code = models.CharField(max_length=50,null=True, blank=True)
     state  = models.CharField(max_length=50,null=True, blank=True)
     country = models.CharField(max_length=50,null=True, blank=True)
-    
-    wallet = models.FloatField(null=True, blank=True)
-    
+
     def __str__(self):
         return self.user.get_full_name()
 
@@ -42,4 +41,7 @@ class Exam(models.Model):
     name = models.CharField(max_length = 215,null = True, blank = True)
     score = models.FloatField(null = True, blank = True)
     percentage = models.IntegerField(null = True, blank = True)
+
+
+
 

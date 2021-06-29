@@ -6,6 +6,7 @@ from employee.models import Employee
 from student.models import Student, Exam
 from django.contrib.auth.models import User
 from activity.models import Lesson, Submission
+from bank.models import StudentAccount, StudentLessonBill
 import re
 import datetime
 
@@ -13,7 +14,7 @@ def index(request):
     context = {}
     if (request.user.is_authenticated):
         context['student'] = Student.objects.get(user = request.user)
-        return redirect('student_profile')
+        return redirect('student_highlights')
     else:
         return redirect('student_login')
 
@@ -57,7 +58,17 @@ def highlights(request):
     context['student'] = Student.objects.get(user = request.user)
     context['lessons'] = lessons = [lesson for lesson in Lesson.objects.all() if (context['student'] in lesson.students.all())]
     context['classes'] = len(lessons)
-    context['balance'] = context['student'].wallet
+    
+    try:
+        studentacc = StudentAccount.objects.get(student = Student.objects.get(user = request.user))
+    except:
+        studentacc = StudentAccount(student = Student.objects.get(user = request.user))
+        studentacc.save()
+    
+    context['balance'] = studentacc.units_left
+    
+    
+    
     hrs = 0
     for lesson in lessons:
         diff = lesson.end-lesson.start
@@ -106,6 +117,17 @@ def lesson_add(request):
         lesson.save()
         lesson.students.add(context['student'])
         lesson.save()
+
+        #studentacc
+        student_acc = StudentAccount.objects.get(student = Student.objects.get(user = request.user))
+        duration = (lesson.end-lesson.start).total_seconds()/60
+        lesson_bill = StudentLessonBill(lesson = lesson, duration = duration)
+        lesson_bill.save()
+        student_acc.bills.add(lesson_bill)
+        student_acc.units_left -= duration
+
+
+        
         return redirect('student_lessons')
         
     return render(request, 'student/lesson_add.jinja', context)
