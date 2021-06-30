@@ -65,7 +65,7 @@ def highlights(request):
         studentacc = StudentAccount(student = Student.objects.get(user = request.user))
         studentacc.save()
     
-    context['balance'] = studentacc.units_left
+    context['balance'] = studentacc.get_units_left()
     
     
     

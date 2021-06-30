@@ -17,10 +17,6 @@ def students_lesson_changed(sender, **kwargs):
         num_students = len(lesson.students.all())
         duration = (lesson.end-lesson.start).total_seconds()/60
 
-        print(lesson)
-        print(lesson.students.all())
-
-
         if (num_students == 1):
             coeff = 1
         elif (num_students == 2):
@@ -46,6 +42,8 @@ def students_lesson_changed(sender, **kwargs):
                 bill = StudentLessonBill(lesson = lesson, coefficent = coeff, duration = duration)
                 bill.save()
                 student_acc.bills.add(bill)
+
+            
             
 
 
@@ -53,8 +51,6 @@ def students_lesson_changed(sender, **kwargs):
 def lesson_changed(sender, instance, created, **kwargs):
   
     lesson = instance
-
-    
     lvl = lesson.teacher.level
 
     num_students = len(lesson.students.all())
@@ -69,6 +65,7 @@ def lesson_changed(sender, instance, created, **kwargs):
     elif (num_students > 2 ):
         coeff = 0.5
     
+
     if (lvl == 1):
         coeff *= 0.5
     elif (lvl == 2):

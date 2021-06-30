@@ -7,9 +7,18 @@ from student.models import Student
 
 class StudentAccount(models.Model):
     student = models.ForeignKey(Student, on_delete = models.CASCADE)
-    units_left = models.FloatField(null = True, blank = True, default = 0)
-    deposits = models.ManyToManyField('StudentDeposit')
-    bills = models.ManyToManyField('StudentLessonBill')
+    deposits = models.ManyToManyField('StudentDeposit', null = True, blank = True,)
+    bills = models.ManyToManyField('StudentLessonBill', null = True, blank = True,)
+    def __str__(self):
+        return (self.student.user.first_name)
+
+    def get_units_left(self):
+        s = 0
+        for bill in self.bills.all():
+            s -= round((bill.duration * bill.coefficent)/60,2)
+        for deposit in self.deposits.all():
+            s += round(deposits.units)
+        return s
 
 class StudentDeposit(models.Model):
     units = models.FloatField(null=True, blank=True)
@@ -24,3 +33,4 @@ class StudentLessonBill(models.Model):
     
     def __str__(self):
         return ('{} (duration = {}, coeff = {})'.format(self.lesson.name, self.duration, self.coefficent))
+    
