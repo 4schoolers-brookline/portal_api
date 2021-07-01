@@ -11,11 +11,16 @@ from django.db.models.signals import m2m_changed
 def students_lesson_changed(sender, **kwargs):
     lesson = kwargs['instance']
     action = kwargs['action']
-    if (action == 'post_add'):
+    if (action == 'post_add' or action == 'post_remove'):
         lvl = lesson.teacher.level
 
         num_students = len(lesson.students.all())
         duration = (lesson.end-lesson.start).total_seconds()/60
+
+        students_deleted_pks = kwargs['pk_set']
+        students_deleted = [Student.objects.get(pk = pk) for pk in students_deleted_pks]
+
+
 
         if (num_students == 1):
             coeff = 1
@@ -42,8 +47,21 @@ def students_lesson_changed(sender, **kwargs):
                 bill = StudentLessonBill(lesson = lesson, coefficent = coeff, duration = duration)
                 bill.save()
                 student_acc.bills.add(bill)
+        for student in students_deleted:
+            sacc = StudentAccount.objects.get(student = student)
 
-            
+    if (action == 'pre_remove'):
+        students_pk = kwargs['pk_set']
+        students = [Student.objects.get(pk = pk) for pk in students_pk] # find all students to be removed
+        for student in students:
+            sacc = StudentAccount.objects.get(student = student)
+            for bill in sacc.bills.all():
+                if (bill.lesson == lesson):
+                    bill.delete()
+        
+
+
+
             
 
 

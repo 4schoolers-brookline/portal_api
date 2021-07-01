@@ -1,8 +1,13 @@
 from django.contrib import admin
 from .models import *
+from django import forms
 
 class StudentAccountAdmin(admin.ModelAdmin):
-    pass
+    readonly_fields = ('units_left',)
+
+    def units_left(self, obj):
+        return (obj.get_units_left())
+
 admin.site.register(StudentAccount, StudentAccountAdmin)
 
 class StudentDepositAdmin(admin.ModelAdmin):
