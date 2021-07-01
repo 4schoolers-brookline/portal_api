@@ -117,16 +117,6 @@ def lesson_add(request):
         lesson.save()
         lesson.students.add(context['student'])
         lesson.save()
-
-        #studentacc
-        student_acc = StudentAccount.objects.get(student = Student.objects.get(user = request.user))
-        duration = (lesson.end-lesson.start).total_seconds()/60
-        lesson_bill = StudentLessonBill(lesson = lesson, duration = duration)
-        lesson_bill.save()
-        student_acc.bills.add(lesson_bill)
-        student_acc.units_left -= duration
-
-
         
         return redirect('student_lessons')
         

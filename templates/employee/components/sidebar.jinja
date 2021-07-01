@@ -1,0 +1,38 @@
+<div class="deznav">
+    <div class="deznav-scroll">
+        <ul class="metismenu" id="menu">
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <i class="flaticon-025-dashboard"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'student_highlights' %}">Highlights</a></li>
+                    <li><a href="{% url 'student_profile' %}">Profile</a></li>
+                    <li><a href="{% url 'student_request' %}">Make a request</a></li>
+                </ul>
+            </li>
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                <i class="flaticon-012-checkmark"></i>
+                    <span class="nav-text">Lessons</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'student_lessons' %}">Calendar</a></li>
+                    <li><a href="{% url 'student_lessons_list' %}">List View Lessons</a></li>   
+                    <li><a href="{% url 'student_lesson_add' %}">Add Lesson</a></li>          
+                </ul>
+            </li>
+            <li><a  href="{% url 'student_directory' %}" aria-expanded="false">
+                    <i class="flaticon-016-double-chevron"></i>
+                    <span class="nav-text">Directory</span>
+                </a>
+                
+            </li>
+            
+        </ul>
+
+        <div class="copyright">
+            <p><strong>4Schoolers Student Portal</strong> © 2021 All Rights Reserved</p>
+            <p class="fs-12">Made with ♥ by Engineering Team</p>
+        </div>
+    </div>
+</div>
