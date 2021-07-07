@@ -63,7 +63,7 @@ def profile(request):
     if (request.method == 'POST'):
         if ('change_image' in request.POST):
             avatar = request.FILES['avatar']
-            student.image = avatar
+            employee.image = avatar
             employee.save()
         else:
             employee.school = request.POST.get('school')
@@ -81,3 +81,36 @@ def profile(request):
         
 
     return render(request, 'employee/profile.jinja', context)
+
+@login_required
+def password(request):
+    context = {}
+    context['employee'] = Employee.objects.get(user = request.user)
+    if (request.method == 'POST'):
+        context['wrong'] = ''
+        old = request.POST['old_password']
+        new = request.POST['password']
+        repeat = request.POST['repeat_password']
+        if (new != repeat):
+            context['wrong']= 'passwords do not match'
+            return render(request, 'employee/password.jinja', context)
+        reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
+        # compiling regex
+        pat = re.compile(reg)
+        
+        # searching regex                 
+        mat = re.search(pat, new)
+        if not mat:
+            context['wrong'] = 'Password should have at least one number, one uppercase, one lowercase, one special symbol and must be between 6-20 characters long'
+            return render(request, 'employee/password.jinja', context)
+        u = request.user
+        if (u.check_password(old)):
+            u.set_password(new)
+            u.save()
+            return redirect('employee_login')
+        else:
+            # wrong password
+            context['wrong']= 'Wrong Password'
+            return render(request, 'employee/password.jinja', context)
+
+    return render(request, 'employee/password.jinja', context)
