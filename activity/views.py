@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from student.models import Student
+from employee.models import Employee
 from django.contrib.auth.models import User
 from .models import Lesson
 import json
@@ -93,3 +94,20 @@ def student_subjects_lessons(request):
         result_cleaned['lessons'].append(value)
     
     return JsonResponse(result_cleaned, safe = False)
+
+@login_required
+def employee_lessons(request):
+    employee = Employee.objects.get(user = request.user)
+    lessons = Lesson.objects.filter(teacher = employee)
+    url = lambda x: 'lesson/'+str(x)
+    result = [
+        {
+            'title': lesson.name,
+            'start': lesson.start,
+            'end': lesson.end,
+            'url': url(lesson.pk),
+        }
+        for lesson in lessons
+    ]
+
+    return JsonResponse(result, safe = False)

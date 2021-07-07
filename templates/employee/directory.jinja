@@ -11,7 +11,7 @@
         <div class="form-head d-flex flex-wrap mb-sm-4 align-items-start">
             <div class="mr-auto mb-2 d-lg-block mb-3">
                 <h2 class="text-black font-w700 mb-0">Students</h2>
-                <p class="mb-0">Welcome our friendly team of genuises.</p>
+                <p class="mb-0">These are our brilliant students.</p>
             </div>
             <div class="dashboard_bar mb-3">
                 <div class="input-group search-area right d-lg-inline-flex d-none  mr-5">
@@ -24,42 +24,11 @@
                 </div>
             </div>
             <select class=" form-control default-select style-3 mb-3 mr-3">
-                <option>All Employees</option>
-                <option>Management</option>
-                <option>Teachers</option>
-                <option>Others</option>
+                <option>All Students</option>
+                <option>Active</option>
+                <option>None Active</option>
             </select>
-            <!-- Add Order -->
-            <div class="modal fade" id="addOrderModal">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Add Teacher</h5>
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label class="text-black font-w500">Teacher Name</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label class="text-black font-w500">Subject</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label class="text-black font-w500">Phone No.</label>
-                                    <input type="number" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-primary">SAVE</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
         <div class="row">
             {% for student in students %}
@@ -77,10 +46,10 @@
                                     <span class="active"></span>
                                 </div>
                                 <div class="media-body" href = "">
-                                    <h6 class="font-w700"><a href="{% url 'student_employee' employee.id %}" class="text-black">{{employee.user.get_full_name}}</a></h6>
-                                    <p class="fs-14 mb-1">{{student.title}}</p>
+                                    <h6 class="font-w700"><a href="{% url 'student_employee' employee.id %}" class="text-black">{{student.user.get_full_name}}</a></h6>
+                                    <p class="fs-14 mb-1">{{student.school}}</p>
                                     <div class="contact-footer">
-                                        <a href="{% url 'student_employee' student.id %}" >View Profile</a>
+                                        <a href="{% url 'employee_student' student.id %}" >View Profile</a>
                                     </div>
                                 </div>
                             </div>

@@ -78,14 +78,14 @@
                                         <tbody>
                                             {% for lesson in lessons %}
                                                 <tr>
-                                                    <td><a class = "badge badge-info light" href = "{% url 'student_lesson' lesson.pk %}">{{lesson.name}}</a></td>
-                                                    <td><a class = "badge badge-success" href = "{% url 'student_employee' lesson.teacher.pk %}">{{lesson.teacher}}</a></td>
+                                                    <td><a class = "badge badge-info light" href = "{% url 'employee_lesson' lesson.pk %}">{{lesson.name}}</a></td>
+                                                    <td><a class = "badge badge-success" href = "{% url 'employee_profile' %}">{{lesson.teacher}}</a></td>
                                                     <td>{{lesson.subject}}</td>
                                                     <td>{{lesson.start}}</td>
                                                     <td>
                                                         <div class="ml-auto">
-                                                            <a href="{% url 'student_lesson_edit' lesson.pk %}" class="btn btn-primary btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
-                                                            <a href="{% url 'student_lesson_delete' lesson.pk %}" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                            <a href="{% url 'employee_lesson_edit' lesson.pk %}" class="btn btn-primary btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+                                                            <a href="{% url 'employee_lesson_delete' lesson.pk %}" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
                                                         </div>
                                                     </td>
                                                 </tr>

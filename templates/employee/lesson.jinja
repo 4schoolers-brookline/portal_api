@@ -34,9 +34,13 @@
 									<h5 class="text-primary d-inline">Students Attending</h5>
 									<div class="row mt-4 sp4" id="lightgallery">
 										{% for s in students_registered %}
-											{% if s.image.url %}
-												<a href="{{s.image.url}}" data-exthumbimage="{{s.image.url}}" data-src="{{s.image.url}}" class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
+											{% if s.image %}
+												<a href="{% url 'employee_student' s.id %}" data-exthumbimage="{{s.image.url}}" data-src="{{s.image.url}}" class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
 													<img src="{{s.image.url}}" alt="{{s.user.get_full_name}}" class="img-fluid">
+												</a>
+											{% else %}
+												<a href="{% url 'employee_student' s.id %}"  class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
+													<img src="{% static 'employee/img/man.png'%}" alt="{{s.user.get_full_name}}" class="img-fluid">
 												</a>	
 											{% endif %}
 
@@ -129,7 +133,7 @@
 									<a href="{% url 'student_lesson_delete' lesson.pk %}" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
 								</div>
 							<ul class="mb-4 post-meta d-flex flex-wrap">
-								<li class="post-author mr-3">By <a class = "btn btn-info light" href = "{% url 'student_employee' lesson.teacher.pk %}">{{lesson.teacher.user.get_full_name}} </a></li>
+								<li class="post-author mr-3">By <a href = "{% url 'student_employee' lesson.teacher.pk %}">{{lesson.teacher.user.get_full_name}}</a></li>
 								<li class="post-date mr-3"><i class="fa fa-calender"></i>{{lesson.start}} - {{lesson.end}}</li>
 								
 							</ul>

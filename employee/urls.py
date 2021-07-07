@@ -12,25 +12,20 @@ urlpatterns = [
     path('logout', views.logout, name = 'employee_logout'),
     path('profile', views.profile, name = 'employee_profile'),
     
-    
+    path('highlights', views.highlights, name = 'employee_highlights'),
     path('directory', views.directory, name = 'employee_directory'),
     path('student/<int:id>', views.student, name = 'employee_student'),
+    path('request', views.req, name = 'employee_request'),
     
-    # path('password', views.password, name = 'employee_password'),
     
-    # path('profile', views.profile, name = 'employee_profile'),
     
-    # path('highlights', views.highlights, name = 'employee_highlights'),
-    # path('request', views.req, name = 'employee_request'),
-    
-    # path('lessons', views.lessons, name = 'student_lessons'),
-    # path('lessons/list', views.lessons_list, name = 'student_lessons_list'),
-    # path('lesson/<int:id>', views.lesson, name = 'student_lesson'),
+    path('lessons', views.lessons, name = 'employee_lessons'),
+    path('lessons/list', views.lessons_list, name = 'employee_lessons_list'),
+    path('lesson/<int:id>', views.lesson, name = 'employee_lesson'),    
+    path('lesson/delete/<int:id>', views.lesson_delete, name = 'employee_lesson_delete'),
+    path('lesson/edit/<int:id>', views.lesson_edit, name = 'employee_lesson_edit'),
+
     # path('lesson/add', views.lesson_add, name = 'student_lesson_add'),
-    # path('lesson/delete/<int:id>', views.lesson_delete, name = 'student_lesson_delete'),
-    # path('lesson/edit/<int:id>', views.lesson_edit, name = 'student_lesson_edit'),
-    
-    
     # path('employee/<int:id>', views.employee, name = 'student_employee'),
 
     # path('api/exams', views.student_exam_results_api),
