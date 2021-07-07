@@ -114,3 +114,21 @@ def password(request):
             return render(request, 'employee/password.jinja', context)
 
     return render(request, 'employee/password.jinja', context)
+
+@login_required
+def student(request, id):
+    context = {}
+    context['employee'] = Employee.objects.get(user = request.user)
+    context['student'] = Student.objects.get(id = id)
+    context['interests'] = (context['student'].interests or 'Education').split(',')
+    context['languages'] = (context['student'].languages or 'English').split(',')   
+    
+    return render(request, 'employee/student.jinja', context)
+
+@login_required
+def directory(request):
+    context = {}
+    context['employee'] = Employee.objects.get(user = request.user)
+    context['students'] = Student.objects.all() # sorted(list(Employee.objects.all()), key = lambda x: x.priority)
+    
+    return render(request, 'student/directory.jinja', context)

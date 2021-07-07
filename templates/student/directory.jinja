@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block style %}
-    <link href="{% static 'css/lightgallery.min.css' %}" rel="stylesheet">
+    <link href="{% static 'student/css/lightgallery.min.css' %}" rel="stylesheet">
 {% endblock style %}
 
 {% block content %}
@@ -71,7 +71,7 @@
                                     {% if employee.image %}
                                         <img src="{{employee.image.url}}" alt="" class="rounded-circle" width="90">
                                     {% else %}
-                                        <img src="{% static 'img/man.png' %}" alt="" class="rounded-circle" width="90">
+                                        <img src="{% static 'student/img/man.png' %}" alt="" class="rounded-circle" width="90">
                                     {% endif %}
                                     
                                     <span class="active"></span>
@@ -96,5 +96,5 @@
 {% endblock content %}
 
 {% block scripts %}
-    <script src="{% static 'js/lightgallery-all.min.js'%}" ></script>
+    <script src="{% static 'student/js/lightgallery-all.min.js'%}" ></script>
 {% endblock scripts %}

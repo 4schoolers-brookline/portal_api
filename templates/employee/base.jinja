@@ -7,10 +7,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <title>{% block title %}{% endblock title %}</title>
-        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon.ico' %}">
-        <link href="{% static 'css/bootstrap-select.min.css' %}" rel="stylesheet">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'employee/img/favicon.ico' %}">
+        <link href="{% static 'employee/css/bootstrap-select.min.css' %}" rel="stylesheet">
         {% block style %} {% endblock style %}
-        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="{% static 'employee/css/style.css' %}" rel="stylesheet">
     </head>
 
     <body class = "{% block bodyclass %}{% endblock bodyclass%}">
@@ -23,11 +23,11 @@
             {% include 'employee/components/footer.jinja' %}
         </div>
 
-        <script src="{% static 'js/global.js' %}"></script>
-        <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+        <script src="{% static 'employee/js/global.js' %}"></script>
+        <script src="{% static 'employee/js/bootstrap-select.min.js' %}"></script>
         
-        <script src="{% static 'js/custom.min.js' %}"></script>
-        <script src="{% static 'js/deznav-init.js' %}"></script>
+        <script src="{% static 'employee/js/custom.min.js' %}"></script>
+        <script src="{% static 'employee/js/deznav-init.js' %}"></script>
         {% block scripts %} {% endblock scripts %}
     </body>
 </html>

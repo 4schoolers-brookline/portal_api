@@ -13,10 +13,13 @@ urlpatterns = [
     path('profile', views.profile, name = 'employee_profile'),
     
     
+    path('directory', views.directory, name = 'employee_directory'),
+    path('student/<int:id>', views.student, name = 'employee_student'),
+    
     # path('password', views.password, name = 'employee_password'),
     
     # path('profile', views.profile, name = 'employee_profile'),
-    # path('directory', views.directory, name = 'employee_directory'),
+    
     # path('highlights', views.highlights, name = 'employee_highlights'),
     # path('request', views.req, name = 'employee_request'),
     

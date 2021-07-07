@@ -8,9 +8,9 @@
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <title>{% block title %}{% endblock title %}</title>
         <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon.ico' %}">
-        <link href="{% static 'css/bootstrap-select.min.css' %}" rel="stylesheet">
+        <link href="{% static 'student/css/bootstrap-select.min.css' %}" rel="stylesheet">
         {% block style %} {% endblock style %}
-        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="{% static 'student/css/style.css' %}" rel="stylesheet">
     </head>
 
     <body class = "{% block bodyclass %}{% endblock bodyclass%}">
@@ -23,11 +23,11 @@
             {% include 'student/components/footer.jinja' %}
         </div>
 
-        <script src="{% static 'js/global.js' %}"></script>
-        <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+        <script src="{% static 'student/js/global.js' %}"></script>
+        <script src="{% static 'student/js/bootstrap-select.min.js' %}"></script>
         
-        <script src="{% static 'js/custom.min.js' %}"></script>
-        <script src="{% static 'js/deznav-init.js' %}"></script>
+        <script src="{% static 'student/js/custom.min.js' %}"></script>
+        <script src="{% static 'student/js/deznav-init.js' %}"></script>
         {% block scripts %} {% endblock scripts %}
     </body>
 </html>

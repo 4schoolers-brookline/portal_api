@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block style %}
-    <link href="{% static 'css/dataTables.min.css' %}" rel="stylesheet">
+    <link href="{% static 'employee/css/dataTables.min.css' %}" rel="stylesheet">
 {% endblock style %}
 
 {% block content %}
@@ -102,8 +102,8 @@
 {% endblock content %}
 
 {% block scripts %}
-    <script src="{% static 'js/moment.min.js'%}" ></script>
+    <script src="{% static 'employee/js/moment.min.js'%}" ></script>
 
-    <script src="{% static 'js/jquery.dataTables.min.js'%}" ></script>
-    <script src="{% static 'js/datatables.init.js'%}" ></script>
+    <script src="{% static 'employee/js/jquery.dataTables.min.js'%}" ></script>
+    <script src="{% static 'employee/js/datatables.init.js'%}" ></script>
 {% endblock scripts %}

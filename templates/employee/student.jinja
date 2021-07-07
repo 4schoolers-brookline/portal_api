@@ -1,0 +1,187 @@
+{% extends 'employee/base.jinja' %}
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'employee/css/lightgallery.min.css' %}" rel="stylesheet">
+{% endblock style %}
+
+{% block content %}
+<div class="content-body">
+	<div class="container-fluid">
+		<div class="row page-titles mx-0">
+			<div class="col-sm-6 p-md-0">
+				<div class="welcome-text">
+					<h4>Hi, welcome back!</h4>
+					<p class="mb-0">4Schoolers welcomes you.</p>
+				</div>
+			</div>
+			<div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="javascript:void(0)">Directory</a></li>
+					<li class="breadcrumb-item active"><a href="javascript:void(0)">Student</a></li>
+				</ol>
+			</div>
+		</div>
+		<!-- row -->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="profile card card-body px-3 pt-3 pb-0">
+					<div class="profile-head">
+						<div class="photo-content">
+							<div class="cover-photo" style = "background:url({% static 'employee/img/cover.png' %})"></div>
+						</div>
+						<div class="profile-info">
+							<div class="profile-photo">
+								<img src="{{student.image.url}}" class="img-fluid rounded-circle" alt="">
+							</div>
+							<div class="profile-details">
+								<div class="profile-name px-3 pt-2">
+									<h4 class="text-primary mb-0">{{student.user.get_full_name}}</h4>
+									<p>Student</p>
+								</div>
+								<div class="profile-email px-2 pt-2">
+									<h4 class="text-muted mb-0">{{student.user.email}}</h4>
+									<p>Email</p>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-4">
+				<div class="row">
+
+
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="profile-news">
+									<h5 class="text-primary d-inline">Education</h5>
+									<div class="media pt-3 pb-3">
+										
+										<div class="media-body">
+											<h5 class="m-b-5"><p class="text-black">{{student.school}} ({{student.graduation_year}})</p></h5>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="profile-interest">
+									<h5 class="text-primary d-inline">Languages</h5>
+									<div class="row mt-4 sp4" id="lightgallery">
+										{% for language in languages %}
+											<a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">{{language}}</a>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="profile-interest">
+									<h5 class="text-primary d-inline">Interests</h5>
+									<div class="row mt-4 sp4" id="lightgallery">
+										{% for interest in interests %}
+											<a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">{{interest}}</a>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="profile-interest">
+									<h5 class="text-primary d-inline">Exam results</h5>
+									<div class="card-body">
+										<canvas id="radar_chart"></canvas>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+			<div class="col-xl-8">
+				<div class="card">
+					<div class="card-body">
+						<div class="profile-tab">
+							<div class="custom-tab-1">
+								<div class="tab-content">
+									<div id="about-me" class="tab-pane fade active show">
+										<div class="profile-about-me">
+											<div class="pt-4 border-bottom-1 pb-3">
+												<h4 class="text-primary">About Me</h4>
+												<p class="mb-2">{{student.bio}}</p>
+											</div>
+										</div>
+										
+										
+										<div class="profile-personal-info">
+											<h4 class="text-primary mb-4">Personal Information</h4>
+											<div class="row mb-2">
+												<div class="col-sm-3 col-5">
+													<h5 class="f-w-500">Name <span class="pull-right">:</span>
+													</h5>
+												</div>
+												<div class="col-sm-9 col-7"><span>{{student.user.get_full_name}}</span>
+												</div>
+											</div>
+											<div class="row mb-2">
+												<div class="col-sm-3 col-5">
+													<h5 class="f-w-500">Email <span class="pull-right">:</span>
+													</h5>
+												</div>
+												<div class="col-sm-9 col-7"><span>{{student.user.email}}</span>
+												</div>
+											</div>
+											
+											<div class="row mb-2">
+												<div class="col-sm-3 col-5">
+													<h5 class="f-w-500">DOB:  <span class="pull-right">:</span>
+													</h5>
+												</div>
+												<div class="col-sm-9 col-7"><span>{{student.birth_date}}</span>
+												</div>
+											</div>
+											<div class="row mb-2">
+												<div class="col-sm-3 col-5">
+													<h5 class="f-w-500">Location <span class="pull-right">:</span></h5>
+												</div>
+												<div class="col-sm-9 col-7"><span>{{student.address}}, {{student.city}}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'employee/js/lightgallery-all.min.js'%}" ></script>
+{% endblock scripts %}
