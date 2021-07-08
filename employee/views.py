@@ -146,9 +146,19 @@ def req(request):
 def highlights(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
-
     context['lessons'] = lessons = Lesson.objects.filter(teacher = context['employee'])
     context['classes'] = len(lessons)
+    
+    students = set()
+    ctr = 0
+    for lesson in lessons:
+        ctr += (lesson.end-lesson.start).total_seconds()/60
+        for student in lesson.students.all():
+            students.add(student)
+        
+    context['students'] = len(students)
+    context['hours'] = ctr
+
 
     return render(request, 'employee/highlights.jinja', context)
 
@@ -173,6 +183,7 @@ def lesson(request, id):
     l = Lesson.objects.get(id = id)
     context['lesson'] = l
     context['students_registered'] = l.students.all()
+    context['homeworks'] = l.homework_submissions.all()
 
     try:
         submission = l.homework_submissions.all().get(owner = request.user)
@@ -217,20 +228,128 @@ def lesson_edit(request, id):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
     lesson = context['lesson'] = Lesson.objects.get(pk = id)
-    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: x.priority)
+    context['students'] = sorted(list(Student.objects.all()), key = lambda x: x.user.get_full_name())
 
     if (request.method == 'POST'):
         name = request.POST['name']
         subject = request.POST['subject']
-        teacher = request.POST['teacher']
+        students = request.POST.getlist('student') 
         description = request.POST['descr']
         start = request.POST['start']
         end = request.POST['end']
+        
+        try:
+            ss = [Student.objects.get(pk=id) for id in students]
+        except:
+            context['error'] = 'One of the students does not exist'
+            return render(request, 'employee/lesson_edit.jinja', context)
+                
+        try:
+            start_parsed = to_datetime(start)
+            end_parsed = to_datetime(end)
+        except:
+            context['error'] = 'There was a problem with the selected time'
+            return render(request, 'employee/lesson_edit.jinja', context)
+
+        lesson.name = name
+        lesson.description = description
+        for student in lesson.students.all():
+            if (student not in ss):
+                lesson.students.remove(student)
+        lesson.students.add(*ss)
+        
+        lesson.start = start_parsed
+        lesson.end = end_parsed
+        
+
+        # Classwork
+        try:
+            cw = lesson.classswork
+            cw_exists = True
+        except:
+            cw_exists = False
 
         try:
-            t = Employee.objects.get(pk = teacher)
+            cw_name = request.POST['cw_name']
+            cw_descr = request.POST['cw_descr']
+            cw_file = request.FILES['cw_file']
+            cw_file_exists = True
+
+
         except:
-            context['error'] = 'Teacher does not exist'
+            cw_file_exists = False
+
+        if (cw_name or cw_descr or cw_file_exists):
+            if (cw_exists):
+                cw.name = cw_name
+                if (cw_file_exists):
+                    cw.file = cw_file
+                cw.description = cw_descr
+                cw.save()
+            else:
+                cw = Submission(name = cw_name, description = cw_descr, owner = context['employee'].user, account_type = 'employee', type = 'Classwork')
+                
+                if (cw_file_exists):
+                    cw.file = cw_file
+                cw.save()
+                lesson.classwork = cw
+
+        # Homework
+        try:
+            hw = lesson.homework
+            hw_exists = True
+        except:
+            hw_exists = False
+
+        try:
+            hw_name = request.POST['hw_name']
+            hw_descr = request.POST['hw_descr']
+            hw_file = request.FILES['hw_file']
+            hw_file_exists = True
+
+
+        except:
+            hw_file_exists = False
+
+        if (hw_name or hw_descr or hw_file_exists):
+            if (hw_exists):
+                hw.name = hw_name
+                if (hw_file_exists):
+                    hw.file = hw_file
+                hw.description = hw_descr
+                hw.save()
+            else:
+                hw = Submission(name = hw_name, description = hw_descr, owner = context['employee'].user, account_type = 'employee', type = 'Homework')
+                if (hw_file_exists):
+                    hw.file = hw_file
+                hw.save()
+                lesson.homework = hw
+
+
+
+        lesson.save()
+        return redirect('employee_lessons')
+
+    return render(request, 'employee/lesson_edit.jinja', context)
+
+@login_required
+def lesson_add(request):
+    context = {}
+    context['employee'] = Employee.objects.get(user = request.user)
+    context['students'] = sorted(list(Student.objects.all()), key = lambda x: x.user.get_full_name())
+
+    if (request.method == 'POST'):
+        name = request.POST['name']
+        subject = request.POST['subject']
+        students = request.POST.getlist('student') 
+        description = request.POST['descr']
+        start = request.POST['start']
+        end = request.POST['end']
+        
+        try:
+            ss = [Student.objects.get(pk=id) for id in students]
+        except:
+            context['error'] = 'One of the students does not exist'
             return render(request, 'employee/lesson_add.jinja', context)
                 
         try:
@@ -240,15 +359,85 @@ def lesson_edit(request, id):
             context['error'] = 'There was a problem with the selected time'
             return render(request, 'employee/lesson_add.jinja', context)
 
-        lesson.name = name
-        lesson.description = description
-        lesson.teacher = t
-        lesson.start = start_parsed
-        lesson.end = end_parsed
+        lesson = Lesson(name = name, description = description, teacher = context['employee'], start = start_parsed, end = end_parsed)
+        
+        
         lesson.save()
+        lesson.students.add(*ss)
+
+        lesson.save()
+        # Classwork
+        try:
+            cw = lesson.classswork
+            cw_exists = True
+        except:
+            cw_exists = False
+
+        try:
+            cw_name = request.POST['cw_name']
+            cw_descr = request.POST['cw_descr']
+            cw_file = request.FILES['cw_file']
+            cw_file_exists = True
+
+
+        except:
+            cw_file_exists = False
+
+        if (cw_name or cw_descr or cw_file_exists):
+            if (cw_exists and cw):
+                cw.name = cw_name
+                if (cw_file_exists):
+                    cw.file = cw_file
+                cw.description = cw_descr
+                cw.save()
+            else:
+                cw = Submission(name = cw_name, description = cw_descr, owner = context['employee'].user, account_type = 'employee', type = 'Classwork')
+                
+                if (cw_file_exists):
+                    cw.file = cw_file
+                cw.save()
+                lesson.classwork = cw
+
+        # Homework
+        try:
+            hw = lesson.homework
+            hw_exists = True
+        except:
+            hw_exists = False
+
+        try:
+            hw_name = request.POST['hw_name']
+            hw_descr = request.POST['hw_descr']
+            hw_file = request.FILES['hw_file']
+            hw_file_exists = True
+
+
+        except:
+            hw_file_exists = False
+
+        if (hw_name or hw_descr or hw_file_exists):
+            if (hw_exists and  hw):
+                
+                hw.name = hw_name
+                if (hw_file_exists):
+                    hw.file = hw_file
+                hw.description = hw_descr
+                hw.save()
+            else:
+                hw = Submission(name = hw_name, description = hw_descr, owner = context['employee'].user, account_type = 'employee', type = 'Homework')
+                if (hw_file_exists):
+                    hw.file = hw_file
+                hw.save()
+                lesson.homework = hw
+
+
+ 
+        lesson.save()
+        
         return redirect('employee_lessons')
 
-    return render(request, 'employee/lesson_edit.jinja', context)
+    return render(request, 'employee/lesson_add.jinja', context)
+
 
 @login_required
 def lesson_delete(request, id):

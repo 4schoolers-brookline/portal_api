@@ -15,7 +15,7 @@
 		if(jQuery('#weekLessonsChart').length > 0 ){
 			var lessons = $.parseJSON(
 				$.ajax({
-					url: '/activity/api/student_lessons_week',
+					url: '/activity/api/employee_lessons_week',
 					dataType: 'json',
 					async:false
 				}).responseText
@@ -61,7 +61,7 @@
 		if(jQuery('#yearLessonsChart').length > 0 ){
 			var lessons = $.parseJSON(
 				$.ajax({
-					url: '/activity/api/student_lessons_year',
+					url: '/activity/api/employee_lessons_year',
 					dataType: 'json',
 					async:false
 				}).responseText
@@ -114,7 +114,7 @@
 			
 			var lessons = $.parseJSON(
 				$.ajax({
-					url: '/activity/api/student_lessons_month',
+					url: '/activity/api/employee_lessons_month',
 					dataType: 'json',
 					async:false
 				}).responseText
@@ -163,62 +163,62 @@
 
 
 
-	var radarChart = function(){	
-		if(jQuery('#radar_chart').length > 0 ){
-			//radar chart
-			var exams = $.parseJSON(
-				$.ajax({
-					url: '/student/api/exams',
-					dataType: 'json',
-					async:false
-				}).responseText
-			);
+	// var radarChart = function(){	
+	// 	if(jQuery('#radar_chart').length > 0 ){
+	// 		//radar chart
+	// 		var exams = $.parseJSON(
+	// 			$.ajax({
+	// 				url: '/student/api/exams',
+	// 				dataType: 'json',
+	// 				async:false
+	// 			}).responseText
+	// 		);
 
-			const radar_chart = document.getElementById("radar_chart").getContext('2d');
+	// 		const radar_chart = document.getElementById("radar_chart").getContext('2d');
 
-			const radar_chartgradientStroke1 = radar_chart.createLinearGradient(500, 0, 100, 0);
-			radar_chartgradientStroke1.addColorStop(0, "rgba(54, 185, 216, .5)");
-			radar_chartgradientStroke1.addColorStop(1, "rgba(75, 255, 162, .5)");
+	// 		const radar_chartgradientStroke1 = radar_chart.createLinearGradient(500, 0, 100, 0);
+	// 		radar_chartgradientStroke1.addColorStop(0, "rgba(54, 185, 216, .5)");
+	// 		radar_chartgradientStroke1.addColorStop(1, "rgba(75, 255, 162, .5)");
 
-			const radar_chartgradientStroke2 = radar_chart.createLinearGradient(500, 0, 100, 0);
-			radar_chartgradientStroke2.addColorStop(0, "rgba(68, 0, 235, .5");
-			radar_chartgradientStroke2.addColorStop(1, "rgba(68, 236, 245, .5");
+	// 		const radar_chartgradientStroke2 = radar_chart.createLinearGradient(500, 0, 100, 0);
+	// 		radar_chartgradientStroke2.addColorStop(0, "rgba(68, 0, 235, .5");
+	// 		radar_chartgradientStroke2.addColorStop(1, "rgba(68, 236, 245, .5");
 
-			// radar_chart.height = 100;
-			new Chart(radar_chart, {
-				type: 'radar',
-				data: {
-					defaultFontFamily: 'Poppins',
-					labels: exams.exams,
-					datasets: [
-						{
-							label: "Exam percentile",
-							data: exams.percentages,
-							borderColor: '#f21780',
-							borderWidth: "1",
-							backgroundColor: radar_chartgradientStroke2
-						},
+	// 		// radar_chart.height = 100;
+	// 		new Chart(radar_chart, {
+	// 			type: 'radar',
+	// 			data: {
+	// 				defaultFontFamily: 'Poppins',
+	// 				labels: exams.exams,
+	// 				datasets: [
+	// 					{
+	// 						label: "Exam percentile",
+	// 						data: exams.percentages,
+	// 						borderColor: '#f21780',
+	// 						borderWidth: "1",
+	// 						backgroundColor: radar_chartgradientStroke2
+	// 					},
 
-					]
-				},
-				options: {
-					legend: false,
-					maintainAspectRatio: false, 
-					scale: {
-						ticks: {
-							beginAtZero: true
-						}
-					}
-				}
-			});
-		}
-	}
+	// 				]
+	// 			},
+	// 			options: {
+	// 				legend: false,
+	// 				maintainAspectRatio: false, 
+	// 				scale: {
+	// 					ticks: {
+	// 						beginAtZero: true
+	// 					}
+	// 				}
+	// 			}
+	// 		});
+	// 	}
+	// }
 	var subjectsLessonChart = function(){
 		//pie chart
 		if(jQuery('#subjectsLessonChart').length > 0 ){
 			var lessons = $.parseJSON(
 				$.ajax({
-					url: '/activity/api/student_subjects_lessons',
+					url: '/activity/api/employee_subjects_lessons',
 					dataType: 'json',
 					async:false
 				}).responseText
@@ -270,7 +270,7 @@
 			yearLessonsChart();
 			monthLessonsChart();	
 			
-			radarChart();
+			// radarChart();
 			subjectsLessonChart();
 		},
 		

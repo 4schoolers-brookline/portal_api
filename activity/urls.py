@@ -11,6 +11,10 @@ urlpatterns = [
     path('api/student_subjects_lessons', views.student_subjects_lessons),
 
     path('api/employee_lessons', views.employee_lessons),
+    path('api/employee_lessons_week', views.employee_lessons_week),
+    path('api/employee_lessons_month', views.employee_lessons_month),
+    path('api/employee_lessons_year', views.employee_lessons_year),
+    path('api/employee_subjects_lessons', views.employee_subjects_lessons),
 
 ]
 

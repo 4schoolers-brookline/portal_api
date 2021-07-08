@@ -142,14 +142,14 @@ def lesson_edit(request, id):
             t = Employee.objects.get(pk = teacher)
         except:
             context['error'] = 'Teacher does not exist'
-            return render(request, 'student/lesson_add.jinja', context)
+            return render(request, 'student/lesson_edit.jinja', context)
                 
         try:
             start_parsed = to_datetime(start)
             end_parsed = to_datetime(end)
         except:
             context['error'] = 'There was a problem with the selected time'
-            return render(request, 'student/lesson_add.jinja', context)
+            return render(request, 'student/lesson_edit.jinja', context)
 
         lesson.name = name
         lesson.description = description

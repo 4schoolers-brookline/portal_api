@@ -38,19 +38,20 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="card-title">Schedule new Lesson</h4>
+						<h4 class="card-title">Create Lesson</h4>
 					</div>
 					<div class="card-body">
-						<form action="" method = "POST" name = "edit_account"> {% csrf_token %}
+						<form action="" method = "POST" name = "edit_account" enctype="multipart/form-data"> {% csrf_token %}
 							<div class="form-row">
 								<div class="form-group col-md-4">
 									<label>Lesson name</label>
-									<input type="text" name = "name" value = "Homework help" class="form-control">
+									<input type="text" name = "name" value = "" class="form-control">
 								</div>
 								<div class="form-group col-md-4">
 									<label>Subject</label>
 										<select class="form-control default-select" id="inputState" name = "subject">
-											<option selected="">Mathematics</option>
+                                            <option selected="">{{lesson.subject}}</option>
+											<option>Mathematics</option>
 											<option>Computer Science</option>
 											<option>English</option>
 											<option>Chemistry</option>
@@ -63,11 +64,10 @@
 										</select>
 								</div>
 								<div class="form-group col-md-4">
-									<label>Teacher</label>
-										
-										<select class="js-dropdown-teachers" name="teacher">
-											{% for teacher in employees %}
-												<option value="{{teacher.pk}}">{{teacher.user.get_full_name}}</option>
+									<label>Student</label>
+										<select multiple class="js-dropdown-teachers" name="student">
+											{% for student in students %}
+                                            	<option value="{{student.pk}}">{{student.user.get_full_name}}</option>	
 											{% endfor %}
 										</select>
 
@@ -76,8 +76,8 @@
 
 							<div class="form-row">
 								<div class="form-group col-md-12">
-									<label >Description</label>
-									<textarea rows="8" class="form-control" name="descr" placeholder="Description of the homework..." id="comment"></textarea>
+									<label >Class Description</label>
+									<textarea rows="8" class="form-control" name="descr" id="descr"></textarea>
 								</div>
 							</div>
 
@@ -86,18 +86,58 @@
 							<div class="row form-material">
 								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
 									<label>Lesson Start time</label>
-									<input type="text" class="form-control" placeholder="Set End Date and Time" name = "start"  id="min-date">
+									<input type="text" class="form-control" placeholder="Set End Date and Time" value = "" name = "start"  id="min-date">
 								</div>
 								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
 									<label>Lesson End time</label>
-									<input type="text" class="form-control" name = "end" placeholder="Set End Date and Time" id="min-date-end">
+									<input type="text" class="form-control" name = "end" placeholder="Set End Date and Time" value = "" id="min-date-end">
 								</div>
 							</div>
+							<hr>
+							<div class="row form-material">
+								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+									<label>Classwork File name</label>
+									<input type="text" class="form-control"  name = "cw_name" value = "" >
+								</div>
+								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+									<label>Classwork File</label>
+
+									<input type="file" class="form-control" name = "cw_file" >
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-md-12">
+									<label >Classwork File Description</label>
+									<textarea rows="8" class="form-control" name="cw_descr" id="cw_descr"></textarea>
+								</div>
+							</div>
+							<hr>
+							<div class="row form-material">
+								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+									<label>Homework File name</label>
+									<input type="text" class="form-control"  name = "hw_name" value = "" >
+								</div>
+								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+									<label>Homework File</label>
+									<input type="file" class="form-control" name = "hw_file" >
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-md-12">
+									<label >Homework File Description</label>
+									<textarea rows="8" class="form-control" name="hw_descr" id="hw_descr"></textarea>
+								</div>
+							</div>
+
+
 							<label>{{error}}</label>
-							<button class="btn btn-primary" type="submit">Schedule</button>
+							<button class="btn btn-primary" type="submit">Save</button>
 						</form>
 						
 					</div>
+					
 				</div>
             </div>
 		</div>

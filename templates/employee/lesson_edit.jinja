@@ -38,10 +38,10 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="card-title">Schedule new Lesson</h4>
+						<h4 class="card-title">Edit Lesson</h4>
 					</div>
 					<div class="card-body">
-						<form action="" method = "POST" name = "edit_account"> {% csrf_token %}
+						<form action="" method = "POST" name = "edit_account" enctype="multipart/form-data"> {% csrf_token %}
 							<div class="form-row">
 								<div class="form-group col-md-4">
 									<label>Lesson name</label>
@@ -64,13 +64,14 @@
 										</select>
 								</div>
 								<div class="form-group col-md-4">
-									<label>Teacher</label>
-										<select class="js-dropdown-teachers" name="teacher">
-											{% for teacher in employees %}
-                                                {% if teacher.id == lesson.teacher.id %}
-                                                    <option value="{{teacher.pk}}" selected>{{teacher.user.get_full_name}}</option>
+									<label>Student</label>
+										<select multiple class="js-dropdown-teachers" name="student">
+											{% for student in students %}
+
+                                                {% if student in lesson.students.all %}
+                                                    <option value="{{student.pk}}" selected>{{student.user.get_full_name}}</option>
                                                 {% else %}
-                                                    <option value="{{teacher.pk}}">{{teacher.user.get_full_name}}</option>
+                                                    <option value="{{student.pk}}">{{student.user.get_full_name}}</option>
                                                 {% endif %}
 												
 											{% endfor %}
@@ -81,7 +82,7 @@
 
 							<div class="form-row">
 								<div class="form-group col-md-12">
-									<label >Description</label>
+									<label >Class Description</label>
 									<textarea rows="8" class="form-control" name="descr" id="descr">{{lesson.description}}</textarea>
 								</div>
 							</div>
@@ -98,11 +99,64 @@
 									<input type="text" class="form-control" name = "end" placeholder="Set End Date and Time" value = "{{lesson.end.year}}/{{lesson.end.month}}/{{lesson.end.day}} {{lesson.end.hour}}:{{lesson.end.minute}}" id="min-date-end">
 								</div>
 							</div>
+							<hr>
+							<div class="row form-material">
+								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+									<label>Classwork File name</label>
+									<input type="text" class="form-control"  name = "cw_name" value = "{{lesson.classwork.name}}" >
+								</div>
+								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+									
+									
+									{% if lesson.classwork.file %}
+										<label><a href="{{lesson.classwork.file.url}}" target="_blank"  class="tooltip-test text-primary" data-toggle="tooltip">Classwork File</a></label>
+										
+									{% else %}
+										<label>Classwork File</label>
+									{% endif %}
+									<input type="file" class="form-control" name = "cw_file" >
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-md-12">
+									<label >Classwork File Description</label>
+									<textarea rows="8" class="form-control" name="cw_descr" id="cw_descr">{{lesson.classwork.description}}</textarea>
+								</div>
+							</div>
+							<hr>
+							<div class="row form-material">
+								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+									<label>Homework File name</label>
+									<input type="text" class="form-control"  name = "hw_name" value = "{{lesson.homework.name}}" >
+								</div>
+								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+									
+									
+									{% if lesson.homework.file %}
+										<label><a href="{{lesson.homework.file.url}}" target="_blank" class="tooltip-test text-primary" data-toggle="tooltip">Homework File</a></label>
+										
+									{% else %}
+										<label>Homework File</label>
+									{% endif %}
+									<input type="file" class="form-control" name = "hw_file" >
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-md-12">
+									<label >Homework File Description</label>
+									<textarea rows="8" class="form-control" name="hw_descr" id="hw_descr">{{lesson.homework.description}}</textarea>
+								</div>
+							</div>
+
+
 							<label>{{error}}</label>
 							<button class="btn btn-primary" type="submit">Save</button>
 						</form>
 						
 					</div>
+					
 				</div>
             </div>
 		</div>
