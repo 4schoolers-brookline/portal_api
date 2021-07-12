@@ -24,7 +24,7 @@ def login(request):
     if (request.user.is_authenticated):
         return redirect('employee_profile')
 
-    if (request.method == 'POST'):        
+    if (request.method == 'POST'):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
@@ -55,7 +55,7 @@ def profile(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
     employee = Employee.objects.get(user = request.user)
-    
+
     context['languages'] = employee.languages.split(',')
     context['interests'] = employee.interests.split(',')
     context['subjects'] = employee.subjects.split(',')
@@ -77,8 +77,8 @@ def profile(request):
             employee.zip_code = request.POST.get('zip_code')
             employee.save()
         return redirect('employee_profile')
-        
-        
+
+
 
     return render(request, 'employee/profile.jinja', context)
 
@@ -97,8 +97,8 @@ def password(request):
         reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
         # compiling regex
         pat = re.compile(reg)
-        
-        # searching regex                 
+
+        # searching regex
         mat = re.search(pat, new)
         if not mat:
             context['wrong'] = 'Password should have at least one number, one uppercase, one lowercase, one special symbol and must be between 6-20 characters long'
@@ -121,8 +121,8 @@ def student(request, id):
     context['employee'] = Employee.objects.get(user = request.user)
     context['student'] = Student.objects.get(id = id)
     context['interests'] = (context['student'].interests or 'Education').split(',')
-    context['languages'] = (context['student'].languages or 'English').split(',')   
-    
+    context['languages'] = (context['student'].languages or 'English').split(',')
+
     return render(request, 'employee/student.jinja', context)
 
 @login_required
@@ -130,7 +130,7 @@ def directory(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
     context['students'] = Student.objects.all() # sorted(list(Employee.objects.all()), key = lambda x: x.priority)
-    
+
     return render(request, 'employee/directory.jinja', context)
 
 @login_required
@@ -148,14 +148,14 @@ def highlights(request):
     context['employee'] = Employee.objects.get(user = request.user)
     context['lessons'] = lessons = Lesson.objects.filter(teacher = context['employee'])
     context['classes'] = len(lessons)
-    
+
     students = set()
     ctr = 0
     for lesson in lessons:
         ctr += (lesson.end-lesson.start).total_seconds()/60
         for student in lesson.students.all():
             students.add(student)
-        
+
     context['students'] = len(students)
     context['hours'] = ctr
 
@@ -205,7 +205,7 @@ def lesson(request, id):
         context['submission_file'] = submission.file
     except:
         pass
-    
+
     if (request.method == 'POST'):
         description = request.POST['descr']
         try:
@@ -233,17 +233,17 @@ def lesson_edit(request, id):
     if (request.method == 'POST'):
         name = request.POST['name']
         subject = request.POST['subject']
-        students = request.POST.getlist('student') 
+        students = request.POST.getlist('student')
         description = request.POST['descr']
         start = request.POST['start']
         end = request.POST['end']
-        
+
         try:
             ss = [Student.objects.get(pk=id) for id in students]
         except:
             context['error'] = 'One of the students does not exist'
             return render(request, 'employee/lesson_edit.jinja', context)
-                
+
         try:
             start_parsed = to_datetime(start)
             end_parsed = to_datetime(end)
@@ -257,10 +257,10 @@ def lesson_edit(request, id):
             if (student not in ss):
                 lesson.students.remove(student)
         lesson.students.add(*ss)
-        
+
         lesson.start = start_parsed
         lesson.end = end_parsed
-        
+
 
         # Classwork
         try:
@@ -288,7 +288,7 @@ def lesson_edit(request, id):
                 cw.save()
             else:
                 cw = Submission(name = cw_name, description = cw_descr, owner = context['employee'].user, account_type = 'employee', type = 'Classwork')
-                
+
                 if (cw_file_exists):
                     cw.file = cw_file
                 cw.save()
@@ -341,17 +341,17 @@ def lesson_add(request):
     if (request.method == 'POST'):
         name = request.POST['name']
         subject = request.POST['subject']
-        students = request.POST.getlist('student') 
+        students = request.POST.getlist('student')
         description = request.POST['descr']
         start = request.POST['start']
         end = request.POST['end']
-        
+
         try:
             ss = [Student.objects.get(pk=id) for id in students]
         except:
             context['error'] = 'One of the students does not exist'
             return render(request, 'employee/lesson_add.jinja', context)
-                
+
         try:
             start_parsed = to_datetime(start)
             end_parsed = to_datetime(end)
@@ -360,8 +360,8 @@ def lesson_add(request):
             return render(request, 'employee/lesson_add.jinja', context)
 
         lesson = Lesson(name = name, description = description, teacher = context['employee'], start = start_parsed, end = end_parsed)
-        
-        
+
+
         lesson.save()
         lesson.students.add(*ss)
 
@@ -392,7 +392,7 @@ def lesson_add(request):
                 cw.save()
             else:
                 cw = Submission(name = cw_name, description = cw_descr, owner = context['employee'].user, account_type = 'employee', type = 'Classwork')
-                
+
                 if (cw_file_exists):
                     cw.file = cw_file
                 cw.save()
@@ -417,7 +417,7 @@ def lesson_add(request):
 
         if (hw_name or hw_descr or hw_file_exists):
             if (hw_exists and  hw):
-                
+
                 hw.name = hw_name
                 if (hw_file_exists):
                     hw.file = hw_file
@@ -431,9 +431,9 @@ def lesson_add(request):
                 lesson.homework = hw
 
 
- 
+
         lesson.save()
-        
+
         return redirect('employee_lessons')
 
     return render(request, 'employee/lesson_add.jinja', context)

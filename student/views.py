@@ -58,17 +58,17 @@ def highlights(request):
     context['student'] = Student.objects.get(user = request.user)
     context['lessons'] = lessons = [lesson for lesson in Lesson.objects.all() if (context['student'] in lesson.students.all())]
     context['classes'] = len(lessons)
-    
+
     try:
         studentacc = StudentAccount.objects.get(student = Student.objects.get(user = request.user))
     except:
         studentacc = StudentAccount(student = Student.objects.get(user = request.user))
         studentacc.save()
-    
+
     context['balance'] = studentacc.get_units_left()
-    
-    
-    
+
+
+
     hrs = 0
     for lesson in lessons:
         diff = lesson.end-lesson.start
@@ -90,7 +90,7 @@ def req(request):
 def lesson_add(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
-    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: -x.priority) 
+    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: -x.priority)
 
     if (request.method == 'POST'):
         name = request.POST['name']
@@ -105,7 +105,7 @@ def lesson_add(request):
         except:
             context['error'] = 'Teacher does not exist'
             return render(request, 'student/lesson_add.jinja', context)
-                
+
         try:
             start_parsed = to_datetime(start)
             end_parsed = to_datetime(end)
@@ -117,9 +117,9 @@ def lesson_add(request):
         lesson.save()
         lesson.students.add(context['student'])
         lesson.save()
-        
+
         return redirect('student_lessons')
-        
+
     return render(request, 'student/lesson_add.jinja', context)
 
 
@@ -143,7 +143,7 @@ def lesson_edit(request, id):
         except:
             context['error'] = 'Teacher does not exist'
             return render(request, 'student/lesson_edit.jinja', context)
-                
+
         try:
             start_parsed = to_datetime(start)
             end_parsed = to_datetime(end)
@@ -211,7 +211,7 @@ def lesson(request, id):
         context['submission_file'] = submission.file
     except:
         pass
-    
+
     if (request.method == 'POST'):
         description = request.POST['descr']
         try:
@@ -246,7 +246,7 @@ def directory(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
     context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: x.priority)
-    
+
     return render(request, 'student/directory.jinja', context)
 
 @login_required
@@ -254,7 +254,7 @@ def profile(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
     student = Student.objects.get(user = request.user)
-    
+
     context['languages'] = student.languages.split(',')
     context['interests'] = student.interests.split(',')
 
@@ -275,8 +275,8 @@ def profile(request):
             student.zip_code = request.POST.get('zip_code')
             student.save()
         return redirect('student_profile')
-        
-        
+
+
 
     return render(request, 'student/profile.jinja', context)
 
@@ -293,8 +293,8 @@ def employee(request, id):
     context['student'] = Student.objects.get(user = request.user)
     context['employee'] = Employee.objects.get(id = id)
     context['interests'] = (context['employee'].interests or 'Education').split(',')
-    context['languages'] = (context['employee'].languages or 'English').split(',')   
-    context['subjects'] = (context['employee'].subjects or 'Advising').split(',')   
+    context['languages'] = (context['employee'].languages or 'English').split(',')
+    context['subjects'] = (context['employee'].subjects or 'Advising').split(',')
 
     return render(request, 'student/employee.jinja', context)
 
@@ -320,8 +320,8 @@ def password(request):
         reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
         # compiling regex
         pat = re.compile(reg)
-        
-        # searching regex                 
+
+        # searching regex
         mat = re.search(pat, new)
         if not mat:
             context['wrong'] = 'Password should have at least one number, one uppercase, one lowercase, one special symbol and must be between 6-20 characters long'
@@ -344,7 +344,7 @@ def login(request):
     if (request.user.is_authenticated):
         return redirect('student_profile')
 
-    if (request.method == 'POST'):        
+    if (request.method == 'POST'):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
@@ -362,4 +362,3 @@ def login(request):
             return render(request, 'student/login.jinja', context)
 
     return render(request, 'student/login.jinja', context)
-

@@ -30,7 +30,7 @@
 					</div>
 					<div class="card-body">
 						<form action="" method = "POST" name = "edit_account" class = "needs-validation" novalidate> {% csrf_token %}
-							<div class="form-row">                
+							<div class="form-row">
                                 <label>Describe your request</label>
                                 <textarea class="form-control" name = "req" rows="10" id="req" value = ""></textarea>
 							</div>
@@ -38,12 +38,12 @@
 							<button class="btn btn-primary" type="submitBtn">Send request</button>
 							{% if wrong %}<h4>{{wrong}}</h4>{% endif %}
 						</form>
-						
+
 					</div>
 				</div>
             </div>
 		</div>
-	</div>		
+	</div>
 </div>
 {% endblock content %}
 

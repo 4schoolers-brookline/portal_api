@@ -33,7 +33,7 @@
         <div class="row">
             {% for student in students %}
                 <div class="col-xl-3 col-xxl-6 col-sm-6">
-                    <div class="card contact-bx hvr">	
+                    <div class="card contact-bx hvr">
                         <div class="card-body">
                             <div class="media">
                                 <div class="image-bx mr-3">
@@ -42,7 +42,7 @@
                                     {% else %}
                                         <img src="{% static 'employee/img/man.png' %}" alt="" class="rounded-circle" width="90">
                                     {% endif %}
-                                    
+
                                     <span class="active"></span>
                                 </div>
                                 <div class="media-body" href = "">
@@ -54,12 +54,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div>	
+                    </div>
                 </div>
             {% endfor %}
 
-		
-        </div>	
+
+        </div>
     </div>
 </div>
 {% endblock content %}
