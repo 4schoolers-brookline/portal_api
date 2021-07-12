@@ -12,12 +12,10 @@ class Employee(models.Model):
     is_active = models.BooleanField(null=True, blank=True)
     title = models.CharField(max_length=100,null=True, blank=True)
 
-    title = models.CharField(max_length=100,null=True, blank=True)
     education = models.CharField(max_length=180,null=True, blank=True)
     priority = models.IntegerField(default = 10, null=True, blank=True)
     image = models.ImageField(upload_to=user_image_path, null=True, blank = True, default = 'man.png')
 
-    title = models.CharField(max_length=100,null=True, blank=True)
     
     languages = models.CharField(max_length=215,null=True, blank=True)
     interests = models.CharField(max_length=215,null=True, blank=True)
