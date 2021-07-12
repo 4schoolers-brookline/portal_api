@@ -54,7 +54,7 @@ class Lesson(models.Model):
     teacher = models.ForeignKey(Employee, on_delete = models.CASCADE)
     name = models.CharField(max_length=50,null=True, blank=True)
     description = models.TextField(blank=True, null=True)
-    subject = models.CharField(max_length = 30, choices = SUBJECT_CHOICES, default = '1')
+    subject = models.CharField(max_length = 30, choices = SUBJECT_CHOICES, default = 'Academic Advising')
     classwork = models.OneToOneField('Submission', on_delete=models.CASCADE, related_name='lesson_classwork', null = True, blank = True)
     homework = models.OneToOneField('Submission', on_delete=models.CASCADE, related_name='lesson_homework_sent', null = True, blank = True)
     homework_submissions = models.ManyToManyField('Submission', null = True, blank = True)

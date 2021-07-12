@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
 from employee.models import Employee
 from student.models import Student, Exam
-from django.contrib.auth.models import User
 from activity.models import Lesson, Submission
 from bank.models import StudentAccount, StudentLessonBill
+
 import re
 import datetime
 
