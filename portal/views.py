@@ -28,14 +28,13 @@ def index(request):
         except:
             pass
         try:
-            context['employee'] = Manager.objects.get(user = request.user)
-            return redirect('managet_login')
+            context['manager'] = Manager.objects.get(user = request.user)
+            return redirect('manager_login')
         except:
             pass
 
 
     return render(request, 'index.html')
-
 
 def team(request):
     context = {}

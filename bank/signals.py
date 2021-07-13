@@ -8,7 +8,7 @@ from django.db.models.signals import m2m_changed
 @receiver(post_save, sender = Student)
 def create_initial_account(sender, instance, created, **kwargs):
     if (created):
-        StudentAccount.objects.create(student = instance, units_left = 0)
+        StudentAccount.objects.create(student = instance)
 
 
     
