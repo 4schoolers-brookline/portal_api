@@ -434,6 +434,8 @@ PublishScripts/
 *.nuget.props
 *.nuget.targets
 
+.conf
+
 # Microsoft Azure Build Output
 csx/
 *.build.csdef

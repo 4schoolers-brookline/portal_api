@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'student', 'employee', 'parent', 'manager', 'activity', 'bank', 'django_cleanup.apps.CleanupConfig',
 ]
 
@@ -115,10 +116,27 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+# AWS S3 Setup for Static Files
+import json
+AWS_ACCESS_KEY_ID = json.load(open('.conf',))['static']['id']
+AWS_SECRET_ACCESS_KEY = json.load(open('.conf',))['static']['id']
+AWS_STORAGE_BUCKET_NAME = '4schoolers'
+AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'portal/static/'),
+]
+STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+
+# STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

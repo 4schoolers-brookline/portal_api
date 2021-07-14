@@ -10,15 +10,15 @@ from bank.models import StudentAccount, StudentLessonBill
 import re
 import datetime
 
-def validation_employee(func):
+# def validation_employee(func):
 
-    def validation(*args, **kwargs):
-        try:
-            employee = Employee.objects.get(user = user)
-            return True
-        except:
-            return False
-    return validation
+#     def validation(*args, **kwargs):
+#         try:
+#             employee = Employee.objects.get(user = user)
+#             return True
+#         except:
+#             return False
+#     return validation
 
 def index(request):
     context = {}
@@ -61,7 +61,7 @@ def logout(request):
     return redirect('employee_login')
 
 @login_required
-@validation_employee
+# @validation_employee
 def profile(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
