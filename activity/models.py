@@ -60,7 +60,7 @@ class Lesson(models.Model):
     homework_submissions = models.ManyToManyField('Submission', null = True, blank = True)
     start = models.DateTimeField(null=True, blank = True)
     end = models.DateTimeField(null=True, blank = True)
-    
+
     def __str__(self):
         return self.name
 
@@ -75,5 +75,3 @@ class Submission(models.Model):
     account_type = models.CharField(max_length = 20, choices = ACC_TYPES, blank = True, null = True)
     type = models.CharField(max_length = 20, choices = SUBMISSION_TYPES)
     file = models.FileField(upload_to=user_submission, blank=True, null=True)
-
-

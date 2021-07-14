@@ -45,11 +45,11 @@
 							<div class="form-row">
 								<div class="form-group col-md-4">
 									<label>Lesson name</label>
-									<input type="text" name = "name" value = "{{lesson.name}}" class="form-control">
+									<input required type="text" name = "name" value = "{{lesson.name}}" class="form-control">
 								</div>
 								<div class="form-group col-md-4">
 									<label>Subject</label>
-										<select class="form-control default-select" id="inputState" name = "subject">
+										<select required class="form-control default-select" id="inputState" name = "subject">
                                             <option selected="">{{lesson.subject}}</option>
 											<option>Mathematics</option>
 											<option>Computer Science</option>
@@ -65,7 +65,7 @@
 								</div>
 								<div class="form-group col-md-4">
 									<label>Student</label>
-										<select multiple class="js-dropdown-teachers" name="student">
+										<select required multiple class="js-dropdown-teachers" name="student">
 											{% for student in students %}
 
                                                 {% if student in lesson.students.all %}
@@ -73,7 +73,7 @@
                                                 {% else %}
                                                     <option value="{{student.pk}}">{{student.user.get_full_name}}</option>
                                                 {% endif %}
-												
+
 											{% endfor %}
 										</select>
 
@@ -87,16 +87,16 @@
 								</div>
 							</div>
 
-							
-							
+
+
 							<div class="row form-material">
 								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
 									<label>Lesson Start time</label>
-									<input type="text" class="form-control" placeholder="Set End Date and Time" value = "{{lesson.start.year}}/{{lesson.start.month}}/{{lesson.start.day}} {{lesson.start.hour}}:{{lesson.start.minute}}" name = "start"  id="min-date">
+									<input required type="text" class="form-control" placeholder="Set End Date and Time" value = "{{lesson.start.year}}/{{lesson.start.month}}/{{lesson.start.day}} {{lesson.start.hour}}:{{lesson.start.minute}}" name = "start"  id="min-date">
 								</div>
 								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
 									<label>Lesson End time</label>
-									<input type="text" class="form-control" name = "end" placeholder="Set End Date and Time" value = "{{lesson.end.year}}/{{lesson.end.month}}/{{lesson.end.day}} {{lesson.end.hour}}:{{lesson.end.minute}}" id="min-date-end">
+									<input required type="text" class="form-control" name = "end" placeholder="Set End Date and Time" value = "{{lesson.end.year}}/{{lesson.end.month}}/{{lesson.end.day}} {{lesson.end.hour}}:{{lesson.end.minute}}" id="min-date-end">
 								</div>
 							</div>
 							<hr>
@@ -106,11 +106,11 @@
 									<input type="text" class="form-control"  name = "cw_name" value = "{{lesson.classwork.name}}" >
 								</div>
 								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
-									
-									
+
+
 									{% if lesson.classwork.file %}
 										<label><a href="{{lesson.classwork.file.url}}" target="_blank"  class="tooltip-test text-primary" data-toggle="tooltip">Classwork File</a></label>
-										
+
 									{% else %}
 										<label>Classwork File</label>
 									{% endif %}
@@ -131,11 +131,11 @@
 									<input type="text" class="form-control"  name = "hw_name" value = "{{lesson.homework.name}}" >
 								</div>
 								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
-									
-									
+
+
 									{% if lesson.homework.file %}
 										<label><a href="{{lesson.homework.file.url}}" target="_blank" class="tooltip-test text-primary" data-toggle="tooltip">Homework File</a></label>
-										
+
 									{% else %}
 										<label>Homework File</label>
 									{% endif %}
@@ -154,13 +154,13 @@
 							<label>{{error}}</label>
 							<button class="btn btn-primary" type="submit">Save</button>
 						</form>
-						
+
 					</div>
-					
+
 				</div>
             </div>
 		</div>
-	</div>		
+	</div>
 </div>
 {% endblock content %}
 

@@ -1,5 +1,5 @@
 {% extends 'student/base_not_loged.jinja' %}
-{% load static %} 
+{% load static %}
 
 {% block bodyclass %}vh-100{% endblock %}
 {% block content %}
@@ -18,11 +18,11 @@
                                     <form action="" method = "POST"> {% csrf_token %}
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Email</strong></label>
-                                            <input type="email" class="form-control" name = "email">
+                                            <input required type="email" class="form-control" name = "email">
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Password</strong></label>
-                                            <input type="password" class="form-control" name = "password">
+                                            <input required type="password" class="form-control" name = "password">
                                         </div>
                                         <div class="form-row d-flex justify-content-between mt-4 mb-2">
                                             <div class="form-group">
@@ -43,7 +43,7 @@
                                                 <p> Wrong email or password</p>
                                             </div>
                                         {% endif %}
-                                        
+
                                     </form>
 
                                 </div>
@@ -57,5 +57,5 @@
 {% endblock content %}
 
 {% block scripts%}
-    
+
 {% endblock %}

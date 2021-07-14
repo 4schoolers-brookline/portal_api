@@ -30,7 +30,6 @@ class StudentLessonBill(models.Model):
     duration = models.IntegerField(null = True, blank = True)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     coefficent = models.FloatField(null = True, blank = True, default = 1)
-    
+
     def __str__(self):
         return ('{} (duration = {}, coeff = {})'.format(self.lesson.name, self.duration, self.coefficent))
-    

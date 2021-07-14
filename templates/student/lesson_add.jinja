@@ -45,11 +45,11 @@
 							<div class="form-row">
 								<div class="form-group col-md-4">
 									<label>Lesson name</label>
-									<input type="text" name = "name" value = "Homework help" class="form-control">
+									<input required type="text" name = "name" value = "Homework help" class="form-control">
 								</div>
 								<div class="form-group col-md-4">
 									<label>Subject</label>
-										<select class="form-control default-select" id="inputState" name = "subject">
+										<select required class="form-control default-select" id="inputState" name = "subject">
 											<option selected="">Mathematics</option>
 											<option>Computer Science</option>
 											<option>English</option>
@@ -86,11 +86,11 @@
 							<div class="row form-material">
 								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
 									<label>Lesson Start time</label>
-									<input type="text" class="form-control" placeholder="Set End Date and Time" name = "start"  id="min-date">
+									<input required type="text" class="form-control" placeholder="Set End Date and Time" name = "start"  id="min-date">
 								</div>
 								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
 									<label>Lesson End time</label>
-									<input type="text" class="form-control" name = "end" placeholder="Set End Date and Time" id="min-date-end">
+									<input required type="text" class="form-control" name = "end" placeholder="Set End Date and Time" id="min-date-end">
 								</div>
 							</div>
 							<label>{{error}}</label>

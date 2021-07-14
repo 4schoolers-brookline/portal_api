@@ -10,6 +10,16 @@ from bank.models import StudentAccount, StudentLessonBill
 import re
 import datetime
 
+def validation_employee(func):
+
+    def validation(*args, **kwargs):
+        try:
+            employee = Employee.objects.get(user = user)
+            return True
+        except:
+            return False
+    return validation
+
 def index(request):
     context = {}
     if (request.user.is_authenticated):
@@ -51,6 +61,7 @@ def logout(request):
     return redirect('employee_login')
 
 @login_required
+@validation_employee
 def profile(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -130,7 +141,8 @@ def directory(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
     context['students'] = Student.objects.all() # sorted(list(Employee.objects.all()), key = lambda x: x.priority)
-
+    context['active_students'] = Student.objects.filter(is_active = True)
+    context['inactive_students'] = Student.objects.filter(is_active = False)
     return render(request, 'employee/directory.jinja', context)
 
 @login_required

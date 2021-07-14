@@ -23,14 +23,14 @@
                     </div>
                 </div>
             </div>
-            <select class=" form-control default-select style-3 mb-3 mr-3">
+            <select id = "select_active" class=" form-control default-select style-3 mb-3 mr-3">
                 <option>All Students</option>
                 <option>Active</option>
                 <option>None Active</option>
             </select>
 
         </div>
-        <div class="row">
+        <div id = "all_students-div" style = "display:" class="row">
             {% for student in students %}
                 <div class="col-xl-3 col-xxl-6 col-sm-6">
                     <div class="card contact-bx hvr">
@@ -57,8 +57,62 @@
                     </div>
                 </div>
             {% endfor %}
+        </div>
+        <div id = "active_students-div" style = "display: none" class="row">
+            {% for student in active_students %}
+                <div class="col-xl-3 col-xxl-6 col-sm-6">
+                    <div class="card contact-bx hvr">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="image-bx mr-3">
+                                    {% if student.image %}
+                                        <img src="{{student.image.url}}" alt="" class="rounded-circle" width="90">
+                                    {% else %}
+                                        <img src="{% static 'employee/img/man.png' %}" alt="" class="rounded-circle" width="90">
+                                    {% endif %}
 
+                                    <span class="active"></span>
+                                </div>
+                                <div class="media-body" href = "">
+                                    <h6 class="font-w700"><a href="{% url 'student_employee' employee.id %}" class="text-black">{{student.user.get_full_name}}</a></h6>
+                                    <p class="fs-14 mb-1">{{student.school}}</p>
+                                    <div class="contact-footer">
+                                        <a href="{% url 'employee_student' student.id %}" >View Profile</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div id = "inactive_students-div" style = "display: none" class="row">
+            {% for student in inactive_students %}
+                <div class="col-xl-3 col-xxl-6 col-sm-6">
+                    <div class="card contact-bx hvr">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="image-bx mr-3">
+                                    {% if student.image %}
+                                        <img src="{{student.image.url}}" alt="" class="rounded-circle" width="90">
+                                    {% else %}
+                                        <img src="{% static 'employee/img/man.png' %}" alt="" class="rounded-circle" width="90">
+                                    {% endif %}
 
+                                    <span class="active"></span>
+                                </div>
+                                <div class="media-body" href = "">
+                                    <h6 class="font-w700"><a href="{% url 'student_employee' employee.id %}" class="text-black">{{student.user.get_full_name}}</a></h6>
+                                    <p class="fs-14 mb-1">{{student.school}}</p>
+                                    <div class="contact-footer">
+                                        <a href="{% url 'employee_student' student.id %}" >View Profile</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -66,4 +120,5 @@
 
 {% block scripts %}
     <script src="{% static 'employee/js/lightgallery-all.min.js'%}" ></script>
+    <script src="{% static 'employee/js/directory.js'%}" ></script>
 {% endblock scripts %}

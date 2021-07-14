@@ -45,11 +45,11 @@
 							<div class="form-row">
 								<div class="form-group col-md-4">
 									<label>Lesson name</label>
-									<input type="text" name = "name" value = "{{lesson.name}}" class="form-control">
+									<input required type="text" name = "name" value = "{{lesson.name}}" class="form-control">
 								</div>
 								<div class="form-group col-md-4">
 									<label>Subject</label>
-										<select class="form-control default-select" id="inputState" name = "subject">
+										<select required class="form-control default-select" id="inputState" name = "subject">
                                             <option selected="">{{lesson.subject}}</option>
 											<option>Mathematics</option>
 											<option>Computer Science</option>
@@ -65,14 +65,14 @@
 								</div>
 								<div class="form-group col-md-4">
 									<label>Teacher</label>
-										<select class="js-dropdown-teachers" name="teacher">
+										<select required class="js-dropdown-teachers" name="teacher">
 											{% for teacher in employees %}
                                                 {% if teacher.id == lesson.teacher.id %}
                                                     <option value="{{teacher.pk}}" selected>{{teacher.user.get_full_name}}</option>
                                                 {% else %}
                                                     <option value="{{teacher.pk}}">{{teacher.user.get_full_name}}</option>
                                                 {% endif %}
-												
+
 											{% endfor %}
 										</select>
 
@@ -86,27 +86,27 @@
 								</div>
 							</div>
 
-							
-							
+
+
 							<div class="row form-material">
 								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
 									<label>Lesson Start time</label>
-									<input type="text" class="form-control" placeholder="Set End Date and Time" value = "{{lesson.start.year}}/{{lesson.start.month}}/{{lesson.start.day}} {{lesson.start.hour}}:{{lesson.start.minute}}" name = "start"  id="min-date">
+									<input required type="text" class="form-control" placeholder="Set End Date and Time" value = "{{lesson.start.year}}/{{lesson.start.month}}/{{lesson.start.day}} {{lesson.start.hour}}:{{lesson.start.minute}}" name = "start"  id="min-date">
 								</div>
 								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
 									<label>Lesson End time</label>
-									<input type="text" class="form-control" name = "end" placeholder="Set End Date and Time" value = "{{lesson.end.year}}/{{lesson.end.month}}/{{lesson.end.day}} {{lesson.end.hour}}:{{lesson.end.minute}}" id="min-date-end">
+									<input required type="text" class="form-control" name = "end" placeholder="Set End Date and Time" value = "{{lesson.end.year}}/{{lesson.end.month}}/{{lesson.end.day}} {{lesson.end.hour}}:{{lesson.end.minute}}" id="min-date-end">
 								</div>
 							</div>
 							<label>{{error}}</label>
 							<button class="btn btn-primary" type="submit">Save</button>
 						</form>
-						
+
 					</div>
 				</div>
             </div>
 		</div>
-	</div>		
+	</div>
 </div>
 {% endblock content %}
 

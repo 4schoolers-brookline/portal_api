@@ -254,6 +254,7 @@ def directory(request):
 @login_required
 def profile(request):
     context = {}
+    print(Student.objects.all())
     context['student'] = Student.objects.get(user = request.user)
     student = Student.objects.get(user = request.user)
 
