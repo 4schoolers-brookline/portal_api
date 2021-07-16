@@ -12,6 +12,16 @@ from bank.models import StudentAccount, StudentLessonBill
 import re
 import datetime
 
+def validation_student(func):
+
+     def validation(request, *args, **kwargs):
+         try:
+             student = Student.objects.get(user = request.user)
+             return func(request, *args, **kwargs)
+         except:
+             raise ValueError("bad request")
+     return validation
+
 def index(request):
     context = {}
     if (request.user.is_authenticated):
@@ -22,6 +32,7 @@ def index(request):
 
 
 @login_required
+@validation_student
 def student_exam_results_api(request):
     student = Student.objects.get(user = request.user)
     exams = Exam.objects.filter(taker = student)
@@ -55,6 +66,7 @@ def student_exam_results_api(request):
 
 
 @login_required
+@validation_student
 def highlights(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
@@ -80,6 +92,7 @@ def highlights(request):
     return render(request, 'student/highlights.jinja', context)
 
 @login_required
+@validation_student
 def req(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
@@ -89,6 +102,7 @@ def req(request):
     return render(request, 'student/request.jinja', context)
 
 @login_required
+@validation_student
 def lesson_add(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
@@ -126,6 +140,7 @@ def lesson_add(request):
 
 
 @login_required
+@validation_student
 def lesson_edit(request, id):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
@@ -164,6 +179,7 @@ def lesson_edit(request, id):
     return render(request, 'student/lesson_edit.jinja', context)
 
 @login_required
+@validation_student
 def lesson_delete(request, id):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
@@ -186,6 +202,7 @@ def to_datetime(s):
 
 
 @login_required
+@validation_student
 def lesson(request, id):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
@@ -231,12 +248,14 @@ def lesson(request, id):
     return render(request, 'student/lesson.jinja', context)
 
 @login_required
+@validation_student
 def lessons(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
     return render(request, 'student/lessons.jinja', context)
 
 @login_required
+@validation_student
 def lessons_list(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
@@ -244,6 +263,7 @@ def lessons_list(request):
     return render(request, 'student/lessons_list.jinja', context)
 
 @login_required
+@validation_student
 def directory(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
@@ -252,6 +272,7 @@ def directory(request):
     return render(request, 'student/directory.jinja', context)
 
 @login_required
+@validation_student
 def profile(request):
     context = {}
     print(Student.objects.all())
@@ -284,6 +305,7 @@ def profile(request):
     return render(request, 'student/profile.jinja', context)
 
 @login_required
+@validation_student
 def logout(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
@@ -291,6 +313,7 @@ def logout(request):
     return redirect('student_login')
 
 @login_required
+@validation_student
 def employee(request, id):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
@@ -309,6 +332,7 @@ def error_500(request, exception):
     return render(request,'student/404.jinja', context)
 
 @login_required
+@validation_student
 def password(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
@@ -341,8 +365,8 @@ def password(request):
 
     return render(request, 'student/password.jinja', context)
 
+@validation_student
 def login(request):
-    # TODO: check if authenticated by other account type
     context = {}
     if (request.user.is_authenticated):
         return redirect('student_profile')

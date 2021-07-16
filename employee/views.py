@@ -10,15 +10,15 @@ from bank.models import StudentAccount, StudentLessonBill
 import re
 import datetime
 
-# def validation_employee(func):
+def validation_employee(func):
 
-#     def validation(*args, **kwargs):
-#         try:
-#             employee = Employee.objects.get(user = user)
-#             return True
-#         except:
-#             return False
-#     return validation
+     def validation(request, *args, **kwargs):
+         try:
+             employee = Employee.objects.get(user = request.user)
+             return func(request, *args, **kwargs)
+         except:
+             raise ValueError("bad request")
+     return validation
 
 def index(request):
     context = {}
@@ -27,7 +27,7 @@ def index(request):
         return redirect('employee_highlights')
     else:
         return redirect('employee_login')
-
+@validation_employee
 def login(request):
     # TODO: check if authenticated by other account type
     context = {}
@@ -54,6 +54,7 @@ def login(request):
     return render(request, 'employee/login.jinja', context)
 
 @login_required
+@validation_employee
 def logout(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -61,7 +62,7 @@ def logout(request):
     return redirect('employee_login')
 
 @login_required
-# @validation_employee
+@validation_employee
 def profile(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -94,6 +95,7 @@ def profile(request):
     return render(request, 'employee/profile.jinja', context)
 
 @login_required
+@validation_employee
 def password(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -127,6 +129,7 @@ def password(request):
     return render(request, 'employee/password.jinja', context)
 
 @login_required
+@validation_employee
 def student(request, id):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -137,6 +140,7 @@ def student(request, id):
     return render(request, 'employee/student.jinja', context)
 
 @login_required
+@validation_employee
 def directory(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -146,6 +150,7 @@ def directory(request):
     return render(request, 'employee/directory.jinja', context)
 
 @login_required
+@validation_employee
 def req(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -155,6 +160,7 @@ def req(request):
     return render(request, 'employee/request.jinja', context)
 
 @login_required
+@validation_employee
 def highlights(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -174,14 +180,15 @@ def highlights(request):
 
     return render(request, 'employee/highlights.jinja', context)
 
-
 @login_required
+@validation_employee
 def lessons(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
     return render(request, 'employee/lessons.jinja', context)
 
 @login_required
+@validation_employee
 def lessons_list(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -189,6 +196,7 @@ def lessons_list(request):
     return render(request, 'employee/lessons_list.jinja', context)
 
 @login_required
+@validation_employee
 def lesson(request, id):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -236,6 +244,7 @@ def lesson(request, id):
 
 
 @login_required
+@validation_employee
 def lesson_edit(request, id):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -345,6 +354,7 @@ def lesson_edit(request, id):
     return render(request, 'employee/lesson_edit.jinja', context)
 
 @login_required
+@validation_employee
 def lesson_add(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -452,6 +462,7 @@ def lesson_add(request):
 
 
 @login_required
+@validation_employee
 def lesson_delete(request, id):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
