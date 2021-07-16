@@ -10,4 +10,6 @@ class Manager(models.Model):
     def __str__(self):
         return self.user.get_full_name()
 
-
+class Request(models.Model):
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    description = models.TextField(blank=True, null=True)

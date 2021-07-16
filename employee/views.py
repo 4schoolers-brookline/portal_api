@@ -6,6 +6,7 @@ from employee.models import Employee
 from student.models import Student, Exam
 from django.contrib.auth.models import User
 from activity.models import Lesson, Submission
+from manager.models import Request
 from bank.models import StudentAccount, StudentLessonBill
 import re
 import datetime
@@ -27,7 +28,7 @@ def index(request):
         return redirect('employee_highlights')
     else:
         return redirect('employee_login')
-@validation_employee
+
 def login(request):
     # TODO: check if authenticated by other account type
     context = {}
@@ -156,6 +157,9 @@ def req(request):
     context['employee'] = Employee.objects.get(user = request.user)
     if (request.method == 'POST'):
         req = request.POST['req']
+        owner = request.user
+        user_request = Request(owner = owner, description = req)
+        user_request.save()
 
     return render(request, 'employee/request.jinja', context)
 

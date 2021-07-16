@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from employee.models import Employee
 from student.models import Student, Exam
 from activity.models import Lesson, Submission
+from manager.models import Request
 from bank.models import StudentAccount, StudentLessonBill
 
 import re
@@ -98,6 +99,9 @@ def req(request):
     context['student'] = Student.objects.get(user = request.user)
     if (request.method == 'POST'):
         req = request.POST['req']
+        owner = request.user
+        user_request = Request(owner = owner, description = req)
+        user_request.save()
 
     return render(request, 'student/request.jinja', context)
 
@@ -365,7 +369,6 @@ def password(request):
 
     return render(request, 'student/password.jinja', context)
 
-@validation_student
 def login(request):
     context = {}
     if (request.user.is_authenticated):
