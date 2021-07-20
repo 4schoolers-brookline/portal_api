@@ -121,7 +121,6 @@ USE_TZ = True
 import json
 AWS_ACCESS_KEY_ID = json.load(open('.conf',))['static']['id']
 AWS_SECRET_ACCESS_KEY = json.load(open('.conf',))['static']['key']
-print(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
 AWS_STORAGE_BUCKET_NAME = '4schoolers'
 
 AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
