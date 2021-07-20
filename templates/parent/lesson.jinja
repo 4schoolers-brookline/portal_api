@@ -1,0 +1,156 @@
+{% extends 'parent/base.jinja' %}
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'parent/css/lightgallery.min.css' %}" rel="stylesheet">
+{% endblock style %}
+
+{% block content %}
+<div class="content-body">
+	<div class="container-fluid">
+
+		<div class="row page-titles mx-0">
+			<div class="col-sm-6 p-md-0">
+				<div class="welcome-text">
+					<h4>Hi, welcome back!</h4>
+					<span>Post Details</span>
+				</div>
+			</div>
+			<div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="javascript:void(0)">Lessons</a></li>
+					<li class="breadcrumb-item active"><a href="javascript:void(0)">Lesson Details</a></li>
+				</ol>
+			</div>
+		</div>
+		<!-- row -->
+		<div class="row">
+			<div class="col-xl-4">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="profile-interest">
+									<h5 class="text-primary d-inline">Students Attending</h5>
+									<div class="row mt-4 sp4" id="lightgallery">
+										{% for s in students_registered %}
+											{% if s.image %}
+												<a href="{% url 'employee_student' s.id %}" data-exthumbimage="{{s.image.url}}" data-src="{{s.image.url}}" class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
+													<img src="{{s.image.url}}" alt="{{s.user.get_full_name}}" class="img-fluid">
+												</a>
+											{% else %}
+												<a href="{% url 'employee_student' s.id %}"  class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
+													<img src="{% static 'employee/img/man.png'%}" alt="{{s.user.get_full_name}}" class="img-fluid">
+												</a>
+											{% endif %}
+
+
+										{% endfor %}
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="profile-interest">
+									<h5 class="text-primary d-inline">Shared Files</h5>
+									<div class="row mt-4 sp4" id="lightgallery">
+
+										<a href="javascript:void()" class="btn btn-primary light btn-xs mb-1" data-toggle="modal" data-target="#classworkModal">Classwork</a>
+										<!-- Modal classwork -->
+										<div class="modal fade" id="classworkModal">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title">Classwork</h5>
+														<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<h5>{{lesson.classwork.name}}</h5>
+														<p>{{lesson.classwork.description}}</p>
+														<hr>
+														{% if classwork_file %}
+															<p><a href="{{lesson.classwork.file.url}}" target="_blank" class="tooltip-test text-primary" data-toggle="tooltip">Download File</a>  </p>
+														{% endif %}
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+										<a href="javascript:void()" class="btn btn-primary light btn-xs mb-1" data-toggle="modal" data-target="#homeworkModal">Homework</a>
+										<!-- Modal homework -->
+										<div class="modal fade" id="homeworkModal">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title">Homework</h5>
+														<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<h5>{{lesson.homework.name}}</h5>
+														<p>{{lesson.homework.description}}</p>
+														<hr>
+														{% if homework_file %}
+															<p><a href="{{lesson.homework.file.url}}" target="_blank" class="tooltip-test text-primary" data-toggle="tooltip">Download File</a>  </p>
+														{% endif %}
+
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+
+			<div class="col-xl-8">
+				<div class="card">
+					<div class="card-body">
+						<div class="post-details">
+							<h3 class="mb-2 text-black">{{lesson.subject}}: {{lesson.name}}</h3>
+							<ul class="mb-4 post-meta d-flex flex-wrap">
+								<li class="post-author mr-3">By <a href = "{% url 'student_employee' lesson.teacher.pk %}">{{lesson.teacher.user.get_full_name}} </a></li>
+								<li class="post-date mr-3"><i class="fa fa-calender"></i>{{lesson.start}} - {{lesson.end}}</li>
+
+							</ul>
+
+							<p>	{{lesson.description}} </p>
+
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'student/js/lightgallery-all.min.js'%}" ></script>
+{% endblock scripts %}
