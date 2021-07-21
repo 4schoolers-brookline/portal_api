@@ -20,7 +20,7 @@ def validation_employee(func):
              employee = Employee.objects.get(user = request.user)
              return func(request, *args, **kwargs)
          except:
-             raise ValueError("bad request")
+             return render(request, 'employee/404.jinja')
      return validation
 
 def index(request):

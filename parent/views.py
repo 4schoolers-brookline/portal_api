@@ -15,6 +15,17 @@ import re
 import datetime
 
 
+def validation_parent(func):
+
+     def validation(request, *args, **kwargs):
+         try:
+             parent = Parent.objects.get(user = request.user)
+             return func(request, *args, **kwargs)
+         except:
+             return render(request, 'parent/404.jinja')
+     return validation
+
+
 def index(request):
     context = {}
     if (request.user.is_authenticated):
@@ -23,6 +34,9 @@ def index(request):
     else:
         return redirect('parent_login')
 
+
+@login_required
+@validation_parent
 def student_exam_results_api(request):
     student = Parent.objects.get(user = request.user).child
     exams = Exam.objects.filter(taker = student)
@@ -85,6 +99,8 @@ def logout(request):
     auth.logout(request)
     return redirect('parent_login')
 
+@login_required
+@validation_parent
 def password(request):
     context = {}
     context['parent'] = Parent.objects.get(user = request.user)
@@ -118,6 +134,7 @@ def password(request):
     return render(request, 'parent/password.jinja', context)
 
 @login_required
+@validation_parent
 def profile(request):
     context = {}
     student = Parent.objects.get(user = request.user).child
@@ -137,6 +154,7 @@ def profile(request):
     return render(request, 'parent/profile.jinja', context)
 
 @login_required
+@validation_parent
 def highlights(request):
     context = {}
     context['parent'] = Parent.objects.get(user = request.user)
@@ -164,6 +182,7 @@ def highlights(request):
     return render(request, 'parent/highlights.jinja', context)
 
 @login_required
+@validation_parent
 def req(request):
     context = {}
     context['parent'] = Parent.objects.get(user = request.user)
@@ -176,6 +195,7 @@ def req(request):
     return render(request, 'parent/request.jinja', context)
 
 @login_required
+@validation_parent
 def lesson(request, id):
     context = {}
     context['student'] = Parent.objects.get(user = request.user).child
@@ -221,6 +241,7 @@ def lesson(request, id):
     return render(request, 'parent/lesson.jinja', context)
 
 @login_required
+@validation_parent
 def lessons(request):
     context = {}
     context['student'] = Parent.objects.get(user = request.user).child
@@ -228,6 +249,7 @@ def lessons(request):
     return render(request, 'parent/lessons.jinja', context)
 
 @login_required
+@validation_parent
 def lessons_list(request):
     context = {}
     context['student'] = Parent.objects.get(user = request.user).child
@@ -236,6 +258,7 @@ def lessons_list(request):
     return render(request, 'parent/lessons_list.jinja', context)
 
 @login_required
+@validation_parent
 def directory(request):
     context = {}
     context['parent'] = Parent.objects.get(user = request.user)
@@ -244,6 +267,7 @@ def directory(request):
     return render(request, 'parent/directory.jinja', context)
 
 @login_required
+@validation_parent
 def employee(request, id):
     context = {}
     context['parent'] = Parent.objects.get(user = request.user)
@@ -255,6 +279,7 @@ def employee(request, id):
     return render(request, 'parent/employee.jinja', context)
 
 @login_required
+@validation_parent
 def student(request, id):
     context = {}
     context['parent'] = Parent.objects.get(user = request.user)

@@ -22,7 +22,7 @@ def validation_student(func):
              student = Student.objects.get(user = request.user)
              return func(request, *args, **kwargs)
          except:
-             raise ValueError("bad request")
+             return render(request, 'student/404.jinja')
      return validation
 
 def index(request):
