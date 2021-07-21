@@ -129,6 +129,9 @@ def lesson_add(request):
         try:
             start_parsed = to_datetime(start)
             end_parsed = to_datetime(end)
+            if end_parsed < start_parsed:
+                context['error'] = 'There was a problem with the selected time'
+                return render(request, 'student/lesson_add.jinja', context)
         except:
             context['error'] = 'There was a problem with the selected time'
             return render(request, 'student/lesson_add.jinja', context)
@@ -168,6 +171,9 @@ def lesson_edit(request, id):
         try:
             start_parsed = to_datetime(start)
             end_parsed = to_datetime(end)
+            if end_parsed < start_parsed:
+                context['error'] = 'There was a problem with the selected time'
+                return render(request, 'student/lesson_edit.jinja', context)
         except:
             context['error'] = 'There was a problem with the selected time'
             return render(request, 'student/lesson_edit.jinja', context)

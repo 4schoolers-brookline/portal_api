@@ -116,9 +116,9 @@ USE_L10N = True
 USE_TZ = True
 
 
-
+STATIC_URL = '/static/'
 # AWS S3 Setup for Static Files
-import json
+'''import json
 AWS_ACCESS_KEY_ID = json.load(open('.conf',))['static']['id']
 AWS_SECRET_ACCESS_KEY = json.load(open('.conf',))['static']['key']
 AWS_STORAGE_BUCKET_NAME = '4schoolers'
@@ -133,7 +133,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'portal/static/'),
 ]
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)'''
 
 # MEDIA For AWS (Deployment)
 # DEFAULT_FILE_STORAGE = 'portal.custom_storages.MediaStorage'
