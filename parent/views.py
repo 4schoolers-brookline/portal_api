@@ -69,27 +69,43 @@ def student_exam_results_api(request):
     return JsonResponse(result, safe = False)
 
 def login(request):
-    # TODO: check if authenticated by other account type
     context = {}
     if (request.user.is_authenticated):
         return redirect('parent_profile')
 
     if (request.method == 'POST'):
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        if '@' in request.POST['login']:
+            email = request.POST.get('login')
+            password = request.POST.get('password')
 
-        try:
-            user = User.objects.get(email = email)
-        except:
-            context['invalid'] = True
-            return render(request, 'parent/login.jinja', context)
+            try:
+                user = User.objects.get(email = email)
+            except:
+                context['invalid'] = True
+                return render(request, 'parent/login.jinja', context)
 
-        if (user.check_password(password)):
-            auth.login(request, user)
-            return redirect('parent_profile')
+            if (user.check_password(password)):
+                auth.login(request, user)
+                return redirect('parent_profile')
+            else:
+                context['invalid'] = True
+                return render(request, 'parent/login.jinja', context)
         else:
-            context['invalid'] = True
-            return render(request, 'parent/login.jinja', context)
+            username = request.POST.get('login')
+            password = request.POST.get('password')
+
+            try:
+                user = User.objects.get(username = username)
+            except:
+                context['invalid'] = True
+                return render(request, 'parent/login.jinja', context)
+
+            if (user.check_password(password)):
+                auth.login(request, user)
+                return redirect('parent_profile')
+            else:
+                context['invalid'] = True
+                return render(request, 'parent/login.jinja', context)
 
     return render(request, 'parent/login.jinja', context)
 

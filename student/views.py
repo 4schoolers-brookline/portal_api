@@ -388,20 +388,37 @@ def login(request):
         return redirect('student_profile')
 
     if (request.method == 'POST'):
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        if '@' in request.POST['login']:
+            email = request.POST.get('login')
+            password = request.POST.get('password')
 
-        try:
-            user = User.objects.get(email = email)
-        except:
-            context['invalid'] = True
-            return render(request, 'student/login.jinja', context)
+            try:
+                user = User.objects.get(email = email)
+            except:
+                context['invalid'] = True
+                return render(request, 'student/login.jinja', context)
 
-        if (user.check_password(password)):
-            auth.login(request, user)
-            return redirect('student_profile')
+            if (user.check_password(password)):
+                auth.login(request, user)
+                return redirect('student_profile')
+            else:
+                context['invalid'] = True
+                return render(request, 'student/login.jinja', context)
         else:
-            context['invalid'] = True
-            return render(request, 'student/login.jinja', context)
+            username = request.POST.get('login')
+            password = request.POST.get('password')
+
+            try:
+                user = User.objects.get(username = username)
+            except:
+                context['invalid'] = True
+                return render(request, 'student/login.jinja', context)
+
+            if (user.check_password(password)):
+                auth.login(request, user)
+                return redirect('student_profile')
+            else:
+                context['invalid'] = True
+                return render(request, 'student/login.jinja', context)
 
     return render(request, 'student/login.jinja', context)

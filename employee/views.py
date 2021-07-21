@@ -32,27 +32,43 @@ def index(request):
         return redirect('employee_login')
 
 def login(request):
-    # TODO: check if authenticated by other account type
     context = {}
     if (request.user.is_authenticated):
         return redirect('employee_profile')
 
     if (request.method == 'POST'):
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        if '@' in request.POST['login']:
+            email = request.POST.get('login')
+            password = request.POST.get('password')
 
-        try:
-            user = User.objects.get(email = email)
-        except:
-            context['invalid'] = True
-            return render(request, 'employee/login.jinja', context)
+            try:
+                user = User.objects.get(email = email)
+            except:
+                context['invalid'] = True
+                return render(request, 'employee/login.jinja', context)
 
-        if (user.check_password(password)):
-            auth.login(request, user)
-            return redirect('employee_profile')
+            if (user.check_password(password)):
+                auth.login(request, user)
+                return redirect('employee_profile')
+            else:
+                context['invalid'] = True
+                return render(request, 'employee/login.jinja', context)
         else:
-            context['invalid'] = True
-            return render(request, 'employee/login.jinja', context)
+            username = request.POST.get('login')
+            password = request.POST.get('password')
+
+            try:
+                user = User.objects.get(username = username)
+            except:
+                context['invalid'] = True
+                return render(request, 'employee/login.jinja', context)
+
+            if (user.check_password(password)):
+                auth.login(request, user)
+                return redirect('employee_profile')
+            else:
+                context['invalid'] = True
+                return render(request, 'employee/login.jinja', context)
 
     return render(request, 'employee/login.jinja', context)
 
