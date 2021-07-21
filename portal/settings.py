@@ -25,7 +25,7 @@ SECRET_KEY = '^ph)#4(^jeo2!5w-w#+@ufjl36l6%1u2lqucvkjxh)$+1no5nc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['44.194.208.183']
 
 
 # Application definition
@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'portaldb',
-        'USER': 'postgres',
-        'PASSWORD':'portaldb',
+        'NAME': 'portal',
+        'USER': 'portaldev',
+        'PASSWORD':'4Schoolers2015',
         'HOST':'localhost',
         'PORT':'5432'
     }
