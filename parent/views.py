@@ -83,7 +83,7 @@ def logout(request):
     context = {}
     context['parent'] = Parent.objects.get(user = request.user)
     auth.logout(request)
-    return redirect('employee_login')
+    return redirect('parent_login')
 
 def password(request):
     context = {}

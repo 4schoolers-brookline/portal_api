@@ -17,10 +17,10 @@
 
     $('#min-date').bootstrapMaterialDatePicker({
         format: 'YYYY/MM/DD HH:mm',
-        minDate: new Date()
+        minDate: new Date(1970, 1, 1)
     });
     $('#min-date-end').bootstrapMaterialDatePicker({
         format: 'YYYY/MM/DD HH:mm',
-        minDate: new Date()
+        minDate: new Date(1970, 1, 1)
     });
 })(jQuery);
