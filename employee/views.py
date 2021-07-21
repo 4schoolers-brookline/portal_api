@@ -20,6 +20,7 @@ def validation_employee(func):
              employee = Employee.objects.get(user = request.user)
              return func(request, *args, **kwargs)
          except:
+             auth.logout(request)
              return render(request, 'employee/404.jinja')
      return validation
 

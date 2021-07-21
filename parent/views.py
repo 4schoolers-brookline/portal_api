@@ -22,6 +22,7 @@ def validation_parent(func):
              parent = Parent.objects.get(user = request.user)
              return func(request, *args, **kwargs)
          except:
+             auth.logout(request)
              return render(request, 'parent/404.jinja')
      return validation
 

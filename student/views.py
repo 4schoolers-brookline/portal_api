@@ -22,6 +22,7 @@ def validation_student(func):
              student = Student.objects.get(user = request.user)
              return func(request, *args, **kwargs)
          except:
+             auth.logout(request)
              return render(request, 'student/404.jinja')
      return validation
 
