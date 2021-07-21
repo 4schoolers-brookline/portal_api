@@ -25,7 +25,7 @@ SECRET_KEY = '^ph)#4(^jeo2!5w-w#+@ufjl36l6%1u2lqucvkjxh)$+1no5nc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['44.194.208.183', '4schoolers.academy', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['147.182.161.175', '4schoolers.academy', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -79,14 +79,13 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'portal',
+        'NAME': 'portaldb',
         'USER': 'portaldev',
         'PASSWORD':'4Schoolers2015',
         'HOST':'localhost',
         'PORT':'5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
