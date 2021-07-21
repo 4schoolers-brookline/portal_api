@@ -12,6 +12,8 @@ from bank.models import StudentAccount, StudentLessonBill
 
 import re
 import datetime
+from datetime import timedelta
+from django.utils import timezone
 
 def validation_student(func):
 
@@ -196,7 +198,8 @@ def lesson_delete(request, id):
     lesson = context['lesson'] = Lesson.objects.get(pk = id)
 
     if (request.method == 'POST'):
-        # TODO: Check if there is less than N hours before class
+        if timezone.now() > lesson.start or lesson.start - timezone.now() < timedelta(days=1):
+            return render(request, 'student/403.jinja', context)
         lesson.delete()
         return redirect('student_lessons')
 
