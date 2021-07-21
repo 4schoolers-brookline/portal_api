@@ -147,13 +147,14 @@ def lesson_add(request):
 
     return render(request, 'student/lesson_add.jinja', context)
 
-
 @login_required
 @validation_student
 def lesson_edit(request, id):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
     lesson = context['lesson'] = Lesson.objects.get(pk = id)
+    if context['student'] not in lesson.students.all():
+        return render(request, 'student/404.jinja')
     context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: x.priority)
 
     if (request.method == 'POST'):
@@ -196,6 +197,8 @@ def lesson_delete(request, id):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
     lesson = context['lesson'] = Lesson.objects.get(pk = id)
+    if context['student'] not in lesson.students.all():
+        return render(request, 'student/404.jinja')
 
     if (request.method == 'POST'):
         if timezone.now() > lesson.start or lesson.start - timezone.now() < timedelta(days=1):
@@ -220,6 +223,8 @@ def lesson(request, id):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
     l = Lesson.objects.get(id = id)
+    if context['student'] not in l.students.all():
+        return render(request, 'student/404.jinja')
     context['lesson'] = l
     context['students_registered'] = l.students.all()
 

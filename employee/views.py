@@ -207,6 +207,8 @@ def lesson(request, id):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
     l = Lesson.objects.get(id = id)
+    if context['employee'] != l.teacher:
+        return render(request, 'employee/404.jinja')
     context['lesson'] = l
     context['students_registered'] = l.students.all()
     context['homeworks'] = l.homework_submissions.all()
@@ -255,6 +257,8 @@ def lesson_edit(request, id):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
     lesson = context['lesson'] = Lesson.objects.get(pk = id)
+    if context['employee'] != lesson.teacher:
+        return render(request, 'employee/404.jinja')
     context['students'] = sorted(list(Student.objects.all()), key = lambda x: x.user.get_full_name())
 
     if (request.method == 'POST'):
@@ -479,6 +483,8 @@ def lesson_delete(request, id):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
     lesson = context['lesson'] = Lesson.objects.get(pk = id)
+    if context['employee'] != lesson.teacher:
+        return render(request, 'employee/404.jinja')
 
     if (request.method == 'POST'):
         if timezone.now() > lesson.start or lesson.start - timezone.now() < timedelta(days=1):
