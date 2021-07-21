@@ -75,20 +75,14 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'portaldb',
-        'USER': 'postgres',
-        'PASSWORD':'portaldb',
-        'HOST':'localhost',
-        'PORT':'5432'
+        'ENGINE': 'django.db.backends.sqlite3',        
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
 
-# Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -121,6 +115,9 @@ USE_L10N = True
 USE_TZ = True
 
 
+# STATIC_URL = '/static/'
+
+
 # AWS S3 Setup for Static Files
 import json
 AWS_ACCESS_KEY_ID = json.load(open('.conf',))['static']['id']
@@ -139,9 +136,5 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
-DEFAULT_FILE_STORAGE = 'portal.custom_storages.MediaStorage'
-
-try:
-    from local_settings import *
-except ImportError as e:
-    pass
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
