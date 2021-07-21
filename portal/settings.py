@@ -25,7 +25,7 @@ SECRET_KEY = '^ph)#4(^jeo2!5w-w#+@ufjl36l6%1u2lqucvkjxh)$+1no5nc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['44.194.208.183', '4schoolers.academy']
+ALLOWED_HOSTS = ['44.194.208.183', '4schoolers.academy', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -142,6 +142,6 @@ STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 DEFAULT_FILE_STORAGE = 'portal.custom_storages.MediaStorage'
 
 try:
-    from local_settings import *
+    from portal.local_settings import *
 except ImportError as e:
     pass
