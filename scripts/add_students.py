@@ -10,7 +10,7 @@ from student.models import Student
 
 def main():
     file_path = input('csv file location: ')
-
+    # NOTE: Make saving safe: if employee with the same username exists dont create another one
     return 0
 
 if __name__ == '__main__':

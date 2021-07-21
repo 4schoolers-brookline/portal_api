@@ -9,6 +9,8 @@ from student.models import Student
 
 def main():
     file_path = input('csv file location: ')
+    # NOTE: Some students do not exist yet.
+    # NOTE: Make saving safe: if class with this teacher and datetime exists: don't create another one
 
     return 0
 
