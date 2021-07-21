@@ -25,7 +25,7 @@ SECRET_KEY = '^ph)#4(^jeo2!5w-w#+@ufjl36l6%1u2lqucvkjxh)$+1no5nc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['44.194.208.183']
+ALLOWED_HOSTS = ['44.194.208.183', '4schoolers.academy']
 
 
 # Application definition
