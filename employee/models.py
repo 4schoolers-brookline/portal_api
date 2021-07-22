@@ -16,7 +16,7 @@ class Employee(models.Model):
     priority = models.IntegerField(default = 10, null=True, blank=True)
     image = models.ImageField(upload_to=user_image_path, null=True, blank = True, default = 'man.png')
 
-    
+
     languages = models.CharField(max_length=215,null=True, blank=True)
     interests = models.CharField(max_length=215,null=True, blank=True)
     subjects = models.CharField(max_length=255,null=True, blank=True)
@@ -29,15 +29,15 @@ class Employee(models.Model):
     bio = models.TextField(blank=True, null=True)
     school = models.CharField(max_length=63,null=True, blank=True)
     graduation_year = models.IntegerField(null=True, blank=True)
-    
+
     address = models.CharField(max_length=100,null=True, blank=True)
     city = models.CharField(max_length=50,null=True, blank=True)
     zip_code = models.CharField(max_length=50,null=True, blank=True)
     state  = models.CharField(max_length=50,null=True, blank=True)
     country = models.CharField(max_length=50,null=True, blank=True)
-    
+
     level = models.IntegerField(null=True, blank=True)
-    
+
 
     def __str__(self):
         return self.user.get_full_name()
