@@ -19,7 +19,7 @@ SUBJECT_CHOICES = (
     ('Physics', 'Physics'),
     ('History', 'History'),
     ('Academic Advising','Academic Advising'),
-    ('Compeetitive Math','Compeetitive Math'),
+    ('Competitive Math','Competitive Math'),
     ('Projects','Projects'),
     ('Essay Writing','Essay Writing'),
 )
