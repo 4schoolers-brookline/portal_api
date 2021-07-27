@@ -1,5 +1,5 @@
 import sys
-sys_path = input("System path to project")
+sys_path = input("System path to project: ")
 sys.path.append(sys_path)
 import os, django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "portal.settings")

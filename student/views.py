@@ -21,9 +21,12 @@ def validation_student(func):
          try:
              student = Student.objects.get(user = request.user)
              return func(request, *args, **kwargs)
-         except:
+         except Exception as e:
+             context = {
+                 'error': e
+             }
              auth.logout(request)
-             return render(request, 'student/404.jinja')
+             return render(request, 'student/404.jinja', context)
      return validation
 
 def index(request):
@@ -297,8 +300,8 @@ def profile(request):
     context['student'] = Student.objects.get(user = request.user)
     student = Student.objects.get(user = request.user)
 
-    context['languages'] = student.languages.split(',')
-    context['interests'] = student.interests.split(',')
+    context['languages'] = student.get_languages()
+    context['interests'] = student.get_interests()
 
     if (request.method == 'POST'):
         if ('change_image' in request.POST):
