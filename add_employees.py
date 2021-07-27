@@ -21,9 +21,10 @@ def main():
                 first_name=row[0],
                 last_name=row[1],
                 username=row[2],
-                email=row[3],
-                password=row[4]
+                email=row[3]
                 )
+            user.set_password(row[4])
+            user.save()
             if created:
                 employee, created = Employee.objects.get_or_create(
                     user = user,
