@@ -25,6 +25,7 @@ def main():
                 password=row[3]
                 )
             if created:
+                user.set_password(row[3])
                 student, created = Student.objects.get_or_create(
                     user = user,
                     phone = row[5],

@@ -42,6 +42,29 @@ class Employee(models.Model):
     def __str__(self):
         return self.user.get_full_name()
 
+    def get_languages(self):
+        langs = self.languages
+        try:
+            x = langs.split(',')
+            return x
+        except:
+            return []
+        
+    def get_interests(self):
+        ints = self.interests
+        try:
+            x = ints.split(',')
+            return x
+        except:
+            return []
+    def get_subjects(self):
+        subs = self.subjects
+        try:
+            x = subs.split(',')
+            return x
+        except:
+            return []
+
 class Documents(models.Model):
     name = models.CharField(max_length=35,null=True, blank=True)
     description = models.TextField(blank=True, null=True)

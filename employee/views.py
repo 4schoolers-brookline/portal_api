@@ -88,9 +88,9 @@ def profile(request):
     context['employee'] = Employee.objects.get(user = request.user)
     employee = Employee.objects.get(user = request.user)
 
-    context['languages'] = employee.languages.split(',')
-    context['interests'] = employee.interests.split(',')
-    context['subjects'] = employee.subjects.split(',')
+    context['languages'] = employee.get_languages()
+    context['interests'] = employee.get_interests()
+    context['subjects'] = employee.get_subjects()
 
     if (request.method == 'POST'):
         if ('change_image' in request.POST):
@@ -154,8 +154,8 @@ def student(request, id):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
     context['student'] = Student.objects.get(id = id)
-    context['interests'] = (context['student'].interests or 'Education').split(',')
-    context['languages'] = (context['student'].languages or 'English').split(',')
+    context['interests'] = (context['student'].get_interests() or 'Education')
+    context['languages'] = (context['student'].get_languages() or 'English')
 
     return render(request, 'employee/student.jinja', context)
 

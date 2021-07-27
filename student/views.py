@@ -339,9 +339,9 @@ def employee(request, id):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
     context['employee'] = Employee.objects.get(id = id)
-    context['interests'] = (context['employee'].interests or 'Education').split(',')
-    context['languages'] = (context['employee'].languages or 'English').split(',')
-    context['subjects'] = (context['employee'].subjects or 'Advising').split(',')
+    context['interests'] = (context['employee'].get_interests() or 'Education')
+    context['languages'] = (context['employee'].get_languages() or 'English')
+    context['subjects'] = (context['employee'].get_subjects() or 'Advising')
 
     return render(request, 'student/employee.jinja', context)
 
