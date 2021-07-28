@@ -284,7 +284,8 @@ def lessons(request):
 def lessons_list(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
-    context['lessons'] = [lesson for lesson in Lesson.objects.all() if (context['student'] in lesson.students.all())]
+    lessons = [lesson for lesson in Lesson.objects.all() if (context['student'] in lesson.students.all())]
+    context['lessons'] = sorted(list(lessons), key = lambda x: x.start.timestamp(), reverse = True)
     return render(request, 'student/lessons_list.jinja', context)
 
 @login_required

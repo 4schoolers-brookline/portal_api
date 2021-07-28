@@ -215,7 +215,9 @@ def lessons(request):
 def lessons_list(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
-    context['lessons'] = lessons = Lesson.objects.filter(teacher = context['employee'])
+    lessons = Lesson.objects.filter(teacher = context['employee'])
+    context['lessons'] = sorted(list(lessons), key = lambda x: x.start.timestamp(), reverse = True)
+
     return render(request, 'employee/lessons_list.jinja', context)
 
 @login_required
