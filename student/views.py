@@ -175,6 +175,7 @@ def lesson_edit(request, id):
         except:
             context['error'] = 'Teacher does not exist'
             return render(request, 'student/lesson_edit.jinja', context)
+#  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
 
         try:
             start_parsed = to_datetime(start)
