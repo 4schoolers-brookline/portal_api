@@ -143,6 +143,7 @@ def lesson_add(request):
             return render(request, 'student/lesson_add.jinja', context)
 
         lesson = Lesson(name = name, subject = subject, description = description, teacher = t, start = start_parsed, end = end_parsed)
+        lesson.subject = subject
         lesson.save()
         lesson.students.add(context['student'])
         lesson.save()
@@ -190,6 +191,7 @@ def lesson_edit(request, id):
         lesson.teacher = t
         lesson.start = start_parsed
         lesson.end = end_parsed
+        lesson.subject = subject
         lesson.save()
         return redirect('student_lessons')
 

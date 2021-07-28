@@ -308,7 +308,7 @@ def lesson_edit(request, id):
             if (student not in ss):
                 lesson.students.remove(student)
         lesson.students.add(*ss)
-
+        lesson.subject = subject
         lesson.start = start_parsed
         lesson.end = end_parsed
 
@@ -416,7 +416,7 @@ def lesson_add(request):
 
         lesson = Lesson(name = name, description = description, teacher = context['employee'], start = start_parsed, end = end_parsed)
 
-
+        lesson.subject = subject
         lesson.save()
         lesson.students.add(*ss)
 
