@@ -72,7 +72,7 @@
                                                 <th>Teacher</th>
                                                 <th>Subject</th>
                                                 <th>Start</th>
-                                                <th>Action</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -83,12 +83,6 @@
                                                     <td><a class = "badge badge-success" href = "{% url 'student_employee' lesson.teacher.pk %}">{{lesson.teacher}}</a></td>
                                                     <td>{{lesson.subject}}</td>
                                                     
-                                                    <td>
-                                                        <div class="ml-auto">
-                                                            <a href="{% url 'student_lesson_edit' lesson.pk %}" class="btn btn-primary btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
-                                                            <a href="{% url 'student_lesson_delete' lesson.pk %}" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
-                                                        </div>
-                                                    </td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
