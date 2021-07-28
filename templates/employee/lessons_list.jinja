@@ -78,10 +78,11 @@
                                         <tbody>
                                             {% for lesson in lessons %}
                                                 <tr>
+                                                    <td>{{lesson.start}}</td>
                                                     <td><a class = "badge badge-info light" href = "{% url 'employee_lesson' lesson.pk %}">{{lesson.name}}</a></td>
                                                     <td><a class = "badge badge-success" href = "{% url 'employee_profile' %}">{{lesson.teacher}}</a></td>
                                                     <td>{{lesson.subject}}</td>
-                                                    <td>{{lesson.start}}</td>
+                                                    
                                                     <td>
                                                         <div class="ml-auto">
                                                             <a href="{% url 'employee_lesson_edit' lesson.pk %}" class="btn btn-primary btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
