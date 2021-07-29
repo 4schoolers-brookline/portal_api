@@ -69,8 +69,8 @@ def user_submission(instance, filename):
     return ('{}s/id{}/{}/{}'.format(instance.account_type,instance.owner.id, instance.type, filename))
 
 class Submission(models.Model):
-    name = models.CharField(max_length=35,null=True, blank=True)
-    description = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=35,null=True, blank=True, default = '')
+    description = models.TextField(blank=True, null=True, default = '')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     account_type = models.CharField(max_length = 20, choices = ACC_TYPES, blank = True, null = True)
     type = models.CharField(max_length = 20, choices = SUBMISSION_TYPES)
