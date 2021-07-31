@@ -25,7 +25,7 @@ SECRET_KEY = '^ph)#4(^jeo2!5w-w#+@ufjl36l6%1u2lqucvkjxh)$+1no5nc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['147.182.161.175', '4schoolers.academy', '127.0.0.1', 'localhost', 'www.4schoolers.academy']
+ALLOWED_HOSTS = ['147.182.161.175', '4schoolers.academy', '127.0.0.1', 'localhost', 'www.4schoolers.academy', 'portal.4schoolers.com', 'www.portal.4schoolers.com']
 
 
 # Application definition
