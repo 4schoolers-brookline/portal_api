@@ -1,0 +1,152 @@
+{% extends 'manager/base.jinja' %}
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'manager/css/lightgallery.min.css' %}" rel="stylesheet">
+
+	<link href="{% static 'manager/css/daterangepicker.css' %}" rel="stylesheet">
+	<link href="{% static 'manager/css/bootstrap-clockpicker.min.css' %}" rel="stylesheet">
+	<link href="{% static 'manager/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet">
+
+	<link href="{% static 'manager/css/pickadate.default.css' %}" rel="stylesheet">
+	<link href="{% static 'manager/css/pickadate.default.date.css' %}" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+
+{% endblock style %}
+
+{% block content %}
+<div class="content-body">
+	<div class="container-fluid">
+		<div class="row page-titles mx-0">
+			<div class="col-sm-6 p-md-0">
+				<div class="welcome-text">
+					<h4>Hi, welcome back!</h4>
+					<p class="mb-0">4Schoolers welcomes you.</p>
+				</div>
+			</div>
+			<div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="javascript:void(0)">Lessons</a></li>
+					<li class="breadcrumb-item active"><a href="javascript:void(0)">Add Lesson</a></li>
+				</ol>
+			</div>
+		</div>
+		<!-- row -->
+		<div class = "row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">Create Lesson</h4>
+					</div>
+					<div class="card-body">
+						<form action="" method = "POST" name = "edit_account" enctype="multipart/form-data"> {% csrf_token %}
+							<div class="form-row">
+								<div class="form-group col-md-4">
+									<label>Lesson name</label>
+									<input required type="text" name = "name" value = "" class="form-control">
+								</div>
+								<div class="form-group col-md-4">
+									<label>Subject</label>
+										<select required class="form-control default-select" id="inputState" name = "subject">
+                                            <option selected="">{{lesson.subject}}</option>
+											<option selected="">{{lesson.subject}}</option>
+											<option value = "Mathematics">Mathematics</option>
+											<option value = "Computer Science">Computer Science</option>
+											<option value = "English">English</option>
+											<option value = "Chemistry">Chemistry</option>
+											<option value = "Physics">Physics</option>
+											<option value = "History">History</option>
+											<option value = "Academic Advising">Academic Advising</option>
+											<option value = "Competitive Math">Competitive Math</option>
+											<option value = "Projects">Projects</option>
+											<option value = "Essay Writing">Essay Writing</option>
+										</select>
+								</div>
+							</div>
+
+              <div class = "from-row">
+                <div class="form-group col-md-4">
+									<label>Student</label>
+										<select required multiple class="js-dropdown-teachers" name="student">
+											{% for student in students %}
+                                            	<option value="{{student.pk}}">{{student.user.get_full_name}}</option>
+											{% endfor %}
+										</select>
+
+								</div>
+                <div class="form-group col-md-4">
+									<label>Teacher</label>
+
+										<select class="js-dropdown-teachers" name="teacher">
+											{% for teacher in employees %}
+												<option value="{{teacher.pk}}">{{teacher.user.get_full_name}}</option>
+											{% endfor %}
+										</select>
+
+								</div>
+              </div>
+
+							<div class="form-row">
+								<div class="form-group col-md-12">
+									<label >Class Description</label>
+									<textarea rows="8" class="form-control" name="descr" id="descr"></textarea>
+								</div>
+							</div>
+
+
+
+							<div class="row form-material">
+								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+									<label>Lesson Start time</label>
+									<input required type="text" class="form-control" placeholder="Set End Date and Time" value = "" name = "start"  id="min-date">
+								</div>
+								<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+									<label>Lesson End time</label>
+									<input required type="text" class="form-control" name = "end" placeholder="Set End Date and Time" value = "" id="min-date-end">
+								</div>
+							</div>
+							<hr>
+
+
+							<label>{{error}}</label>
+							<button class="btn btn-primary" type="submit">Save</button>
+						</form>
+
+					</div>
+
+				</div>
+            </div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'manager/js/lightgallery-all.min.js'%}" ></script>
+
+	<script src="{% static 'manager/js/moment.min.js'%}" ></script>
+	<script src="{% static 'manager/js/daterangepicker.js'%}" ></script>
+
+	<script src="{% static 'manager/js/bootstrap-clockpicker.min.js'%}" ></script>
+
+	<script src="{% static 'manager/js/bootstrap-material-datetimepicker.js'%}" ></script>
+
+	<script src="{% static 'manager/js/picker.js'%}" ></script>
+	<script src="{% static 'manager/js/picker.time.js'%}" ></script>
+	<script src="{% static 'manager/js/picker.date.js'%}" ></script>
+
+
+
+	<script src="{% static 'manager/js/bs-daterange-picker-init.js'%}" ></script>
+	<script src="{% static 'manager/js/material-date-picker-init.js'%}" ></script>
+	<script src="{% static 'manager/js/pickadate-init.js'%}" ></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script>
+		$(document).ready(function() {
+		$('.js-dropdown-teachers').select2();
+	});
+	</script>
+
+{% endblock scripts %}

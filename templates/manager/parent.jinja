@@ -1,0 +1,194 @@
+{% extends 'manager/base.jinja' %}
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'manager/css/lightgallery.min.css' %}" rel="stylesheet">
+{% endblock style %}
+
+{% block content %}
+<div class="content-body">
+	<div class="container-fluid">
+		<div class="row page-titles mx-0">
+			<div class="col-sm-6 p-md-0">
+				<div class="welcome-text">
+					<h4>Hi, welcome back!</h4>
+					<p class="mb-0">4Schoolers welcomes you.</p>
+				</div>
+			</div>
+			<div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+					<li class="breadcrumb-item active"><a href="javascript:void(0)">Profile</a></li>
+				</ol>
+			</div>
+		</div>
+		<!-- row -->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="profile card card-body px-3 pt-3 pb-0">
+					<div class="profile-head">
+						<div class="photo-content">
+							<div class="cover-photo" style = "background:url({% static 'parent/img/cover.png' %})"></div>
+
+						</div>
+						<div class="profile-info">
+							<div class="profile-photo">
+								<a href="javascript:void()" data-toggle="modal" data-target="#changeImageModal">
+									<img src="{{parent.image.url}}" class="img-fluid rounded-circle" alt="" data-toggle="modal" data-target="#changeImageModalModal">
+								</a>
+
+							</div>
+							<div class="profile-details">
+								<div class="profile-name px-3 pt-2">
+									<h4 class="text-primary mb-0">{{parent.user.get_full_name}}</h4>
+									<p>Parent</p>
+								</div>
+								<div class="profile-email px-2 pt-2">
+									<h4 class="text-muted mb-0">{{parent.user.email}}</h4>
+									<p>Email</p>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-4">
+				<div class="row">
+
+
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="profile-interest">
+									<h5 class="text-primary d-inline">Exam results</h5>
+									<div class="card-body">
+										<canvas id="radar_chart"></canvas>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+			<div class="col-xl-8">
+				<div class="card">
+					<div class="card-body">
+						<div class="profile-tab">
+							<div class="custom-tab-1">
+								<ul class="nav nav-tabs">
+									<li class="nav-item"><a href="#about-me" data-toggle="tab" class="nav-link active show">About Me</a>
+									</li>
+									<li class="nav-item"><a href="#profile-settings" data-toggle="tab" class="nav-link">Edit</a>
+									</li>
+								</ul>
+								<div class="tab-content">
+									<div id="about-me" class="tab-pane fade active show">
+
+
+										<div class="profile-personal-info">
+											<h4 class="text-primary mb-4">Personal Information</h4>
+											<div class="row mb-2">
+												<div class="col-sm-3 col-5">
+													<h5 class="f-w-500">Name <span class="pull-right">:</span>
+													</h5>
+												</div>
+												<div class="col-sm-9 col-7"><span>{{parent.user.get_full_name}}</span>
+												</div>
+											</div>
+											<div class="row mb-2">
+												<div class="col-sm-3 col-5">
+													<h5 class="f-w-500">Email <span class="pull-right">:</span>
+													</h5>
+												</div>
+												<div class="col-sm-9 col-7"><span>{{parent.user.email}}</span>
+												</div>
+											</div>
+                      <div class="row mb-2">
+												<div class="col-sm-3 col-5">
+													<h5 class="f-w-500">Phone <span class="pull-right">:</span>
+													</h5>
+												</div>
+												<div class="col-sm-9 col-7"><span>{{parent.phone}}</span>
+												</div>
+											</div>
+									</div>
+
+									<div id="profile-settings" class="tab-pane fade">
+										<div class="pt-3">
+											<div class="settings-form">
+												<h4 class="text-primary">Edit Account</h4>
+												<form action="" method = "POST" name = "edit_account"> {% csrf_token %}
+													<div class="form-row">
+														<div class="form-group col-md-6">
+															<label>Phone</label>
+															<input required type="text" name = "phone" value = {{parent.phone}} class="form-control">
+														</div>
+													</div>
+													<button class="btn btn-primary" type="submit">Save</button>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal changeImage -->
+<div class="modal fade" id="changeImageModal">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Change profile Image</h5>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<img src = "{{parent.image.url}}">
+				<hr>
+				<form action="" method = "POST" name = "change_image_form" enctype="multipart/form-data"> {% csrf_token %}
+
+
+					<div class="form-group">
+						<label>Attach an image</label>
+						<input type="file" accept="image/*" class="form-control" name = "avatar">
+					</div>
+
+
+					<button class="btn btn-primary" type="submit" name = "change_image">Save</button>
+				</form>
+
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'manager/js/lightgallery-all.min.js'%}" ></script>
+	<script src="{% static 'manager/js/Chart.bundle.min.js' %}"></script>
+
+    <script src="{% static 'manager/js/apexchart.js' %}"></script>
+
+    <script src="{% static 'manager/js/chartist.min.js' %}"></script>
+
+
+
+
+    <script src="{% static 'manager/js/chartjs-init.js' %}"></script>
+{% endblock scripts %}

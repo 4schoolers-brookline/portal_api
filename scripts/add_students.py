@@ -13,7 +13,7 @@ from student.models import Student
 
 def add_student():
     data = input('First Name,Last Name,username,password,Email,Phone,bio,is_male,languages,interests,school,graduation year,address,city,zip,state,country').split(',')
-    
+
     # Data
     fname = data[0]
     lname = data[1]
@@ -42,7 +42,7 @@ def add_student():
     )
     user.set_password(password)
     user.save()
-    
+
     # student creation
     student = Student(
         user = user,
@@ -107,7 +107,7 @@ def main():
         read_file()
     elif (x=='2'):
         add_student()
-    
+
 
 if __name__ == '__main__':
     main()
