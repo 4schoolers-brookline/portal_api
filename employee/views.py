@@ -233,7 +233,7 @@ def lesson(request, id):
     context['lesson'] = l
     context['students_registered'] = l.students.all()
     context['homeworks'] = l.homework_submissions.all()
-    
+
     try:
         submission = l.homework_submissions.all().get(owner = request.user)
     except:
@@ -281,7 +281,7 @@ def lesson_edit(request, id):
     if context['employee'] != lesson.teacher:
         return render(request, 'employee/404.jinja')
     context['students'] = sorted(list(Student.objects.all()), key = lambda x: x.user.get_full_name())
-    
+
     context['start_time'] = lesson.start - datetime.timedelta(hours = 4)
     context['end_time'] = lesson.end - datetime.timedelta(hours = 4)
     

@@ -22,4 +22,6 @@ urlpatterns = [
     path('api/parent_lessons_week', views.parent_lessons_week),
     path('api/parent_subjects_lessons', views.parent_subjects_lessons),
 
+    path('api/manager_lessons', views.manager_lessons),
+
 ]

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from student.models import Student
 from employee.models import Employee
 from parent.models import Parent
+from manager.models import Manager
 from django.contrib.auth.models import User
 from .models import Lesson
 import json
@@ -255,3 +256,37 @@ def parent_subjects_lessons(request):
         result_cleaned['lessons'].append(value)
 
     return JsonResponse(result_cleaned, safe = False)
+
+@login_required
+def manager_lessons(request):
+    manager = Manager.objects.get(user = request.user)
+    result = []
+    for student in manager.students.all():
+        lessons = [lesson for lesson in Lesson.objects.all() if (student in lesson.students.all())]
+        url = lambda x: 'lesson/'+str(x)
+        result += [
+            {
+                'title': lesson.name,
+                'start': lesson.start,
+                'end': lesson.end,
+                'url': url(lesson.pk),
+            }
+            for lesson in lessons if lesson not in result
+        ]
+    for employee in manager.employees.all():
+        lessons = Lesson.objects.filter(teacher = employee)
+        url = lambda x: 'lesson/'+str(x)
+        result += [
+            {
+                'title': lesson.name,
+                'start': lesson.start,
+                'end': lesson.end,
+                'url': url(lesson.pk),
+            }
+            for lesson in lessons
+        ]
+    final_result = []
+    for lesson in result:
+        if lesson not in final_result:
+            final_result.append(lesson)
+    return JsonResponse(final_result, safe = False)

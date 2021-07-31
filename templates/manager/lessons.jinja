@@ -1,0 +1,46 @@
+{% extends 'manager/base.jinja' %}
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'manager/css/fullcalendar.main.min.css' %}" rel="stylesheet">
+{% endblock style %}
+
+{% block content %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Hi, welcome back!</h4>
+                    <p class="mb-0">View your lessons here</p>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Lessons</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Calendar</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="row">
+            <div id="external-events"></div>
+
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="calendar" class="app-fullcalendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'manager/js/moment.min.js'%}" ></script>
+
+    <script src="{% static 'manager/js/fullcalendar.main.min.js'%}" ></script>
+    <script src="{% static 'manager/js/fullcalendar-init.js'%}" ></script>
+{% endblock scripts %}

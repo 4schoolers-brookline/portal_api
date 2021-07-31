@@ -1,0 +1,64 @@
+{% extends 'manager/base.jinja' %}
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'manager/css/lightgallery.min.css' %}" rel="stylesheet">
+{% endblock style %}
+
+{% block content %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="form-head d-flex flex-wrap mb-sm-4 align-items-start">
+            <div class="mr-auto mb-2 d-lg-block mb-3">
+                <h2 class="text-black font-w700 mb-0">Parents</h2>
+                <p class="mb-0">To be added.</p>
+            </div>
+            <div class="dashboard_bar mb-3">
+                <div class="input-group search-area right d-lg-inline-flex d-none  mr-5">
+                    <input type="text" class="form-control" placeholder="Search here..">
+                    <div class="input-group-append">
+                        <a href="javascript:void(0);" class="input-group-text">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z" fill="#A4A4A4"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Add Order -->
+        </div>
+        <div class="row">
+            {% for parent in parents %}
+                <div class="col-xl-3 col-xxl-6 col-sm-6">
+                    <div class="card contact-bx hvr">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="image-bx mr-3">
+                                    {% if parent.image %}
+                                        <img src="{{parent.image.url}}" alt="" class="rounded-circle" width="90">
+                                    {% else %}
+                                        <img src="{% static 'manager/img/man.png' %}" alt="" class="rounded-circle" width="90">
+                                    {% endif %}
+
+                                    <span class="active"></span>
+                                </div>
+                                <div class="media-body" href = "">
+                                    <h6 class="font-w700"><a href="{% url 'manager_parent' parent.id %}" class="text-black">{{parent.user.get_full_name}}</a></h6>
+                                    <p class="fs-14 mb-1">{{ parent.child.user.get_full_name}}'s parent.</p>
+                                    <div class="contact-footer">
+                                        <a href="{% url 'manager_parent' parent.id %}" >View Profile</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'manager/js/lightgallery-all.min.js'%}" ></script>
+{% endblock scripts %}

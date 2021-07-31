@@ -1,0 +1,31 @@
+{% extends 'employee/base.jinja' %}
+{% load static %}
+
+{% block style %}
+{% endblock style %}
+
+{% block content %}
+<div class="content-body">
+    <div class="container">
+        <div class="row justify-content-center h-100 align-items-center">
+            <div class="col-md-5">
+                <div class="form-input-content text-center error-page">
+                    <h1 class="error-text font-weight-bold">Delete</h1>
+                    <h4><i class="fa fa-exclamation-triangle text-warning"></i> Deleting lesson</h4>
+                    <p>{{lesson.name}} will be deleted</p>
+                    
+                    <div>
+                        <form method = "post"> {% csrf_token %}
+                            <input type = submit class="btn btn-primary" value = "Delete">
+                        </form>
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+{% endblock scripts %}

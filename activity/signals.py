@@ -28,7 +28,7 @@ def students_lesson_changed(sender, **kwargs):
             coeff = 0.7
         elif (num_students > 2 ):
             coeff = 0.5
-        
+
         if (lvl == 1):
             coeff *= 0.5
         elif (lvl == 2):
@@ -58,16 +58,16 @@ def students_lesson_changed(sender, **kwargs):
             for bill in sacc.bills.all():
                 if (bill.lesson == lesson):
                     bill.delete()
-        
 
 
 
-            
+
+
 
 
 @receiver(post_save, sender = Lesson)
 def lesson_changed(sender, instance, created, **kwargs):
-  
+
     lesson = instance
     lvl = lesson.teacher.level
 
@@ -82,7 +82,7 @@ def lesson_changed(sender, instance, created, **kwargs):
         coeff = 0.7
     elif (num_students > 2 ):
         coeff = 0.5
-    
+
 
     if (lvl == 1):
         coeff *= 0.5
@@ -91,7 +91,7 @@ def lesson_changed(sender, instance, created, **kwargs):
     elif (lvl > 2):
         coeff *= 1
 
-    
+
     for student in lesson.students.all():
         if (not created):
             student_acc = StudentAccount.objects.get(student = student)
@@ -106,6 +106,3 @@ def lesson_changed(sender, instance, created, **kwargs):
             bill.save()
             student_acc.bills.add(bill)
             student_acc.save()
-
-
-
