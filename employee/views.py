@@ -20,9 +20,10 @@ def validation_employee(func):
          try:
              employee = Employee.objects.get(user = request.user)
              return func(request, *args, **kwargs)
-         except:
-             auth.logout(request)
-             return render(request, 'employee/404.jinja')
+         except Exception as e:
+            #  auth.logout(request)
+             context = {'error': e}
+             return render(request, 'employee/404.jinja', context = context)
      return validation
 
 def index(request):
@@ -369,13 +370,13 @@ def lesson_edit(request, id):
             hw_file_exists = False
 
         if (hw_name or hw_descr or hw_file_exists):
-            if (hw_exists):
-                hw.name = hw_name
+            try:
+                hw.name = hw_name or ''
                 if (hw_file_exists):
                     hw.file = hw_file
-                hw.description = hw_descr
+                hw.description = hw_descr or ''
                 hw.save()
-            else:
+            except:
                 hw = Submission(name = hw_name, description = hw_descr, owner = context['employee'].user, account_type = 'employee', type = 'Homework')
                 if (hw_file_exists):
                     hw.file = hw_file
