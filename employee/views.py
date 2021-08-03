@@ -163,6 +163,62 @@ def student(request, id):
 
 @login_required
 @validation_employee
+def student_add(request):
+    context = {}
+    context['employee'] = Employee.objects.get(user = request.user)
+    if request.method == 'POST':
+        fname = request.POST['first_name']
+        lname = request.POST['last_name']
+        username = request.POST['username']
+        password = request.POST['password']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        bio = request.POST['bio']
+        is_male = (request.POST['gender'] == "male")
+        languages = request.POST['languages']
+        interests = request.POST['interests']
+        school = request.POST['school']
+        graduation = request.POST['graduation_year']
+        address = request.POST['address']
+        city = request.POST['city']
+        zip_code = request.POST['zip']
+        state = request.POST['state']
+        country = request.POST['country']
+
+        user = User(
+            first_name = fname,
+            last_name = lname,
+            username = username,
+            email = email
+        )
+        user.set_password(password)
+        user.save()
+
+        student = Student(
+            user = user,
+            phone = phone,
+            bio = bio,
+            is_male = is_male,
+            languages = languages,
+            interests = interests,
+            school = school,
+            address = address,
+            city = city,
+            zip_code = zip_code,
+            state = state,
+            country = country,
+            is_active = True
+        )
+        try:
+            student.graduation_year = graduation
+        except:
+            pass
+        student.save()
+        return redirect('employee_directory')
+    return render(request, 'employee/student_add.jinja', context)
+
+@login_required
+@validation_employee
 def directory(request):
     context = {}
     context['employee'] = Employee.objects.get(user = request.user)
@@ -271,7 +327,6 @@ def lesson(request, id):
 
     return render(request, 'employee/lesson.jinja', context)
 
-
 @login_required
 @validation_employee
 def lesson_edit(request, id):
@@ -284,7 +339,7 @@ def lesson_edit(request, id):
 
     context['start_time'] = lesson.start - datetime.timedelta(hours = 4)
     context['end_time'] = lesson.end - datetime.timedelta(hours = 4)
-    
+
     if (request.method == 'POST'):
         name = request.POST['name']
         subject = request.POST['subject']
@@ -500,7 +555,6 @@ def lesson_add(request):
 
     return render(request, 'employee/lesson_add.jinja', context)
 
-
 @login_required
 @validation_employee
 def lesson_delete(request, id):
@@ -517,7 +571,6 @@ def lesson_delete(request, id):
         return redirect('employee_lessons')
 
     return render(request, 'employee/lesson_delete.jinja', context)
-
 
 def to_datetime(s):
     date = s.split(' ')[0].split('/')

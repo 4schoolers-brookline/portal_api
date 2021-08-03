@@ -15,6 +15,7 @@ urlpatterns = [
     path('highlights', views.highlights, name = 'employee_highlights'),
     path('directory', views.directory, name = 'employee_directory'),
     path('student/<int:id>', views.student, name = 'employee_student'),
+    path('student/add', views.student_add, name = 'employee_student_add'),
     path('request', views.req, name = 'employee_request'),
 
 
