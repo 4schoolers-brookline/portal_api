@@ -22,6 +22,16 @@ SUBJECT_CHOICES = (
     ('Competitive Math','Competitive Math'),
     ('Projects','Projects'),
     ('Essay Writing','Essay Writing'),
+    ('ACT Science','ACT Science'),
+    ('ACT Math','ACT Math'),
+    ('ACT English','ACT English'),
+    ('SAT Math','SAT Math'),
+    ('SAT English','SAT English'),
+    ('SSAT','SSAT'),
+    ('PSAT','PSAT'),
+    ('LSAT','LSAT'),
+    ('TOEFL','TOEFL'),
+    ('IELTS','IELTS')
 )
 
 
