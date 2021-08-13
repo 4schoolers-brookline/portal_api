@@ -401,7 +401,7 @@ def student_add(request):
             is_active = True
         )
         try:
-            student.graduation_year = graduation
+            student.graduation_year = int(graduation)
         except:
             pass
         student.save()
@@ -437,9 +437,9 @@ def employee_add(request):
         title = request.POST['title']
         education = request.POST['education']
         subjects = request.POST['subjects']
-        level = request.POST['level']
+        level = 3
         is_fulltime = (request.POST['education'] == "yes")
-        priority = request.POST['priority']
+        priority = 1
         user, created = User.objects.get_or_create(
             first_name = fname,
             last_name = lname,
@@ -549,6 +549,15 @@ def student(request, id):
             student.city = request.POST.get('city')
             student.state = request.POST.get('state')
             student.zip_code = request.POST.get('zip_code')
+            password = request.POST.get('password')
+            reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
+            pat = re.compile(reg)
+            mat = re.search(pat, password)
+            if not mat:
+                context['error'] = 'Password should have at least one number, one uppercase, one lowercase, one special symbol and must be between 6-20 characters long'
+                return render(request, 'manager/student.jinja', context)
+            student.user.set_password(password)
+            student.user.save()
             student.save()
         return redirect('manager_student', id)
 

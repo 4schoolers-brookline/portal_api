@@ -41,12 +41,12 @@
 											{% else %}
 												<a href="{% url 'employee_student' s.id %}"  class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
 													<img src="{% static 'employee/img/man.png'%}" alt="{{s.user.get_full_name}}" class="img-fluid">
-												</a>	
+												</a>
 											{% endif %}
 
-											
+
 										{% endfor %}
-										
+
 									</div>
 								</div>
 							</div>
@@ -59,7 +59,7 @@
 								<div class="profile-interest">
 									<h5 class="text-primary d-inline">Shared Files</h5>
 									<div class="row mt-4 sp4" id="">
-										
+
 										<a href="javascript:void()" class="btn btn-primary light btn-xs mb-1" data-toggle="modal" data-target="#classworkModal">Classwork</a>
 										<!-- Modal classwork -->
 										<div class="modal fade" id="classworkModal">
@@ -104,7 +104,7 @@
 														{% if homework_file %}
 															<p><a href="{{lesson.homework.file.url}}" target="_blank" class="tooltip-test text-primary" data-toggle="tooltip">Download File</a>  </p>
 														{% endif %}
-														
+
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
@@ -112,7 +112,7 @@
 												</div>
 											</div>
 										</div>
-										
+
 									</div>
 								</div>
 							</div>
@@ -152,11 +152,11 @@
 												</div>
 										</div>
 										{% endfor %}
-										
 
 
 
-										
+
+
 									</div>
 								</div>
 							</div>
@@ -166,7 +166,7 @@
 				</div>
 			</div>
 
-			
+
 			<div class="col-xl-8">
 				<div class="card">
 					<div class="card-body">
@@ -175,13 +175,14 @@
 								<div class="ml-auto">
 									<a href="{% url 'employee_lesson_edit' lesson.pk %}" class="btn btn-primary btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
 									<a href="{% url 'employee_lesson_delete' lesson.pk %}" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
+                  <a href="{% url 'employee_lesson_clone' lesson.pk %}" class="btn btn-success btn-xs sharp"><i class="fa fa-clone"></i></a>
 								</div>
 							<ul class="mb-4 post-meta d-flex flex-wrap">
 								<li class="post-author mr-3">By <a href = "{% url 'student_employee' lesson.teacher.pk %}">{{lesson.teacher.user.get_full_name}}</a></li>
 								<li class="post-date mr-3"><i class="fa fa-calender"></i>{{lesson.start}} - {{lesson.end}}</li>
-								
+
 							</ul>
-							
+
 							<p>	{{lesson.description}} </p>
 
 

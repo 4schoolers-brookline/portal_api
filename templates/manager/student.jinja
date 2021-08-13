@@ -183,6 +183,12 @@
 											<div class="settings-form">
 												<h4 class="text-primary">Edit Account</h4>
 												<form action="" method = "POST" name = "edit_account"> {% csrf_token %}
+                          <div class="form-row">
+														<div class="form-group col-md-6">
+															<label>Password</label>
+															<input required type="text" name = "password" value = "" class="form-control">
+														</div>
+													</div>
 													<div class="form-row">
 														<div class="form-group col-md-6">
 															<label>School</label>
