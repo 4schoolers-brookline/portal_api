@@ -24,4 +24,16 @@ urlpatterns = [
 
     path('api/manager_lessons', views.manager_lessons),
 
+    path('api/manager_student_lessons', views.manager_student_lessons),
+    path('api/manager_student_lessons_year', views.manager_student_lessons_year),
+    path('api/manager_student_lessons_month', views.manager_student_lessons_month),
+    path('api/manager_student_lessons_week', views.manager_student_lessons_week),
+    path('api/manager_student_subjects_lessons', views.manager_student_subjects_lessons),
+
+    path('api/manager_employee_lessons', views.manager_employee_lessons),
+    path('api/manager_employee_lessons_year', views.manager_employee_lessons_year),
+    path('api/manager_employee_lessons_month', views.manager_employee_lessons_month),
+    path('api/manager_employee_lessons_week', views.manager_employee_lessons_week),
+    path('api/manager_employee_subjects_lessons', views.manager_employee_subjects_lessons),
+
 ]

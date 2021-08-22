@@ -251,7 +251,7 @@ def highlights(request):
     students = set()
     ctr = 0
     for lesson in lessons:
-        ctr += (lesson.end-lesson.start).total_seconds()/360
+        ctr += (lesson.end-lesson.start).total_seconds()/3600
         for student in lesson.students.all():
             students.add(student)
 

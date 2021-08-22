@@ -18,6 +18,8 @@ urlpatterns = [
     path('request', views.req, name = 'manager_request'),
     path('request/list', views.req_list, name = 'manager_request_list'),
 
+    path('highlights/student/<int:id>', views.highlights_student, name = "highlights_student"),
+    path('highlights/employee/<int:id>', views.highlights_employee, name = "highlights_employee"),
 
 
     path('lessons', views.lessons, name = 'manager_lessons'),

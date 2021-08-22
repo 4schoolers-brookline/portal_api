@@ -10,6 +10,7 @@ from manager.models import Manager, Request
 from parent.models import Parent
 from bank.models import StudentAccount, StudentLessonBill
 import re
+import json
 import datetime
 from datetime import timedelta
 from django.utils import timezone
@@ -21,9 +22,8 @@ def validation_manager(func):
              manager = Manager.objects.get(user = request.user)
              return func(request, *args, **kwargs)
          except Exception as e:
-            #  auth.logout(request)
              context = {'error': e}
-            #  auth.logout(request)
+             auth.logout(request)
              return render(request, 'manager/404.jinja', context)
      return validation
 
@@ -351,6 +351,57 @@ def lesson_add(request):
         lesson.save()
 
     return render(request, 'manager/lesson_add.jinja', context)
+
+@login_required
+@validation_manager
+def highlights_student(request, id):
+    context = {}
+    context['manager'] = Manager.objects.get(user = request.user)
+    context['student'] = Student.objects.get(id = id)
+    context['student_id'] = context['student'].id
+    context['lessons'] = lessons = [lesson for lesson in Lesson.objects.all() if (context['student'] in lesson.students.all())]
+    context['classes'] = len(lessons)
+
+    try:
+        studentacc = StudentAccount.objects.get(student = Student.objects.get(id = id))
+    except:
+        studentacc = StudentAccount(student = Student.objects.get(id = id))
+        studentacc.save()
+
+    context['balance'] = studentacc.get_units_left()
+
+
+
+    hrs = 0
+    for lesson in lessons:
+        diff = lesson.end-lesson.start
+        hrs += diff.total_seconds()/3600
+    context['hours'] = round(hrs, 2)
+
+    return render(request, 'manager/highlights_student.jinja', context)
+
+@login_required
+@validation_manager
+def highlights_employee(request, id):
+    context = {}
+    context['manager'] = Manager.objects.get(user = request.user)
+    context['employee'] = Employee.objects.get(id = id)
+    context['employee_id'] = context['employee'].id
+    context['lessons'] = lessons = Lesson.objects.filter(teacher = context['employee'])
+    context['classes'] = len(lessons)
+
+    students = set()
+    ctr = 0
+    for lesson in lessons:
+        ctr += (lesson.end-lesson.start).total_seconds()/3600
+        for student in lesson.students.all():
+            students.add(student)
+
+    context['students'] = len(students)
+    context['hours'] = ctr
+
+
+    return render(request, 'manager/highlights_employee.jinja', context)
 
 @login_required
 @validation_manager
