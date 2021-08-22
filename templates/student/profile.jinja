@@ -134,6 +134,8 @@
 									</li>
 									<li class="nav-item"><a href="#profile-settings" data-toggle="tab" class="nav-link">Edit</a>
 									</li>
+                  <li class="nav-item"><a href="#profile-deposits" data-toggle="tab" class="nav-link">Deposits</a>
+									</li>
 								</ul>
 								<div class="tab-content">
 									<div id="about-me" class="tab-pane fade active show">
@@ -231,6 +233,36 @@
 													<button class="btn btn-primary" type="submit">Save</button>
 												</form>
 											</div>
+										</div>
+									</div>
+
+                  <div id="profile-deposits" class="tab-pane fade">
+										<div class="pt-3">
+                      <table id="example" class="display" style="min-width: 700px">
+                          <thead>
+                              <tr>
+                                  <th>№</th>
+                                  <th>Date</th>
+                                  <th>Units</th>
+                                  <th>Dollars</th>
+                                  <th>Description</th>
+
+
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {% for deposit in deposits %}
+                                  <tr>
+                                      <td>{{ forloop.counter }}</td>
+                                      <td>{{deposit.date}}</td>
+                                      <td>{{deposit.units}}</td>
+                                      <td>{{deposit.dollars}}</td>
+                                      <td>{{deposit.description}}</td>
+
+                                  </tr>
+                              {% endfor %}
+                          </tbody>
+                      </table>
 										</div>
 									</div>
 								</div>

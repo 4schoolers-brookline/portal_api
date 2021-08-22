@@ -1,16 +1,16 @@
 (function($) {
-   "use strict" 
+   "use strict"
 
-	
+
 	/* function draw() {
-		
+
 	} */
 
  var dzSparkLine = function(){
 	let draw = Chart.controllers.line.__super__.draw; //draw shadow
-	
+
 	var screenWidth = $(window).width();
-	
+
 	var weekLessonsChart = function(){
 		if(jQuery('#weekLessonsChart').length > 0 ){
 			var lessons = $.parseJSON(
@@ -21,7 +21,7 @@
 				}).responseText
 			);
 			const barChart_1 = document.getElementById("weekLessonsChart").getContext('2d');
-    
+
 			barChart_1.height = 40;
 
 			new Chart(barChart_1, {
@@ -40,7 +40,7 @@
 					]
 				},
 				options: {
-					legend: false, 
+					legend: false,
 					scales: {
 						yAxes: [{
 							ticks: {
@@ -87,13 +87,13 @@
 							data: lessons,
 							borderColor: barChart_2gradientStroke,
 							borderWidth: "0",
-							backgroundColor: barChart_2gradientStroke, 
+							backgroundColor: barChart_2gradientStroke,
 							hoverBackgroundColor: barChart_2gradientStroke
 						}
 					]
 				},
 				options: {
-					legend: false, 
+					legend: false,
 					scales: {
 						yAxes: [{
 							ticks: {
@@ -111,7 +111,7 @@
 	}
 	var monthLessonsChart = function(){
 		if(jQuery('#monthLessonsChart').length > 0 ){
-			
+
 			var lessons = $.parseJSON(
 				$.ajax({
 					url: '/activity/api/student_lessons_month',
@@ -139,13 +139,13 @@
 							data: lessons.days,
 							borderColor: barChart_2gradientStroke,
 							borderWidth: "0",
-							backgroundColor: barChart_2gradientStroke, 
+							backgroundColor: barChart_2gradientStroke,
 							hoverBackgroundColor: barChart_2gradientStroke
 						}
 					]
 				},
 				options: {
-					legend: false, 
+					legend: false,
 					scales: {
 						yAxes: [{
 							ticks: {
@@ -163,7 +163,7 @@
 
 
 
-	var radarChart = function(){	
+	var radarChart = function(){
 		if(jQuery('#radar_chart').length > 0 ){
 			//radar chart
 			var exams = $.parseJSON(
@@ -203,7 +203,7 @@
 				},
 				options: {
 					legend: false,
-					maintainAspectRatio: false, 
+					maintainAspectRatio: false,
 					scale: {
 						ticks: {
 							beginAtZero: true
@@ -223,7 +223,7 @@
 					async:false
 				}).responseText
 			);
-			
+
 			//pie chart
 			const pie_chart = document.getElementById("subjectsLessonChart").getContext('2d');
 			// pie_chart.height = 100;
@@ -233,7 +233,7 @@
 					defaultFontFamily: 'Poppins',
 					datasets: [{
 						data: lessons.lessons,
-						borderWidth: 0, 
+						borderWidth: 0,
 						backgroundColor: [
 							"rgba(41, 51, 242, .9)",
 							"rgba(41, 51, 242, .7)",
@@ -251,35 +251,35 @@
 					labels: lessons.subjects
 				},
 				options: {
-					responsive: true, 
-					legend: false, 
+					responsive: true,
+					legend: false,
 					maintainAspectRatio: false
 				}
 			});
 		}
 	}
-    
+
 	/* Function ============ */
 	return {
 		init:function(){
 		},
-		
-		
+
+
 		load:function(){
-			weekLessonsChart();	
+			weekLessonsChart();
 			yearLessonsChart();
-			monthLessonsChart();	
-			
+			monthLessonsChart();
+
 			radarChart();
 			subjectsLessonChart();
 		},
-		
+
 		resize:function(){
-			// barChart1();	
+			// barChart1();
 			// barChart2();
-			// barChart3();	
-			// lineChart1();	
-			// lineChart2();		
+			// barChart3();
+			// lineChart1();
+			// lineChart2();
 			// lineChart3();
 			// lineChart03();
 			// areaChart1();
@@ -287,15 +287,15 @@
 			// areaChart3();
 			// radarChart();
 			// pieChart();
-			// doughnutChart(); 
-			// polarChart(); 
+			// doughnutChart();
+			// polarChart();
 		}
 	}
 
 }();
 
 
-	
+
 jQuery(window).on('load',function(){
 	dzSparkLine.load();
 });
@@ -304,5 +304,5 @@ jQuery(window).on('resize',function(){
 	//dzSparkLine.resize();
 	setTimeout(function(){ dzSparkLine.resize(); }, 1000);
 });
-	
+
 })(jQuery);

@@ -303,7 +303,13 @@ def profile(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
     student = Student.objects.get(user = request.user)
-
+    lessons = [lesson for lesson in Lesson.objects.all() if (context['student'] in lesson.students.all())]
+    context['lessons'] = sorted(list(lessons), key = lambda x: x.start.timestamp(), reverse = True)
+    for account in StudentAccount.objects.all():
+        if account.student == context['student']:
+            student_account = account
+            break
+    context['deposits'] = [deposit for deposit in student_account.deposits.all()]
     context['languages'] = student.get_languages()
     context['interests'] = student.get_interests()
 
