@@ -16,14 +16,15 @@ from django.utils import timezone
 import pytz
 
 def validation_manager(func):
-
      def validation(request, *args, **kwargs):
          try:
              manager = Manager.objects.get(user = request.user)
              return func(request, *args, **kwargs)
-         except:
-             auth.logout(request)
-             return render(request, 'manager/404.jinja')
+         except Exception as e:
+            #  auth.logout(request)
+             context = {'error': e}
+            #  auth.logout(request)
+             return render(request, 'manager/404.jinja', context)
      return validation
 
 def index(request):
@@ -147,7 +148,7 @@ def profile(request):
 def employee_list(request):
     context = {}
     context['manager'] = Manager.objects.get(user = request.user)
-    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: x.priority)
+    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: x.priority or 1)
     return render(request, 'manager/employee_list.jinja', context)
 
 @login_required
@@ -257,7 +258,7 @@ def lesson_edit(request, id):
         return render(request, 'manager/404.jinja')
 
     context['students'] = sorted(list(context['manager'].students.all()), key = lambda x: x.user.get_full_name())
-    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: -x.priority)
+    context['employees'] = Employee.objects.all()
 
     context['start_time'] = lesson.start - datetime.timedelta(hours = 4)
     context['end_time'] = lesson.end - datetime.timedelta(hours = 4)
@@ -308,7 +309,7 @@ def lesson_add(request):
     context = {}
     context['manager'] = Manager.objects.get(user = request.user)
     context['students'] = sorted(list(context['manager'].students.all()), key = lambda x: x.user.get_full_name())
-    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: -x.priority)
+    context['employees'] = Employee.objects.all()
 
     if (request.method == 'POST'):
         name = request.POST['name']

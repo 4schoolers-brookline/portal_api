@@ -116,7 +116,7 @@ def req(request):
 def lesson_add(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
-    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: -x.priority)
+    context['employees'] = Employee.objects.all()
 
     if (request.method == 'POST'):
         name = request.POST['name']
@@ -160,7 +160,7 @@ def lesson_edit(request, id):
     lesson = context['lesson'] = Lesson.objects.get(pk = id)
     if context['student'] not in lesson.students.all():
         return render(request, 'student/404.jinja')
-    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: x.priority)
+    context['employees'] = Employee.objects.all()
 
     if (request.method == 'POST'):
         name = request.POST['name']
@@ -293,7 +293,7 @@ def lessons_list(request):
 def directory(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)
-    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: x.priority)
+    context['employees'] = sorted(list(Employee.objects.all()), key = lambda x: x.priority or 1)
 
     return render(request, 'student/directory.jinja', context)
 

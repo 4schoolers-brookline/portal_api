@@ -22,8 +22,6 @@ urlpatterns = [
     path('lesson/add', views.lesson_add, name = 'student_lesson_add'),
     path('lesson/delete/<int:id>', views.lesson_delete, name = 'student_lesson_delete'),
     path('lesson/edit/<int:id>', views.lesson_edit, name = 'student_lesson_edit'),
-
-
     path('employee/<int:id>', views.employee, name = 'student_employee'),
 
     path('api/exams', views.student_exam_results_api),
