@@ -22,7 +22,7 @@ SECRET_KEY = '^ph)#4(^jeo2!5w-w#+@ufjl36l6%1u2lqucvkjxh)$+1no5nc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['147.182.161.175', '4schoolers.academy', '127.0.0.1', 'localhost', 'www.4schoolers.academy', 'portal.4schoolers.com', 'www.portal.4schoolers.com']
 
 
 # Application definition
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'student', 'employee', 'parent', 'manager', 'activity', 'bank', 'django_cleanup.apps.CleanupConfig',
 ]
 
@@ -45,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'portal.middleware.mytz.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'portal.urls'
@@ -71,12 +73,20 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'portaldb',
+        'USER': 'portaldev',
+        'PASSWORD':'4Schoolers2015',
+        'HOST':'localhost',
+        'PORT':'5432'
     }
 }
+
+
+
 
 
 # Password validation
@@ -112,10 +122,27 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
+# AWS S3 Setup for Static Files
+import json
+AWS_ACCESS_KEY_ID = json.load(open('.conf',))['static']['id']
+AWS_SECRET_ACCESS_KEY = json.load(open('.conf',))['static']['key']
+AWS_STORAGE_BUCKET_NAME = '4schoolers'
 
-STATIC_URL = '/static/'
+AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'portal/static/'),
+]
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+DEFAULT_FILE_STORAGE = 'portal.custom_storages.MediaStorage'
+
+try:
+    from portal.local_settings import *
+except ImportError as e:
+    pass
