@@ -299,6 +299,18 @@ def directory(request):
 
 @login_required
 @validation_student
+def deposits(request):
+    context = {}
+    context['student'] = student = Student.objects.get(user = request.user)
+    student_bank = StudentAccount.objects.get(student = student)
+    deposits = student_bank.deposits.all()
+    context['deposits'] = deposits
+    return render(request, 'student/deposits.jinja', context)
+
+
+
+@login_required
+@validation_student
 def profile(request):
     context = {}
     context['student'] = Student.objects.get(user = request.user)

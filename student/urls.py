@@ -15,6 +15,8 @@ urlpatterns = [
     path('directory', views.directory, name = 'student_directory'),
     path('highlights', views.highlights, name = 'student_highlights'),
     path('request', views.req, name = 'student_request'),
+    path('deposits', views.deposits, name = 'student_deposits'),
+    
 
     path('lessons', views.lessons, name = 'student_lessons'),
     path('lessons/list', views.lessons_list, name = 'student_lessons_list'),

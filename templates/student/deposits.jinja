@@ -1,0 +1,86 @@
+{% extends 'student/base.jinja' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'student/css/chartist.min.css'%}">
+{% endblock style %}
+
+{% block content %}
+
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Add Project -->
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Hi, welcome back!</h4>
+                    <span>Some profile highlights!</span>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Highlights</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="row">     
+
+            <!-- Column starts -->
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header d-block">
+                                <h4 class="card-title">Money Deposits</h4>
+                                <p class="m-0 subtitle"> Here you can see all money deposits made to your account.</p>
+                            </div>
+                            <div class="card-body">
+                                <div id="accordion-two" class="accordion accordion-danger-solid">
+                                    {% for deposit in deposits %}
+                                        <div class="accordion__item">
+                                            <div class="accordion__header" data-toggle="collapse" data-target="#bordered_collapse{{forloop.counter}}"> <span class="accordion__header--text">{{deposit.date}}</span>
+                                                <span class="accordion__header--indicator"></span>
+                                            </div>
+                                            <div id="bordered_collapse{{forloop.counter}}" class="collapse accordion__body show" data-parent="#accordion-{{forloop.counter}}">
+                                                <div class="accordion__body--text">
+                                                    Bought {{deposit.units}} units. Spent ${{deposit.dollars}}. {{deposit.description}}.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column ends -->
+
+
+        
+            
+
+                                
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+
+    
+{% block scripts %}
+
+    <script src="{% static 'student/js/Chart.bundle.min.js' %}"></script>
+
+    <script src="{% static 'student/js/apexchart.js' %}"></script>
+
+    <script src="{% static 'student/js/chartist.min.js' %}"></script>
+
+
+
+
+    <script src="{% static 'student/js/chartjs-init.js' %}"></script>
+{% endblock scripts %}

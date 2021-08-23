@@ -49,7 +49,7 @@
                                     <h6 class="font-w700"><a href="{% url 'manager_student' student.id %}" class="text-black">{{student.user.get_full_name}}</a></h6>
                                     <p class="fs-14 mb-1">{{student.school}}</p>
                                     <div class="contact-footer">
-                                        <a href="{% url 'manager_student' student.id %}" >View Profile</a>
+                                        <a href="{% url 'manager_student' student.id %}" >View Profile </a> | <a href="{% url 'highlights_student' student.id %}" >View Highlights</a> 
                                     </div>
                                 </div>
                             </div>
