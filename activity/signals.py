@@ -69,7 +69,7 @@ def students_lesson_changed(sender, **kwargs):
 def lesson_changed(sender, instance, created, **kwargs):
 
     lesson = instance
-    lvl = lesson.teacher.level
+    lvl = lesson.teacher.level or 3
 
     num_students = len(lesson.students.all())
     duration = (lesson.end-lesson.start).total_seconds()/60
@@ -79,15 +79,15 @@ def lesson_changed(sender, instance, created, **kwargs):
     if (num_students == 1):
         coeff = 1
     elif (num_students == 2):
-        coeff = 0.7
+        coeff = 0.8
     elif (num_students > 2 ):
-        coeff = 0.5
+        coeff = 0.6
 
 
     if (lvl == 1):
-        coeff *= 0.5
+        coeff *= 0.6
     elif (lvl == 2):
-        coeff *= 0.7
+        coeff *= 0.8
     elif (lvl > 2):
         coeff *= 1
 
