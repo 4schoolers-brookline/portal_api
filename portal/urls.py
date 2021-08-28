@@ -22,7 +22,9 @@ from . import views
 
 urlpatterns = [
     path('', views.index),
+    path('reset/<uidb64>/<token>/',views.reset, name='reset'),
     path('admin/', admin.site.urls),
+    path('forgot', views.forgot, name = 'forgot'),
     path('student/', include('student.urls')),
     path('manager/', include('manager.urls')),
     path('parent/', include('parent.urls')),

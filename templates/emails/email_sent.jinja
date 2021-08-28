@@ -1,0 +1,32 @@
+{% extends 'student/base_not_loged.jinja' %}
+{% load static %}
+
+{% block bodyclass %}vh-100{% endblock %}
+{% block content %}
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-6">
+                    <div class="authincation-content">
+                        <div class="row no-gutters">
+                            <div class="col-xl-12">
+                                <div class="auth-form">
+									<div class="text-center mb-3">
+										<img src="{% static 'employee/img/logo-min.png' %}" alt="">
+									</div>
+                                    <h4 class="text-center mb-4">Email with instructions has been sent</h4>
+                                 
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block scripts%}
+
+{% endblock %}

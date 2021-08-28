@@ -1,0 +1,12 @@
+{% autoescape off %}
+Dear, {{ user.first_name }},
+
+You have requested to reset your password. To reset your password the link below.
+
+http://4schoolers.academy{% url 'reset' uidb64=uid token=token %}
+
+if you think that an error has occurred, just ignore this email.
+
+Kind regards,
+4Schoolers Development Team
+{% endautoescape %}
