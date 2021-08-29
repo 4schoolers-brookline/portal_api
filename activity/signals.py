@@ -59,12 +59,6 @@ def students_lesson_changed(sender, **kwargs):
                 if (bill.lesson == lesson):
                     bill.delete()
 
-
-
-
-
-
-
 @receiver(post_save, sender = Lesson)
 def lesson_changed(sender, instance, created, **kwargs):
 
