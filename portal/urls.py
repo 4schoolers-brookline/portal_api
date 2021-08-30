@@ -29,6 +29,7 @@ urlpatterns = [
     path('api/employee_searchbar', searchbar.employee_searchbar, name = 'employee_searchbar'),
     path('api/manager_searchbar', searchbar.manager_searchbar, name = 'manager_searchbar'),
     path('student/', include('student.urls')),
+    path('corporation/', include('corporation.urls')),
     path('manager/', include('manager.urls')),
     path('parent/', include('parent.urls')),
     path('employee/', include('employee.urls')),
