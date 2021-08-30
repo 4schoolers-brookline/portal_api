@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>{% block title %}{% endblock title %}</title>
+        <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+        <link href="{% static 'corporation/css/bootstrap-select.min.css' %}" rel="stylesheet">
+        <link href="{% static 'corporation/css/style.css' %}" rel="stylesheet">
+
+        {% block style %} {% endblock style %}
+    </head>
+
+    <body class = "{% block bodyclass %}{% endblock bodyclass%}">
+        {% block content %}{% endblock content %}
+        <script src="{% static 'corporation/js/global.js' %}"></script>
+        <script src="{% static 'corporation/js/bootstrap-select.min.js' %}"></script>
+        <script src="{% static 'corporation/js/custom.min.js' %}"></script>
+        <script src="{% static 'corporation/js/deznav-init.js' %}"></script>
+        {% block scripts %} {% endblock scripts %}
+    </body>
+</html>

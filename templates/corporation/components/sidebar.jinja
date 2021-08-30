@@ -1,0 +1,40 @@
+<div class="deznav">
+    <div class="deznav-scroll">
+        <ul class="metismenu" id="menu">
+            
+            <li><a href="{% url 'corporation_students' %}" aria-expanded="false">
+                    <i class="flaticon-016-double-chevron"></i>
+                    <span class="nav-text">All students</span>
+                </a>
+
+            </li>
+            
+            <li><a class="ai-icon" href="{% url 'corporation_highlights' %}" aria-expanded="false">
+                    <i class="flaticon-016-double-chevron"></i>
+                    <span class="nav-text">Highlights</span>
+                </a>
+
+            </li>
+            
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                <i class="flaticon-012-checkmark"></i>
+                    <span class="nav-text">Lessons</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'corporation_lessons' %}">Calendar</a></li>
+                    <li><a href="{% url 'corporation_lessons_list' %}">List View Lessons</a></li>
+                </ul>
+            </li>
+
+        </ul>
+        <div class="drum-box">
+            <p class="fs-18 font-w500 mb-4">Something is not working?</p>
+            <a class="" href="mailto:dev@4schoolers.com"><i class="fa fa-long-arrow-right"></i> Email Dev Team
+            </a>
+        </div>
+        <div class="copyright">
+            <p><strong>4Schoolers Student Portal</strong> © 2021 All Rights Reserved</p>
+            <p class="fs-12">Made with ♥ by Engineering Team</p>
+        </div>
+    </div>
+</div>

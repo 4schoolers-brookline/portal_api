@@ -28,6 +28,7 @@ ALLOWED_HOSTS = ['147.182.161.175', '4schoolers.academy', '127.0.0.1', 'localhos
 # Application definition
 
 INSTALLED_APPS = [
+    'corporation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages',
-    'corporation','student', 'employee', 'parent', 'manager', 'activity', 'bank', 'django_cleanup.apps.CleanupConfig',
+    'student', 'employee', 'parent', 'manager', 'activity', 'bank', 'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [

@@ -5,11 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from .models import Corporation
-from employee.models import Employee
-from student.models import Student, Exam, Student
+from student.models import Student, Exam
 from activity.models import Lesson, Submission
-from manager.models import Request
-from bank.models import StudentAccount, StudentLessonBill
+from bank.models import StudentAccount
 
 import re
 import datetime
@@ -32,23 +30,26 @@ def validation_corporation(func):
          try:
              corporation = Corporation.objects.get(user = request.user)
              return func(request, *args, **kwargs)
-         except:
-             auth.logout(request)
-             return render(request, 'corporation/404.jinja')
+         except Exception as e:
+            #  auth.logout(request)
+            context = {
+                'error': e
+            }
+            return render(request, 'corporation/404.jinja', context)
      return validation
 
 def index(request):
     context = {}
     if (request.user.is_authenticated):
         context['corporation'] = Corporation.objects.get(user = request.user)
-        return redirect('corporation_highlights')
+        return redirect('corporation_students')
     else:
         return redirect('corporation_login')
 
 def login(request):
     context = {}
     if (request.user.is_authenticated):
-        return redirect('corporation_profile')
+        return redirect('corporation_students')
 
     if (request.method == 'POST'):
         if '@' in request.POST['login']:
@@ -63,7 +64,7 @@ def login(request):
 
             if (user.check_password(password)):
                 auth.login(request, user)
-                return redirect('corporation_profile')
+                return redirect('corporation_students')
             else:
                 context['invalid'] = True
                 return render(request, 'corporation/login.jinja', context)
@@ -79,7 +80,7 @@ def login(request):
 
             if (user.check_password(password)):
                 auth.login(request, user)
-                return redirect('corporation_profile')
+                return redirect('corporation_students')
             else:
                 context['invalid'] = True
                 return render(request, 'corporation/login.jinja', context)
@@ -190,25 +191,24 @@ def lesson(request, id):
 @validation_corporation
 def lessons(request):
     context = {}
-    students = Corporation.objects.get(user = request.user).children
-    context['lessons'] = {lesson for lesson in Lesson.objects.all() if (any(student in lesson.students.all() for student in lesson))}
-
+    students = Corporation.objects.get(user = request.user).children.all()
+    context['lessons'] = list({lesson for lesson in Lesson.objects.all() if (any(student in lesson.students.all() for student in students))})
     return render(request, 'corporation/lessons.jinja', context)
 
 @login_required
 @validation_corporation
 def lessons_list(request):
     context = {}
-    students = Corporation.objects.get(user = request.user).children
-    context['lessons'] = {lesson for lesson in Lesson.objects.all() if (any(student in lesson.students.all() for student in lesson))}
-
+    students = Corporation.objects.get(user = request.user).children.all()
+    context['lessons'] = list({lesson for lesson in Lesson.objects.all() if (any(student in lesson.students.all() for student in students))})
     return render(request, 'corporation/lessons_list.jinja', context)
 
 @login_required
 @validation_corporation
 def students(request):
     context = {}
-    context['students'] = Corporation.objects.get(user = request.user).children
+    context['corporation'] = Corporation.objects.get(user = request.user)
+    context['students'] = Corporation.objects.get(user = request.user).children.all()
     return render(request, 'corporation/students.jinja', context)
 
 
@@ -220,5 +220,8 @@ def student(request, id):
     context['student'] = student = Student.objects.get(id = id)
     context['interests'] = (student.interests or 'Education').split(',')
     context['languages'] = (student.languages or 'English').split(',')
-    
+
+    student_account = StudentAccount.objects.get(student = student)
+    context['units_left'] = student_account.get_units_left()
+    context['deposits'] = student_account.deposits.all()
     return render(request, 'corporation/student.jinja', context)

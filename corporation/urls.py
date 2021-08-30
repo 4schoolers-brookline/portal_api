@@ -12,10 +12,11 @@ urlpatterns = [
     path('highlights', views.highlights, name = 'corporation_highlights'),
     
 
-    path('students', views.students, name = 'corporation_student_list'),
+    path('students', views.students, name = 'corporation_students'),
     
     path('lessons', views.lessons, name = 'corporation_lessons'),
     path('lessons/list', views.lessons_list, name = 'corporation_lessons_list'),
+    path('lessons/<int:id>', views.lesson, name = 'corporation_lesson'),
     
     path('student/<int:id>', views.student, name = 'corporation_student'),
     

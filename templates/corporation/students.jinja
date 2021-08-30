@@ -1,0 +1,55 @@
+{% extends 'corporation/base.jinja' %}
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'corporation/css/lightgallery.min.css' %}" rel="stylesheet">
+{% endblock style %}
+
+{% block content %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="form-head d-flex flex-wrap mb-sm-4 align-items-start">
+            <div class="mr-auto mb-2 d-lg-block mb-3">
+                <h2 class="text-black font-w700 mb-0">Corporation: All students</h2>
+                <p class="mb-0">All students from the organization.</p>
+            </div>
+            
+        
+        </div>
+        <div class="row">
+            {% for student in students %}
+                <div class="col-xl-3 col-xxl-6 col-sm-6">
+                    <div class="card contact-bx hvr">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="image-bx mr-3">
+                                    {% if student.image %}
+                                        <img src="{{student.image.url}}" alt="" class="rounded-circle" width="90">
+                                    {% else %}
+                                        <img src="{% static 'corporation/img/man.png' %}" alt="" class="rounded-circle" width="90">
+                                    {% endif %}
+
+                                    <span class="active"></span>
+                                </div>
+                                <div class="media-body" href = "">
+                                    <h6 class="font-w700"><a href="{% url 'corporation_student' student.id %}" class="text-black">{{student.user.get_full_name}}</a></h6>
+                                    <p class="fs-14 mb-1">{{student.title}}</p>
+                                    <div class="contact-footer">
+                                        <a href="{% url 'corporation_student' student.id %}" >View Profile</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'corporation/js/lightgallery-all.min.js'%}" ></script>
+{% endblock scripts %}
