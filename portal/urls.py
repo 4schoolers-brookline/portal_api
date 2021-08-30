@@ -18,19 +18,22 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
-from . import views
+from . import views, searchbar
 
 urlpatterns = [
     path('', views.index),
     path('reset/<uidb64>/<token>/',views.reset, name='reset'),
     path('admin/', admin.site.urls),
     path('forgot', views.forgot, name = 'forgot'),
+    path('api/student_searchbar', searchbar.student_searchbar, name = 'student_searchbar'),
+    path('api/employee_searchbar', searchbar.employee_searchbar, name = 'employee_searchbar'),
+    path('api/manager_searchbar', searchbar.manager_searchbar, name = 'manager_searchbar'),
     path('student/', include('student.urls')),
     path('manager/', include('manager.urls')),
     path('parent/', include('parent.urls')),
     path('employee/', include('employee.urls')),
     path('activity/', include('activity.urls')),
-] 
+]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

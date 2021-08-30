@@ -22,11 +22,11 @@ class Student(models.Model):
 
     languages = models.CharField(max_length=215,null=True, blank=True)
     interests = models.CharField(max_length=215,null=True, blank=True)
-    
+
 
     school = models.CharField(max_length=63,null=True, blank=True)
     graduation_year = models.IntegerField(null=True, blank=True)
-    
+
     address = models.CharField(max_length=100,null=True, blank=True)
     city = models.CharField(max_length=50,null=True, blank=True)
     zip_code = models.CharField(max_length=50,null=True, blank=True)
@@ -43,7 +43,7 @@ class Student(models.Model):
             return x
         except:
             return []
-        
+
     def get_interests(self):
         ints = self.interests
         try:
@@ -57,7 +57,3 @@ class Exam(models.Model):
     name = models.CharField(max_length = 215,null = True, blank = True)
     score = models.FloatField(null = True, blank = True)
     percentage = models.IntegerField(null = True, blank = True)
-
-
-
-
