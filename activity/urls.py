@@ -36,4 +36,10 @@ urlpatterns = [
     path('api/manager_employee_lessons_week', views.manager_employee_lessons_week),
     path('api/manager_employee_subjects_lessons', views.manager_employee_subjects_lessons),
 
+    path('api/corporation_lessons_year', views.corporation_lessons_year),
+    path('api/corporation_lessons_month', views.corporation_lessons_month),
+    path('api/corporation_lessons_week', views.corporation_lessons_week),
+    path('api/corporation_subjects_lessons', views.corporation_subjects_lessons),
+    path('api/corporation_students_lessons', views.corporation_students_lessons),
+    
 ]

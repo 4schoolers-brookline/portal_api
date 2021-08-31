@@ -131,42 +131,25 @@ def password(request):
 @validation_corporation
 def highlights(request):
     context = {}
-    context['corporation'] = Corporation.objects.get(user = request.user)
-    student = Corporation.objects.get(user = request.user).child
-    context['student'] = student
-    context['lessons'] = lessons = [lesson for lesson in Lesson.objects.all() if (context['student'] in lesson.students.all())]
-    context['classes'] = len(lessons)
+    context['corporation'] = corporation = Corporation.objects.get(user = request.user)
+    context['students'] = students = corporation.children.all()
+    context['students_num'] = len(students)
+    
+    balance = 0
+    for student in students:
+        try:
+            studentacc = StudentAccount.objects.get(student = student)
+        except:
+            studentacc = StudentAccount(student = student)
+            studentacc.save()
+        balance += studentacc.get_units_left()
+    context['balance'] = balance
 
-    try:
-        studentacc = StudentAccount.objects.get(student = student)
-    except:
-        studentacc = StudentAccount(student = student)
-        studentacc.save()
 
-    context['balance'] = studentacc.get_units_left()
-
-
-
-    hrs = 0
-    for lesson in lessons:
-        diff = lesson.end-lesson.start
-        hrs += diff.total_seconds()/3600
-    context['hours'] = round(hrs, 2)
+    context['lessons'] = lessons = list({lesson for lesson in Lesson.objects.all() if (any(student in lesson.students.all() for student in students))})
+    context['total_classes'] = len(lessons)
 
     return render(request, 'corporation/highlights.jinja', context)
-
-@login_required
-@validation_corporation
-def req(request):
-    context = {}
-    context['corporation'] = Corporation.objects.get(user = request.user)
-    if (request.method == 'POST'):
-        req = request.POST['req']
-        owner = request.user
-        user_request = Request(owner = owner, description = req)
-        user_request.save()
-
-    return render(request, 'corporation/request.jinja', context)
 
 @login_required
 @validation_corporation
