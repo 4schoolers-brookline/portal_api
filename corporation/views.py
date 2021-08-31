@@ -31,7 +31,7 @@ def validation_corporation(func):
              corporation = Corporation.objects.get(user = request.user)
              return func(request, *args, **kwargs)
          except Exception as e:
-            #  auth.logout(request)
+            auth.logout(request)
             context = {
                 'error': e
             }
