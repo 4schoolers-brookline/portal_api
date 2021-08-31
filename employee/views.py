@@ -565,8 +565,7 @@ def lesson_delete(request, id):
         return render(request, 'employee/404.jinja')
 
     if (request.method == 'POST'):
-        if timezone.now() > lesson.start or lesson.start - timezone.now() < timedelta(days=1):
-            return render(request, 'employee/403.jinja', context)
+        
         lesson.delete()
         return redirect('employee_lessons')
 
