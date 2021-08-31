@@ -1,1 +1,1 @@
-4Schoolers Portal API built with Django & Django REST Framework.
+4Schoolers Portal API built with Django.
