@@ -13,17 +13,6 @@ import re
 import datetime
 
 
-# login
-# logout
-# change password
-# all students
-
-# calendar
-# list view lessons
-# lesson open
-
-# highlights
-
 
 def validation_corporation(func):
      def validation(request, *args, **kwargs):

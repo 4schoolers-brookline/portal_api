@@ -547,8 +547,6 @@ def lesson_add(request):
                 hw.save()
                 lesson.homework = hw
 
-
-
         lesson.save()
 
         return redirect('employee_lessons')
