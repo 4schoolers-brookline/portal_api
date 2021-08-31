@@ -41,5 +41,6 @@ urlpatterns = [
     path('api/corporation_lessons_week', views.corporation_lessons_week),
     path('api/corporation_subjects_lessons', views.corporation_subjects_lessons),
     path('api/corporation_students_lessons', views.corporation_students_lessons),
+    path('api/corporation_lessons', views.corporation_lessons),
     
 ]

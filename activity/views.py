@@ -550,3 +550,20 @@ def corporation_students_lessons(request):
         result_cleaned['lessons'].append(value)
 
     return JsonResponse(result_cleaned, safe = False)
+
+def corporation_lessons(request):
+    students = Corporation.objects.get(user = request.user).children.all()
+    lessons = list({lesson for lesson in Lesson.objects.all() if (any(student in lesson.students.all() for student in students))})
+    
+    url = lambda x: 'lesson/'+str(x)
+    result = [
+        {
+            'title': lesson.name,
+            'start': lesson.start,
+            'end': lesson.end,
+            'url': url(lesson.pk),
+        }
+        for lesson in lessons
+    ]
+
+    return JsonResponse(result, safe = False)

@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	var lessons = $.parseJSON(
 		$.ajax({
-			url: '/activity/api/parent_lessons',
+			url: '/activity/api/corporation_lessons',
 			dataType: 'json',
 			async:false
 		}).responseText
