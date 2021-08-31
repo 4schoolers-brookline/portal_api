@@ -43,7 +43,7 @@ def student_lessons_year(request):
     result = [0 for _ in range(13)]
     for lesson in lessons:
         if lesson.start.year == datetime.datetime.now().year:
-            result[lesson.start.month-1] += 1
+            result[lesson.start.month-1] += (lesson.end-lesson.start).total_seconds()/3600
     return JsonResponse(result, safe = False)
 
 @login_required
@@ -54,7 +54,7 @@ def student_lessons_month(request):
     days = [0 for _ in range(this_month+1)]
     for lesson in lessons:
         if (lesson.start.year == datetime.datetime.now().year and lesson.start.month == datetime.datetime.now().month):
-            days[lesson.start.day-1] += 1
+            days[lesson.start.day-1] += (lesson.end-lesson.start).total_seconds()/3600
     result = {
         'total': [i for i in range(1,this_month+1)],
         'days': days
@@ -69,7 +69,7 @@ def student_lessons_week(request):
     result = [0 for _ in range(8)]
     for lesson in lessons:
         if (lesson.start.year == datetime.datetime.now().year and lesson.start.month == datetime.datetime.now().month and lesson.start.isocalendar()[1]==datetime.datetime.now().isocalendar()[1]):
-            result[lesson.start.weekday()] += 1
+            result[lesson.start.weekday()] += (lesson.end-lesson.start).total_seconds()/3600
 
 
     return JsonResponse(result, safe = False)
@@ -83,9 +83,9 @@ def student_subjects_lessons(request):
 
     for lesson in lessons:
         if (lesson.subject not in result.keys()):
-            result[lesson.subject] = 1
+            result[lesson.subject] = (lesson.end-lesson.start).total_seconds()/3600
         else:
-            result[lesson.subject] += 1
+            result[lesson.subject] += (lesson.end-lesson.start).total_seconds()/3600
 
 
     result_cleaned = {
@@ -123,7 +123,7 @@ def employee_lessons_week(request):
     result = [0 for _ in range(8)]
     for lesson in lessons:
         if (lesson.start.year == datetime.datetime.now().year and lesson.start.month == datetime.datetime.now().month and lesson.start.isocalendar()[1]==datetime.datetime.now().isocalendar()[1]):
-            result[lesson.start.weekday()] += 1
+            result[lesson.start.weekday()] += (lesson.end-lesson.start).total_seconds()/3600
 
 
     return JsonResponse(result, safe = False)
@@ -136,7 +136,7 @@ def employee_lessons_month(request):
     days = [0 for _ in range(this_month+1)]
     for lesson in lessons:
         if (lesson.start.year == datetime.datetime.now().year and lesson.start.month == datetime.datetime.now().month):
-            days[lesson.start.day-1] += 1
+            days[lesson.start.day-1] += (lesson.end-lesson.start).total_seconds()/3600
     result = {
         'total': [i for i in range(1,this_month+1)],
         'days': days
@@ -151,7 +151,7 @@ def employee_lessons_year(request):
     result = [0 for _ in range(13)]
     for lesson in lessons:
         if lesson.start.year == datetime.datetime.now().year:
-            result[lesson.start.month-1] += 1
+            result[lesson.start.month-1] += (lesson.end-lesson.start).total_seconds()/3600
     return JsonResponse(result, safe = False)
 
 @login_required
@@ -163,9 +163,9 @@ def employee_subjects_lessons(request):
 
     for lesson in lessons:
         if (lesson.subject not in result.keys()):
-            result[lesson.subject] = 1
+            result[lesson.subject] = (lesson.end-lesson.start).total_seconds()/3600
         else:
-            result[lesson.subject] += 1
+            result[lesson.subject] += (lesson.end-lesson.start).total_seconds()/3600
 
 
     result_cleaned = {
@@ -203,7 +203,7 @@ def parent_lessons_year(request):
     result = [0 for _ in range(13)]
     for lesson in lessons:
         if lesson.start.year == datetime.datetime.now().year:
-            result[lesson.start.month-1] += 1
+            result[lesson.start.month-1] += (lesson.end-lesson.start).total_seconds()/3600
     return JsonResponse(result, safe = False)
 
 @login_required
@@ -214,7 +214,7 @@ def parent_lessons_month(request):
     days = [0 for _ in range(this_month+1)]
     for lesson in lessons:
         if (lesson.start.year == datetime.datetime.now().year and lesson.start.month == datetime.datetime.now().month):
-            days[lesson.start.day-1] += 1
+            days[lesson.start.day-1] += (lesson.end-lesson.start).total_seconds()/3600
     result = {
         'total': [i for i in range(1,this_month+1)],
         'days': days
@@ -229,7 +229,7 @@ def parent_lessons_week(request):
     result = [0 for _ in range(8)]
     for lesson in lessons:
         if (lesson.start.year == datetime.datetime.now().year and lesson.start.month == datetime.datetime.now().month and lesson.start.isocalendar()[1]==datetime.datetime.now().isocalendar()[1]):
-            result[lesson.start.weekday()] += 1
+            result[lesson.start.weekday()] += (lesson.end-lesson.start).total_seconds()/3600
 
 
     return JsonResponse(result, safe = False)
@@ -243,9 +243,9 @@ def parent_subjects_lessons(request):
 
     for lesson in lessons:
         if (lesson.subject not in result.keys()):
-            result[lesson.subject] = 1
+            result[lesson.subject] = (lesson.end-lesson.start).total_seconds()/3600
         else:
-            result[lesson.subject] += 1
+            result[lesson.subject] += (lesson.end-lesson.start).total_seconds()/3600
 
 
     result_cleaned = {
@@ -317,7 +317,7 @@ def manager_student_lessons_year(request):
     result = [0 for _ in range(13)]
     for lesson in lessons:
         if lesson.start.year == datetime.datetime.now().year:
-            result[lesson.start.month-1] += 1
+            result[lesson.start.month-1] += (lesson.end-lesson.start).total_seconds()/3600
     return JsonResponse(result, safe = False)
 
 @login_required
@@ -328,7 +328,7 @@ def manager_student_lessons_month(request):
     days = [0 for _ in range(this_month+1)]
     for lesson in lessons:
         if (lesson.start.year == datetime.datetime.now().year and lesson.start.month == datetime.datetime.now().month):
-            days[lesson.start.day-1] += 1
+            days[lesson.start.day-1] += (lesson.end-lesson.start).total_seconds()/3600
     result = {
         'total': [i for i in range(1,this_month+1)],
         'days': days
@@ -343,7 +343,7 @@ def manager_student_lessons_week(request):
     result = [0 for _ in range(8)]
     for lesson in lessons:
         if (lesson.start.year == datetime.datetime.now().year and lesson.start.month == datetime.datetime.now().month and lesson.start.isocalendar()[1]==datetime.datetime.now().isocalendar()[1]):
-            result[lesson.start.weekday()] += 1
+            result[lesson.start.weekday()] += (lesson.end-lesson.start).total_seconds()/3600
 
 
     return JsonResponse(result, safe = False)
@@ -357,9 +357,9 @@ def manager_student_subjects_lessons(request):
 
     for lesson in lessons:
         if (lesson.subject not in result.keys()):
-            result[lesson.subject] = 1
+            result[lesson.subject] = (lesson.end-lesson.start).total_seconds()/3600
         else:
-            result[lesson.subject] += 1
+            result[lesson.subject] += (lesson.end-lesson.start).total_seconds()/3600
 
 
     result_cleaned = {
@@ -397,7 +397,7 @@ def manager_employee_lessons_week(request):
     result = [0 for _ in range(8)]
     for lesson in lessons:
         if (lesson.start.year == datetime.datetime.now().year and lesson.start.month == datetime.datetime.now().month and lesson.start.isocalendar()[1]==datetime.datetime.now().isocalendar()[1]):
-            result[lesson.start.weekday()] += 1
+            result[lesson.start.weekday()] += (lesson.end-lesson.start).total_seconds()/3600
 
 
     return JsonResponse(result, safe = False)
@@ -410,7 +410,7 @@ def manager_employee_lessons_month(request):
     days = [0 for _ in range(this_month+1)]
     for lesson in lessons:
         if (lesson.start.year == datetime.datetime.now().year and lesson.start.month == datetime.datetime.now().month):
-            days[lesson.start.day-1] += 1
+            days[lesson.start.day-1] += (lesson.end-lesson.start).total_seconds()/3600
     result = {
         'total': [i for i in range(1,this_month+1)],
         'days': days
@@ -426,7 +426,7 @@ def manager_employee_lessons_year(request):
     result = [0 for _ in range(13)]
     for lesson in lessons:
         if lesson.start.year == datetime.datetime.now().year:
-            result[lesson.start.month-1] += 1
+            result[lesson.start.month-1] += (lesson.end-lesson.start).total_seconds()/3600
     return JsonResponse(result, safe = False)
 
 @login_required
@@ -438,9 +438,9 @@ def manager_employee_subjects_lessons(request):
 
     for lesson in lessons:
         if (lesson.subject not in result.keys()):
-            result[lesson.subject] = 1
+            result[lesson.subject] = (lesson.end-lesson.start).total_seconds()/3600
         else:
-            result[lesson.subject] += 1
+            result[lesson.subject] += (lesson.end-lesson.start).total_seconds()/3600
 
 
     result_cleaned = {
@@ -464,7 +464,7 @@ def corporation_lessons_week(request):
     result = [0 for _ in range(8)]
     for lesson in lessons:
         if (lesson.start.year == datetime.datetime.now().year and lesson.start.month == datetime.datetime.now().month and lesson.start.isocalendar()[1]==datetime.datetime.now().isocalendar()[1]):
-            result[lesson.start.weekday()] += 1
+            result[lesson.start.weekday()] += (lesson.end-lesson.start).total_seconds()/3600
 
 
     return JsonResponse(result, safe = False)
@@ -477,7 +477,7 @@ def corporation_lessons_month(request):
     days = [0 for _ in range(this_month+1)]
     for lesson in lessons:
         if (lesson.start.year == datetime.datetime.now().year and lesson.start.month == datetime.datetime.now().month):
-            days[lesson.start.day-1] += 1
+            days[lesson.start.day-1] += (lesson.end-lesson.start).total_seconds()/3600
     result = {
         'total': [i for i in range(1,this_month+1)],
         'days': days
@@ -493,7 +493,7 @@ def corporation_lessons_year(request):
     result = [0 for _ in range(13)]
     for lesson in lessons:
         if lesson.start.year == datetime.datetime.now().year:
-            result[lesson.start.month-1] += 1
+            result[lesson.start.month-1] += (lesson.end-lesson.start).total_seconds()/3600
     return JsonResponse(result, safe = False)
 
 @login_required
@@ -505,9 +505,9 @@ def corporation_subjects_lessons(request):
 
     for lesson in lessons:
         if (lesson.subject not in result.keys()):
-            result[lesson.subject] = 1
+            result[lesson.subject] = (lesson.end-lesson.start).total_seconds()/3600
         else:
-            result[lesson.subject] += 1
+            result[lesson.subject] += (lesson.end-lesson.start).total_seconds()/3600
 
 
     result_cleaned = {
@@ -534,9 +534,9 @@ def corporation_students_lessons(request):
         studs = lesson.students.all()
         for s in studs:
             if (s.user.username in result.keys()):
-                result[s.user.username] += 1
+                result[s.user.username] += (lesson.end-lesson.start).total_seconds()/3600
             else:
-                result[s.user.username] = 1
+                result[s.user.username] = (lesson.end-lesson.start).total_seconds()/3600
 
 
 
