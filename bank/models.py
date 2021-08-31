@@ -26,6 +26,9 @@ class StudentDeposit(models.Model):
     date = models.DateField(null=True, blank=True)
     description = models.CharField(max_length = 250, null = True, blank = True)
 
+    def __str__(self):
+        return ('{} units: {}'.format(self.units, self.description))
+
 class StudentLessonBill(models.Model):
     duration = models.IntegerField(null = True, blank = True)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
