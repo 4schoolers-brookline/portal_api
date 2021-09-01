@@ -21,7 +21,7 @@ def validation_employee(func):
              employee = Employee.objects.get(user = request.user)
              return func(request, *args, **kwargs)
          except Exception as e:
-            #  auth.logout(request)
+             auth.logout(request)
              context = {'error': e}
              return render(request, 'employee/404.jinja', context = context)
      return validation
