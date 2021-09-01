@@ -18,7 +18,7 @@ class StudentAccount(models.Model):
             s -= round((bill.duration * bill.coefficent)/60,2)
         for deposit in self.deposits.all():
             s += round(deposit.units)
-        return s
+        return round(s,2)
 
 class StudentDeposit(models.Model):
     units = models.FloatField(null=True, blank=True)
