@@ -1,1 +1,1 @@
-4Schoolers Portal API built with Django.
+4Schoolers Portal built with Django.
